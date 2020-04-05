@@ -1,0 +1,10 @@
+{
+  "semi": true,
+  "arrowParens": "always",
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "vueIndentScriptAndStyle": true,
+  "jsxBracketSameLine": false,
+  "bracketSpacing": true,
+  "jsxSingleQuote:": true
+}

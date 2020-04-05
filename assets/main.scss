@@ -1,0 +1,30 @@
+// Global stylesheet
+
+.limitWidth {
+  max-width: 90vw;
+  margin: auto;
+}
+.paddLeft {
+  padding-left: 12px;
+}
+.fundingImage {
+  margin: 0 4px;
+}
+.hiddentext {
+  text-indent: 1000%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.padd-bottom {
+  margin-bottom: 20px;
+}
+.no-padding-bottom {
+  padding-bottom: 0;
+}
+.no-padding-top {
+  padding-top: 0;
+}
+.middle-align-text {
+  display: flex;
+  align-items: center;
+}
