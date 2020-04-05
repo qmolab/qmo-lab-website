@@ -2,7 +2,7 @@
 
 > QMO Lab Website
 
-# By David Mayes
+## By David Mayes
 
 ## Build Setup
 
