@@ -2,6 +2,8 @@
 
 > QMO Lab Website
 
+# By David Mayes
+
 ## Build Setup
 
 ```bash
