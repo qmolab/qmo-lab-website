@@ -4,7 +4,8 @@
       v-for="link in links"
       :key="link.title"
       color="primary"
-      :to="link.path"
+      :to="link.to"
+      nuxt
       dens
     >
       <v-list-item-icon>
@@ -21,7 +22,7 @@
     components: {},
     props: {
       links: {
-        type: Object,
+        type: Array,
         required: true,
       },
     },

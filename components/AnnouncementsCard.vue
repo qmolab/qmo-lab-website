@@ -14,10 +14,10 @@
 
       <v-card-actions class="no-padding-top">
         <v-spacer></v-spacer>
-        <v-btn text to="/publications/">
+        <v-btn text to="/publications">
           Publications
         </v-btn>
-        <v-btn text>
+        <v-btn text to="/news">
           News Archive
         </v-btn>
       </v-card-actions>
@@ -34,7 +34,7 @@
     props: {
       title: { type: String, default: 'Announcements' },
       text: { type: String, default: '' },
-      announcements: { type: Object, required: true },
+      announcements: { type: Array, required: true },
     },
   };
 </script>

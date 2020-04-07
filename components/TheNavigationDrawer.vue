@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-list-item>
-      <v-img src="/img/logos/logo.svg" alt="test" />
+      <img src="~assets/images/logo.svg" alt="test" />
     </v-list-item>
     <v-divider />
-    <NavigationLinkList :links="links" />
+    <NavigationLinkList :links="navLinks" />
   </div>
 </template>
 
@@ -16,10 +16,16 @@
     components: {
       NavigationLinkList,
     },
-    props: {
-      links: {
-        type: Object,
-        required: true,
+    props: {},
+    computed: {
+      navLinks() {
+        if (this.$route.path.match('/research')) {
+          return this.$store.state.navLinks.main.concat(
+            this.$store.state.navLinks.research
+          );
+        } else {
+          return this.$store.state.navLinks.main;
+        }
       },
     },
   };

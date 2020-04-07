@@ -9,7 +9,7 @@
     name: 'BaseCarousel',
     props: {
       slides: {
-        type: Object,
+        type: Array,
         required: true,
       },
     },

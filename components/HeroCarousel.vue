@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import BaseCarousel from '@/components/primitive/BaseCarousel.vue';
+  import BaseCarousel from '@/components/BaseCarousel.vue';
   export default {
     name: 'HeroCarousel',
     components: {
@@ -13,7 +13,7 @@
     },
     props: {
       slides: {
-        type: Object,
+        type: Array,
         required: true,
       },
     },
@@ -21,7 +21,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import '@/sass/variables.scss';
+  @import '~vuetify/src/styles/styles.sass';
   .carousel_slider {
     height: 300px;
     @media #{map-get($display-breakpoints, 'sm-and-down')} {

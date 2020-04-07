@@ -5,8 +5,11 @@ export default {
   /*
    ** Headers of the page
    */
+  modern: 'client',
+  pageTransition: 'fade',
+  layoutTransition: 'layout',
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
+    titleTemplate: '%s -  QMO Lab',
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
@@ -38,8 +41,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
-  scss: [],
+  css: ['~/assets/main.scss'],
   /*
    ** Plugins to load before mounting the App
    */
@@ -92,6 +94,7 @@ export default {
    */
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    treeShake: true,
     theme: {
       dark: true,
       themes: {

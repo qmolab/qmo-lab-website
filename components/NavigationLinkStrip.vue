@@ -1,5 +1,5 @@
 <template>
-  <nav style="display: flex;">
+  <nav style="display: flex; height: 100%; margin-bottom: -8px;">
     <NavigationLink v-for="link in links" :key="link.title" :link="link" />
   </nav>
 </template>
@@ -13,15 +13,11 @@
     },
     props: {
       links: {
-        type: Object,
+        type: Array,
         required: true,
       },
     },
   };
 </script>
 
-<style scoped lang="scss">
-  .v-btn:before {
-    background-color: #80f;
-  }
-</style>
+<style scoped lang="scss"></style>

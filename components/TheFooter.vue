@@ -3,7 +3,7 @@
     <div class="ucrLogoContainer">
       <a href="//ucr.edu" target="blank">
         <img
-          src="/img/logos/ucr_logo_blueGold.png"
+          src="~assets/images/ucr_logo_blueGold.png"
           class="ucrLogoLarge"
           alt="University of California, Riverside"
         />
@@ -36,53 +36,7 @@
           </p>
         </v-col>
         <v-col style="padding: 0; width: 500px;">
-          <v-card
-            height="initial"
-            max-width="819"
-            class="col"
-            style="flex-grow: 1; margin: 12px; overflow: hidden; float: right;"
-            color="#1d1d1d"
-            to="/links/"
-            hover
-          >
-            <v-card-title style="padding: 0; padding-bottom: 8px;"
-              >Funding Provided in Part By:
-            </v-card-title>
-            <div style="display: flex;">
-              <v-img
-                src="@/assets/images/funding_logos/NSF_logo.png"
-                max-height="80"
-                width="40"
-                max-width="80"
-                class="fundingImage"
-                contain
-              />
-              <v-img
-                src="@/assets/images/funding_logos/CIFAR_logo.png"
-                max-height="80"
-                width="117"
-                max-width="235"
-                class="fundingImage"
-                contain
-              />
-              <v-img
-                src="@/assets/images/funding_logos/SHINES_logo.png"
-                max-height="80"
-                width="75"
-                max-width="150"
-                class="fundingImage"
-                contain
-              />
-              <v-img
-                src="@/assets/images/funding_logos/RCSA_logo.png"
-                max-height="80"
-                width="130"
-                max-width="260"
-                class="fundingImage hidden-sm-and-down"
-                contain
-              />
-            </div>
-          </v-card>
+          <FundingCard />
         </v-col>
       </v-row>
     </div>
@@ -96,7 +50,15 @@
   </v-footer>
 </template>
 
-<script></script>
+<script>
+  import FundingCard from '@/components/FundingCard.vue';
+  export default {
+    name: 'TheFooter',
+    components: {
+      FundingCard,
+    },
+  };
+</script>
 
 <style scoped lang="scss">
   .ucrLogoContainer {
@@ -126,7 +88,7 @@
     width: 90px;
     height: 90px;
     background-position: 0 center;
-    background-image: url('/img/logos/logo.svg');
+    background-image: url('~assets/images/logo.svg');
     background-size: 300px;
   }
   .copyrightNotice {
