@@ -1,6 +1,6 @@
 # qmolab
 
-> QMO Lab Website
+> QMO Lab Website (alpha)
 
 ## By David J. Mayes
 
