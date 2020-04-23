@@ -8,13 +8,11 @@
     >
       <TheNavigationDrawer />
     </v-navigation-drawer>
-    <v-app-bar hide-on-scroll color="grey darken-4" app>
+    <v-app-bar hide-on-scroll app>
       <TheHeader @toggle-drawer="drawer = !drawer" />
     </v-app-bar>
     <v-content>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-content>
     <TheFooter />
   </v-app>

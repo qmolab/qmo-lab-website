@@ -1,19 +1,17 @@
 import colors from 'vuetify/es5/util/colors';
 
 export default {
-  mode: 'spa',
+  mode: 'universal',
   /*
    ** Headers of the page
    */
-  modern: 'client',
+  // modern: 'client',
   pageTransition: 'fade',
-  layoutTransition: 'layout',
+  layoutTransition: 'fade',
   head: {
     titleTemplate: '%s -  QMO Lab',
     title: process.env.npm_package_name || '',
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'HandheldFriendly', content: 'true' },
       {
         hid: 'description',
@@ -23,21 +21,15 @@ export default {
       {
         hid: 'keywords',
         name: 'keywords',
-        content: '',
-      },
-    ],
-    link: [
-      {
-        rel: 'icon',
-        type: 'image/x-icon',
-        href: '/favicon.ico',
+        content:
+          'qmo lab, physics, quantum materials, condensed matter physics, nathan gabor, nathaniel gabor, gabor Lab, ucr physics, optoelectronics, ucr lab, graphene, nanotubes, physics',
       },
     ],
   },
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: { color: '#85a' },
   /*
    ** Global CSS
    */
@@ -58,24 +50,31 @@ export default {
     '@nuxtjs/vuetify',
     // Doc: https://www.bazzite.com/docs/nuxt-optimized-images
     '@bazzite/nuxt-optimized-images',
-    // Doc: https://github.com/Developmint/nuxt-bundle-buddy
-    // 'nuxt-bundle-buddy',
+    // Doc: https://github.com/DreaMinder/nuxt-payload-extractor
+    'nuxt-payload-extractor',
     // Doc: https://github.com/Developmint/nuxt-webfontloader
     // 'nuxt-webfontloader',
+    // Doc: https://pwa.nuxtjs.org/setup.html
+    '@nuxtjs/pwa',
+    // Doc: https://github.com/nuxt-community/sitemap-module
+    '@nuxtjs/sitemap',
+    // Doc: https://github.com/robcresswell/nuxt-compress
+    'nuxt-compress',
+    // Doc: https://github.com/nuxt-community/webpackmonitor-module
+    '@nuxtjs/webpackmonitor',
   ],
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    // Doc: https://pwa.nuxtjs.org/setup.html
-    '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/webpackmonitor-module
-    '@nuxtjs/webpackmonitor',
-    // Doc: https://github.com/robcresswell/nuxt-compress
-    'nuxt-compress',
-    // Doc: https://github.com/nuxt-community/sitemap-module
-    '@nuxtjs/sitemap',
-  ],
+  modules: [],
+  /*
+   ** Webfontloader options
+   */
+  webfontloader: {
+    google: {
+      families: [], // Loads Lato font with weights 400 and 700
+    },
+  },
   /*
    ** Internal optimizeCSS module options
    ** https://github.com/NMFR/optimize-css-assets-webpack-plugin
@@ -99,9 +98,9 @@ export default {
       dark: true,
       themes: {
         dark: {
-          primary: '#85a',
-          accent: colors.grey.darken3,
-          secondary: '#3678d0',
+          primary: '#d094ff',
+          accent: '#9900ff',
+          secondary: '#9b94ff',
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
@@ -156,6 +155,7 @@ export default {
      */
     meta: {
       /* meta options */
+      theme_color: '#85a',
     },
     /*
      ** icon module configuration
@@ -170,6 +170,9 @@ export default {
      */
     manifest: {
       /* manifest options */
+      background_color: '#121212',
+      theme_color: '#85a',
+      display: 'browser',
     },
   },
   /*
@@ -178,7 +181,7 @@ export default {
    */
   sitemap: {
     // sitemap configuration
-    hostname: 'https://qmolab.ucr.edu',
+    hostname: 'http://localhost/',
   },
   /*
    ** Build configuration
@@ -191,7 +194,7 @@ export default {
         cacheGroups: {
           styles: {
             name: 'styles',
-            test: /\.(s?css|vue)$/,
+            test: /\.(s?css|sass|vue)$/,
             chunks: 'all',
             enforce: true,
           },

@@ -1,7 +1,10 @@
 <template>
   <div>
     <v-list-item>
-      <img src="~assets/images/logo.svg" alt="test" />
+      <v-img
+        :src="require('~/assets/images/logo_transparent.svg')"
+        alt="test"
+      />
     </v-list-item>
     <v-divider />
     <NavigationLinkList :links="navLinks" />

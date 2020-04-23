@@ -1,39 +1,35 @@
 <template>
-  <v-col class="funding-card-container">
+  <v-hover v-slot:default="{ hover }">
     <v-card
+      :elevation="flat ? 0 : canHover && hover ? elevationHover : elevation"
       :height="height"
-      :max-width="maxWidth"
-      class="funding-card"
-      color="#1d1d1d"
-      :to="to"
-      :hover="hover"
+      :nuxt="linkToLinkPage"
+      :to="linkToLinkPage ? to : undefined"
+      :color="color(hover)"
+      class="fundingCard"
     >
-      <v-card-title class="funding-card-title">Lab Funding: </v-card-title>
-      <div class="funding-card-image-area">
-        <img
-          src="~assets/images/funding_logos/NSF_logo.png"
-          class="funding-card-image nsfLogo"
-        />
-        <img
-          src="~assets/images/funding_logos/CIFAR_logo.png"
-          class="funding-card-image cifarLogo"
-        />
-        <img
-          src="~assets/images/funding_logos/SHINES_logo.png"
-          class="funding-card-image shinesLogo"
-        />
-        <img
-          src="~assets/images/funding_logos/RCSA_logo.png"
-          class="funding-card-image hidden-sm-and-down rcsaLogo"
-        />
-      </div>
+      <v-card-title>Lab Funding:</v-card-title>
+      <v-row>
+        <v-col v-for="(fundingSource, n) in images" :key="n" :cols="colSpan">
+          <BaseImage
+            :src="fundingSource.src"
+            :lazy-src="fundingSource.lazy"
+            :alt="fundingSource.alt"
+            :title="fundingSource.title"
+            :max-height="maxHeight"
+            contain
+          />
+        </v-col>
+      </v-row>
     </v-card>
-  </v-col>
+  </v-hover>
 </template>
 
 <script>
+  import BaseImage from '@/components/BaseImage.vue';
   export default {
     name: 'FundingCard',
+    components: { BaseImage },
     props: {
       to: {
         type: String,
@@ -43,75 +39,92 @@
         type: String,
         default: 'initial',
       },
-      maxWidth: {
+      maxHeight: {
         type: Number,
-        default: 819,
+        default: 80,
       },
-      hover: {
+      colSpan: {
+        type: Number,
+        default: 3,
+      },
+      tooltipDelay: {
+        type: Number,
+        default: 500,
+      },
+      canHover: {
         type: Boolean,
         default: true,
+      },
+      linkToLinkPage: {
+        type: Boolean,
+        default: true,
+      },
+      flat: {
+        type: Boolean,
+        default: false,
+      },
+      elevation: {
+        type: Number,
+        default: 2,
+      },
+      elevationHover: {
+        type: Number,
+        default: 12,
+      },
+      bgOpacity: {
+        type: Number,
+        default: 0.01,
+      },
+      bgOpacityHover: {
+        type: Number,
+        default: 0.02,
       },
     },
     data() {
       return {
+        dummy: 0,
         images: [
           {
-            src: '~assets/images/funding_logos/NSF_logo.png',
-            class: 'nsfLogo',
+            src: require('~/assets/images/funding_logos/NSF_logo.png?resize&quality=55&format=png&size=300'),
+            lazy: require('~/assets/images/funding_logos/NSF_logo.png?lqip'),
+            alt: 'NSF Logo',
+            title: 'The National Science Foundation',
           },
           {
-            src: '~assets/images/funding_logos/CIFAR_logo.png',
-            class: 'cifarLogo',
+            src: require('~/assets/images/funding_logos/CIFAR_logo.png?resize&quality=55&format=png&size=300'),
+            lazy: require('~/assets/images/funding_logos/CIFAR_logo.png?lqip'),
+            alt: 'CIFAR Logo',
+            title: 'Canadian Institute for the Advanced Research',
           },
           {
-            src: '~assets/images/funding_logos/SHINES_logo.png',
-            class: 'shinesLogo',
+            src: require('~/assets/images/funding_logos/SHINES_logo.png?resize&quality=55&format=png&size=300'),
+            lazy: require('~/assets/images/funding_logos/SHINES_logo.png?lqip'),
+            alt: 'SHINES Logo',
+            title: 'Spin and Heat in Nanoscale Electronic Systems',
           },
           {
-            src: '~assets/images/funding_logos/RCSA_logo.png',
-            class: 'hidden-sm-and-down rcsaLogo',
+            src: require('~/assets/images/funding_logos/RCSA_logo.png?resize&quality=55&format=png&size=300'),
+            lazy: require('~/assets/images/funding_logos/RCSA_logo.png?lqip'),
+            alt: 'RCSA Logo',
+            title: 'Research Corporation for Science Advancement',
           },
         ],
       };
+    },
+    methods: {
+      color(hovering) {
+        return (
+          'rgba(255,255,255,' +
+          (hovering ? this.bgOpacityHover : this.bgOpacity).toString() +
+          ')'
+        );
+      },
     },
   };
 </script>
 
 <style scoped lang="scss">
-  .funding-card-container {
-    padding: 0;
-    width: 500px;
-    .funding-card {
-      flex-grow: 1;
-      margin: 12px;
-      overflow: hidden;
-      float: right;
-      .funding-card-title {
-        padding: 0;
-        padding-bottom: 8px;
-      }
-      .funding-card-image-area {
-        display: flex;
-        .funding-card-image {
-          max-height: 80px;
-          .nsfLogo {
-            width: 40px;
-            max-width: 80px;
-          }
-          .cifarLogo {
-            width: 117px;
-            max-width: 235px;
-          }
-          .shinesLogo {
-            width: 75px;
-            max-width: 150px;
-          }
-          .rcsaLogo {
-            width: 130px;
-            max-width: 260px;
-          }
-        }
-      }
-    }
+  .fundingCard {
+    transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 </style>

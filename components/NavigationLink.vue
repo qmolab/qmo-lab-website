@@ -39,7 +39,7 @@
       border-top-right-radius: 2px;
       &.activeLink {
         height: 5px;
-        background-color: #85a;
+        background-color: $primary;
       }
     }
     .v-btn {

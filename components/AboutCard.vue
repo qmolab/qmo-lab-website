@@ -13,11 +13,11 @@
           inception. In the coming decades, the discovery of quantum phenomena
           in various scientific realms promises to revolutionize science,
           technology, and society. In biology, the quantum effects of
-          photosynthesis are still being unravelled, while the miniaturization
-          of integrated circuits forces us to confront quantum mechanics
-          head-on. As scientists, we have a unique opportunity to explore
-          quantum mechanics in the laboratory and unravel the bizarre and
-          unintuitive behavior that emerges in atomic-scale systems.
+          photosynthesis are still being unraveled, while the miniaturization of
+          integrated circuits forces us to confront quantum mechanics head-on.
+          As scientists, we have a unique opportunity to explore quantum
+          mechanics in the laboratory and unravel the bizarre and unintuitive
+          behavior that emerges in atomic-scale systems.
         </p>
         <p>
           The QMO lab aims to discover new quantum phenomena in atomically thin

@@ -1,5 +1,5 @@
 <template>
-  <div class="newsPage">
+  <v-container class="newsPage">
     <h1>This is a News Archive page</h1>
-  </div>
+  </v-container>
 </template>

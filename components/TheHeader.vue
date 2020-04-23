@@ -1,9 +1,7 @@
 <template>
   <v-row justify="center" no-gutters style="height: 100%;">
     <v-col sm="1" class="hidden-md-and-up middle-align-text fill-height">
-      <v-btn fab text @click.stop="$emit('toggle-drawer')">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      <v-app-bar-nav-icon @click.stop="$emit('toggle-drawer')" />
     </v-col>
     <h2 class="hidden-md-and-up middle-align-text fill-height">
       QMO Lab {{ $route.name }}

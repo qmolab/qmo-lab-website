@@ -2,20 +2,126 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
+$black: #121212;
+$white: #f5f5f5;
+$light-grey: #eeeeee;
+$primary: #d094ff;
+$secondary: #9b94ff;
+$borderRadius: 4px;
+$accent: #9900ff;
 
+//$font-size-root: 18px;
 $material-dark: (
-    'background': #212121,
-    'surface': #212121,
-    'color': #f5f5f5,
-    'text': (
-      'theme': #f5f5f5,
-      'primary': #eeeeee,
-      'secondary': #eeeeee,
+  'status-bar': (
+    'regular': $black,
+    'lights-out': rgba($black, 0.2)
+  ),
+  'app-bar': lighten($black,3%),
+  'background': $black,
+  'surface': rgba(255,255,255,0.02),
+  'cards': rgba(255,255,255,0.02),
+  'chips': #555,
+  'dividers': rgba($white, 0.12),
+  'text': (
+    'theme': $primary,
+    'primary': $white,
+    'secondary': $light-grey,
+    'disabled': rgba($white, 0.5),
+    'link': $secondary,
+    'link-hover': $secondary,
+  ),
+  'icons': (
+    'active': $white,
+    'inactive': rgba($white, 0.5)
+  ),
+  'inputs': (
+    'box': $white,
+    'solo-inverted': rgba($white, 0.16),
+    'solo-inverted-focused': $white,
+    'solo-inverted-focused-label': rgba($black, .6),
+    'solo-inverted-focused-placeholder': rgba($black, 0.38),
+    'solo-inverted-focused-text': rgba($black, 0.87)
+  ),
+  'buttons': (
+    'disabled': rgba($white, 0.3),
+    'focused': rgba($white, 0.12),
+    'focused-alt': rgba($white, 0.1),
+    'pressed': rgba(#ccc, 0.25)
+  ),
+  'expansion-panels': (
+    'focus': #494949
+  ),
+  'navigation-drawer': lighten($black,5%),
+  'selection-controls': (
+    'disabled': rgba($white, 0.3),
+    'thumb': (
+      'inactive': lighten($black,1.5%),
+      'disabled': lighten($black,0.5%)
     ),
-    'cards': lighten( #212121, 1% )
+    'track': (
+      'inactive': rgba($white, 0.3),
+      'disabled': rgba($white, 0.1)
+    )
+  ),
+  'slider': (
+    'active': rgba($white, 0.3),
+    'inactive': rgba($white, 0.2),
+    'disabled': rgba($white, 0.2),
+    'discrete': $white
+  ),
+  'skeleton': linear-gradient(90deg, transparent, rgba($black, .05), transparent),
+  'states': (
+    'hover': 0.08,
+    'focus': 0.24,
+    'selected': 0.16,
+    'activated': 0.24,
+    'pressed': 0.32,
+    'dragged': 0.16
+  ),
+  'tabs': rgba($white, 0.6),
+  'toggle-buttons': (
+    'color': $white
+  ),
+  'text-fields': (
+    'filled': rgba($white, 0.08),
+    'filled-hover': rgba($white, 0.16),
+    'outlined': rgba($white, 0.24),
+    'outlined-disabled': rgba($white, 0.16),
+    'outlined-hover': $white
+  ),
+  'input-bottom-line': rgba($white, 0.7),
+  'stepper': (
+    'active': rgba($white, 1),
+    'completed': rgba($white, 0.87),
+    'hover': rgba($white, 0.75)
+  ),
+  'table': (
+    'active': #505050,
+    'hover': lighten($black,1%),
+    'group': lighten($black,1%),
+  ),
+  'toolbar': lighten($black,3%),
+  'picker': (
+    'body': lighten($black,0.5%),
+    'clock': lighten($black,1%),
+    'indeterminateTime': lighten($black,1.5%),
+    'title': lighten($black,1%)
+  ),
+  'color-picker': (
+    'checkerboard': rgba($white, 0.12)
+  ),
+  'bg-color': $black,
+  'fg-color': $white,
+  'text-color': $white,
+  'primary-text-percent': 1,
+  'secondary-text-percent': 0.7,
+  'disabledORhints-text-percent': 0.5,
+  'divider-percent': 0.12,
+  'active-icon-percent': 1,
+  'inactive-icon-percent': 0.5
 );
 $material-light: (
-    'background': #eeeeee,
-    'surface': #f5f5f5,
-    'color': #212121,
+  'background': $light-grey,
+  'surface': $white,
+  'color': $black,
 );

@@ -1,6 +1,6 @@
 <template>
   <div class="carousel_slider">
-    <BaseCarousel :slides="slides" />
+    <BaseCarousel :slides="slides" cycle />
   </div>
 </template>
 
@@ -23,9 +23,9 @@
 <style scoped lang="scss">
   @import '~vuetify/src/styles/styles.sass';
   .carousel_slider {
-    height: 300px;
+    height: 350px;
     @media #{map-get($display-breakpoints, 'sm-and-down')} {
-      height: 200px;
+      height: 250px;
     }
   }
 </style>

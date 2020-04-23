@@ -9,7 +9,7 @@
     >
       <TheNavigationDrawer />
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" hide-on-scroll color="grey darken-4" app>
+    <v-app-bar :clipped-left="clipped" hide-on-scroll app>
       <TheHeader @toggle-drawer="drawer = !drawer" />
     </v-app-bar>
     <v-content>

@@ -1,5 +1,5 @@
 <template>
-  <div class="researchPage">
+  <v-container class="researchPage">
     <h1>This is the research splash page</h1>
-  </div>
+  </v-container>
 </template>

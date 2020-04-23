@@ -1,22 +1,24 @@
 <template>
-  <v-flex xs12 sm12 md12 style="margin: auto;">
+  <HeroPage class="homePage">
     <AboutCard />
     <AnnouncementsCard
       :announcements="announcements"
       title="QMO LAB NEWS"
       text="For More QMO Lab Highlights, Please See Our Publications Or Visit The News Archive."
     />
-  </v-flex>
+  </HeroPage>
 </template>
 
 <script>
   import AboutCard from '@/components/AboutCard.vue';
   import AnnouncementsCard from '@/components/AnnouncementsCard.vue';
+  import HeroPage from '@/components/HeroPage.vue';
 
   export default {
     components: {
       AboutCard,
       AnnouncementsCard,
+      HeroPage,
     },
     data() {
       return {
@@ -56,6 +58,5 @@
         ],
       };
     },
-    layout: 'withHero',
   };
 </script>
