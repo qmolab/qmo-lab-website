@@ -91,3 +91,6 @@ sw.*
 
 # Webpack Monitor
 .monitor
+
+# deploy
+*deploy*

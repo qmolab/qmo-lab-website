@@ -11,12 +11,12 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "gen": "nuxt generate",
+    "deploy": "deploy.bat",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest",
     "webpack-defaults": "webpack-defaults"
   },
   "dependencies": {
-    "babel-plugin-transform-remove-strict-mode": "0.0.2",
     "nuxt": "^2.0.0"
   },
   "devDependencies": {

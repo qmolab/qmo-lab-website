@@ -117,7 +117,7 @@ export default {
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
-    customVariables: ['~/assets/variables.scss', '~/assets/colorpack.scss'],
+    customVariables: ['~/assets/variables.scss'],
     defaultAssets: {
       font: { family: 'Roboto' },
       icons: false,
