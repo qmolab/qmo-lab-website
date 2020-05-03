@@ -6,24 +6,31 @@
       :align="alignment"
       :justify="justify"
     >
-      <ImageButton
+      <BaseImage
         :src="'https://img.youtube.com/vi/' + video + '/default.jpg'"
         alt="video alt"
         title="video title"
         max-height="90"
-        class="videoGalleryVideoCard"
-        @clicked="selectVideo(video)"
-        ><v-icon class="youtubeIcon">mdi-youtube</v-icon></ImageButton
+        :class="{
+          videoGalleryVideoCard: true,
+          selected: video === currentVideo,
+        }"
+        :disabled="video === currentVideo"
+        :link="video !== currentVideo"
+        @click="selectVideo(video)"
       >
+        <v-icon class="mdiYoutube">{{ mdiYoutube }}</v-icon>
+      </BaseImage>
     </v-col>
   </v-row>
 </template>
 
 <script>
-  import ImageButton from '@/components/ImageButton.vue';
+  import { mdiYoutube } from '@mdi/js';
+  import BaseImage from '@/components/BaseImage.vue';
   export default {
     name: 'VideoGalleryPagination',
-    components: { ImageButton },
+    components: { BaseImage },
     props: {
       videos: {
         type: Array,
@@ -32,15 +39,16 @@
     },
     data() {
       return {
-        playerWidth: 640,
-        playerHeight: 360,
         alignment: 'left',
         justify: false,
+        mdiYoutube,
+        currentVideo: undefined,
       };
     },
     computed: {},
     methods: {
       selectVideo(videoId) {
+        this.currentVideo = videoId;
         this.$emit('selected', videoId);
       },
     },
@@ -49,25 +57,18 @@
 
 <style scoped lang="scss">
   .videoGalleryVideoCard {
+    max-height: 90px;
     max-width: 160px;
     overflow: hidden;
-    .youtubeIcon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      height: 20px;
-      width: 24px;
-      margin-top: -10px;
-      margin-left: -12px;
+    .mdiYoutube {
+      width: 20px;
     }
-    &.on-hover {
-      .youtubeIcon {
-        color: #f00;
-      }
+    &:not(.selected):hover .mdiYoutube {
+      color: $youtube-red;
+      opacity: 1;
     }
     .videoGalleryVideoImage {
       border-radius: 4px;
-      overflow: hidden;
     }
   }
 </style>

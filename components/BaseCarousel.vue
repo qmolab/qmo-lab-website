@@ -6,11 +6,14 @@
     height="inherit"
     progress
     hide-delimiter-background
+    :next-icon="mdiChevronRight"
+    :prev-icon="mdiChevronLeft"
   >
     <v-carousel-item v-for="(slide, i) in slides" :key="i">
       <v-img
-        :src="slide.src"
-        :lazy-src="slide.lazy"
+        :src="slide.src.src"
+        :lazy-src="slide.src.placeholder"
+        :srcset="slide.webp"
         :alt="slide.alt"
         cover
         height="100%"
@@ -18,9 +21,9 @@
         <v-row align="end" class="lightbox white--text pa-2 fill-height">
           <v-col>
             <v-card link hover color="rgba(0, 0, 0, 0.3)" class="subheading">
-              <v-card-subtitle style="padding: 8px;">{{
-                slide.title
-              }}</v-card-subtitle>
+              <v-card-subtitle style="padding: 8px;">
+                {{ slide.title }}
+              </v-card-subtitle>
             </v-card>
             <v-spacer />
           </v-col>
@@ -36,6 +39,7 @@
 </template>
 
 <script>
+  import { mdiChevronRight, mdiChevronLeft } from '@mdi/js';
   export default {
     name: 'BaseCarousel',
     props: {
@@ -51,6 +55,9 @@
         type: Boolean,
         default: true,
       },
+    },
+    data() {
+      return { mdiChevronRight, mdiChevronLeft };
     },
   };
 </script>

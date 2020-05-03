@@ -1,26 +1,21 @@
 <template>
-  <v-tooltip
-    bottom
-    :open-delay="tooltipDelay"
-    :close-delay="tooltipDelay / 2"
-    :eager="eagerSetting"
-  >
-    <template v-slot:activator="{ on }">
-      <v-lazy
-        :options="{
-          threshold: 0.5,
-        }"
-        transition="fade-transition"
-      >
+  <div :class="{ imageLink: link }" @click="$emit('click', $event)">
+    <v-tooltip
+      bottom
+      :open-delay="tooltipDelay"
+      :close-delay="tooltipDelay / 2"
+      :eager="eagerSetting"
+      :disabled="disabled"
+    >
+      <template v-slot:activator="{ on }">
         <v-img
           :src="sourceChecked"
           :lazy-src="lazySrcChecked"
           :srcset="srcsetChecked"
-          :sizes="sizesChecked"
           :eager="eagerSetting"
           :gradient="gradient"
           :alt="alt"
-          :aspect-ratio="aspectRatio"
+          :aspect-ratio="aspectRatioChecked"
           :contain="contain"
           :height="height"
           :min-height="minHeight"
@@ -28,9 +23,10 @@
           :width="width"
           :min-width="minWidth"
           :max-width="maxWidth"
-          @error="$emit('error', $event)"
-          @load="$emit('load', $event)"
-          @sized="$emit('sized', $event)"
+          :options="{
+            threshold: 0.5,
+          }"
+          transition="fade-transition"
           v-on="on"
         >
           <slot />
@@ -40,10 +36,10 @@
             </v-row>
           </template>
         </v-img>
-      </v-lazy>
-    </template>
-    <span>{{ title }}</span>
-  </v-tooltip>
+      </template>
+      <span>{{ title }}</span>
+    </v-tooltip>
+  </div>
 </template>
 
 <script>
@@ -51,9 +47,9 @@
     name: 'BaseImage',
     props: {
       src: { type: [String, Object], required: true },
+      webp: { type: [String, Object], default: undefined },
       lazySrc: { type: String, default: undefined },
       srcset: { type: String, default: undefined },
-      sizes: { type: String, default: undefined },
       gradient: { type: String, default: undefined },
       alt: { type: String, default: undefined },
       title: { type: String, default: '' },
@@ -67,22 +63,36 @@
       maxWidth: { type: [Number, String], default: undefined },
       position: { type: [String, Number], default: 'center, center' },
       tooltipDelay: { type: [String, Number], default: '500' },
+      link: { type: Boolean, default: false },
+      disabled: { type: Boolean, default: false },
     },
     data() {
-      return {};
+      return { aspectRatioChecked: 0 };
     },
     computed: {
       sourceChecked() {
-        return this.src || undefined;
+        return typeof this.src === 'string' ? this.src : this.src.src;
       },
       srcsetChecked() {
-        return this.srcset || undefined;
+        if (this.srcset) return this.srcset;
+        else if (typeof this.src !== 'string') {
+          let srcset = this.src.srcSet || this.src.srcset;
+          if (this.webp) {
+            if (this.webp.srcSet || this.webp.srcset)
+              srcset += ' ' + this.webp.srcSet || this.webp.srcset;
+            else srcset = this.webp;
+          }
+          return srcset;
+        }
+        return undefined;
       },
       lazySrcChecked() {
-        return this.lazySrc || undefined;
-      },
-      sizesChecked() {
-        return this.sizes || undefined;
+        return (
+          this.lazySrc ||
+          (typeof this.src === 'string'
+            ? undefined
+            : this.src.placeholder || this.src.lazySrc)
+        );
       },
       eagerSetting() {
         // eager: { type: Boolean, default: false },
@@ -94,9 +104,22 @@
       },
     },
     mounted() {
-      this.$emit('loaded');
+      if (this.aspectRatio) this.aspectRatioChecked = this.aspectRatio;
+      else if (this.lazySrcChecked && !(this.width && this.height)) {
+        const img = new Image();
+        img.onload = () => {
+          this.aspectRatioChecked = img.naturalWidth / img.naturalHeight;
+        };
+        img.src = this.lazySrcChecked;
+      }
     },
   };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+  .imageLink {
+    cursor: pointer;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+</style>

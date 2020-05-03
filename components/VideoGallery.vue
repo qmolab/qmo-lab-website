@@ -43,12 +43,18 @@
         type: Boolean,
         default: true,
       },
+      playerWidth: {
+        type: Number,
+        default: 640,
+      },
+      playerHeight: {
+        type: Number,
+        default: 360,
+      },
     },
     data() {
       return {
         currentVideoID: '',
-        playerWidth: 640,
-        playerHeight: 360,
       };
     },
   };
@@ -58,9 +64,10 @@
   .videoGallery {
     max-width: 1280px;
     margin: auto;
+    padding: 12px;
   }
   .videoPlayer {
-    transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
     position: relative;
   }
 </style>

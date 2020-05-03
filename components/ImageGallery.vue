@@ -1,26 +1,43 @@
 <template>
-  <div class="imageGallery">
-    <v-container v-for="(gallery, k) in galleryImages" :key="k">
+  <div>
+    <ModalImage
+      :id="`modal-gallery`"
+      v-model="currentIndex"
+      :images="currentImages"
+    />
+    <div v-for="(gallery, k) in galleryImages" :key="k">
       <h3>{{ gallery.title }}</h3>
       <waterfall
-        :id="k"
-        :key="k"
-        :container-id="k"
+        :id="`waterfall-${k}`"
+        :key="`waterfall-${k}`"
+        v-slot="{ item, index }"
+        :container-id="`waterfall-${k}`"
         :resizable="true"
         :items="gallery.images"
-        popup-on-click
-      />
-    </v-container>
+      >
+        <BaseImage
+          :src="item.thumbnail"
+          :alt="item.title"
+          :title="item.title"
+          link
+          @click="click(index, gallery.images)"
+        />
+      </waterfall>
+    </div>
   </div>
 </template>
 
 <script>
-  import Waterfall from '@/components/WaterfallLayout';
+  import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
+  import BaseImage from '@/components/BaseImage.vue';
+  import ModalImage from '@/components/ModalImage.vue';
 
   export default {
     name: 'ImageGallery',
     components: {
       Waterfall,
+      ModalImage,
+      BaseImage,
     },
     props: {
       galleryImages: {
@@ -29,7 +46,13 @@
       },
     },
     data() {
-      return {};
+      return { currentIndex: -1, currentImages: [] };
+    },
+    methods: {
+      click(index, images) {
+        this.currentImages = images;
+        this.currentIndex = index;
+      },
     },
   };
 </script>

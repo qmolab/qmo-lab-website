@@ -81,7 +81,7 @@
     }
     &::after {
       content: '';
-      background-image: url('~assets/images/gallery/blue.png?resize&quality=55&format=jpg&size=760');
+      background-image: url('~assets/images/gallery/blue.png?webp');
       background-size: cover;
       opacity: 0.2;
       z-index: 1;

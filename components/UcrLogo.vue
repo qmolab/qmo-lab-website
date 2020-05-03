@@ -1,10 +1,9 @@
 <template>
-  <a href="https://ucr.edu" target="blank">
+  <a href="https://ucr.edu" target="_blank" rel="noopener">
     <v-tooltip bottom open-delay="500">
       <template v-slot:activator="{ on }">
         <v-img
-          :src="src"
-          :lazy-src="require('~/assets/images/ucr_logo_blGd.png?lqip')"
+          :src="src.src"
           :alt="alt"
           :max-width="maxWidth"
           class="ucrLogo"
@@ -35,7 +34,7 @@
     },
     data() {
       return {
-        src: require('~/assets/images/ucr_logo_blGd.png?resize&quality=55&format=png&size=300'),
+        src: require('~/assets/images/ucr_logo_blGd.png?resize&format=png'),
       };
     },
   };

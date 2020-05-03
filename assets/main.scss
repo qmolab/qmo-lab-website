@@ -27,6 +27,7 @@
 }
 .middle-align-text {
   display: flex;
+  float: left;
   align-items: center;
 }
 .fill-height {
@@ -54,12 +55,26 @@
     top: 18px;
   }
 }
-.imageGallery .blueimp-gallery>.slides>.slide>.slide-content {
-  border-radius: $borderRadius;
-  overflow: hidden;
-  max-height: 90%;
-}
 
 .v-image__image {
   transition: background-image 280ms cubic-bezier(0.4,0,0.2,1);
+}
+
+.v-icon.v-icon--svg.mdiYoutube {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: $dark-grey;
+  transform: translate3d(-50%, -50%, 0);
+  opacity: 0.8;
+  transition: 0.28s cubic-bezier(0.4,0,0.2,1);
+  &::before {
+    content: '';
+    background-color: $light-grey;
+    z-index: -1;
+    position: absolute;
+    height: 50%;
+    width: 50%;
+    border-radius: 50%;
+  }
 }

@@ -28,6 +28,7 @@
 <style scoped lang="scss">
   .navButton {
     display: flex;
+    float: left;
     align-items: center;
     position: relative;
     .bottomBorder {

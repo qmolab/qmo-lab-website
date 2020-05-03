@@ -5,7 +5,7 @@
         <BaseImage
           class="align-end pa-2"
           :src="member.img"
-          :lazy-src="member.lazy"
+          :webp="member.webp"
           :aspect-ratio="5 / 4"
           :alt="fullName"
           :title="shortName"

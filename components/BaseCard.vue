@@ -9,12 +9,7 @@
         <div class="caption">{{ config.headline }}</div>
       </v-list-item-content>
     </v-list-item>
-    <v-img
-      class="align-end"
-      :src="config.img"
-      :lazy-src="config.lazy"
-      :aspect-ratio="3 / 2"
-    >
+    <v-img class="align-end" :src="config.img" :aspect-ratio="3 / 2">
       <div v-if="config.textOnImage" class="caption textOnImage ps-4">
         {{ config.textOnImage }}
       </div>
@@ -26,15 +21,22 @@
         Share
       </v-btn>
 
-      <v-btn color="secondary" text :href="config.href" target="_blank">
+      <v-btn
+        color="secondary"
+        text
+        :href="config.href"
+        target="_blank"
+        rel="noopener"
+      >
         Read more
-        <v-icon right color="secondary">mdi-open-in-new</v-icon>
+        <v-icon right color="secondary">{{ openInNewIcon }}</v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+  import { mdiOpenInNew } from '@mdi/js';
   export default {
     name: 'BaseCard',
     props: {
@@ -42,6 +44,11 @@
         type: Object,
         required: true,
       },
+    },
+    data() {
+      return {
+        openInNewIcon: mdiOpenInNew,
+      };
     },
   };
 </script>

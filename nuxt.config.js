@@ -1,7 +1,27 @@
-import colors from 'vuetify/es5/util/colors';
+// import colors from 'vuetify/es5/util/colors';
+
+const modules = [];
+let modern = false;
+if (process.env.NODE_ENV === 'production') {
+  // Doc: https://github.com/Developmint/nuxt-webfontloader
+  modules.push('nuxt-webfontloader');
+  modern = 'client';
+}
+
+const primary = '#d094ff';
+const accent = '#9900ff';
+const secondary = '#9b94ff';
+const info = '#26A69A';
+const warning = '#FFC107';
+const error = '#DD2C00';
+const success = '#00E676';
+const backgroundColor = '#121212';
+
+const imageQuality = 0.65;
 
 export default {
   mode: 'universal',
+  modern,
   /*
    ** Headers of the page
    */
@@ -25,11 +45,18 @@ export default {
           'qmo lab, physics, quantum materials, condensed matter physics, nathan gabor, nathaniel gabor, gabor Lab, ucr physics, optoelectronics, ucr lab, graphene, nanotubes, physics',
       },
     ],
+    link: [
+      { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
+      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+    ],
+  },
+  router: {
+    base: process.env.NODE_ENV === 'dev' ? '/' : '/node/',
   },
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#85a' },
+  loading: { color: primary },
   /*
    ** Global CSS
    */
@@ -37,7 +64,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/vuetify.scss'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -47,17 +74,15 @@ export default {
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
     // Doc: https://github.com/nuxt-community/vuetify-module
-    '@nuxtjs/vuetify',
-    // Doc: https://www.bazzite.com/docs/nuxt-optimized-images
     '@bazzite/nuxt-optimized-images',
     // Doc: https://github.com/DreaMinder/nuxt-payload-extractor
-    'nuxt-payload-extractor',
-    // Doc: https://github.com/Developmint/nuxt-webfontloader
-    // 'nuxt-webfontloader',
+    '@nuxtjs/vuetify',
     // Doc: https://pwa.nuxtjs.org/setup.html
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/sitemap-module
     '@nuxtjs/sitemap',
+    // Doc: https://www.bazzite.com/docs/nuxt-optimized-images
+    'nuxt-payload-extractor',
     // Doc: https://github.com/robcresswell/nuxt-compress
     'nuxt-compress',
     // Doc: https://github.com/nuxt-community/webpackmonitor-module
@@ -66,7 +91,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules,
   /*
    ** Webfontloader options
    */
@@ -92,19 +117,23 @@ export default {
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+    customVariables: ['~/assets/variables.scss', '~/assets/colorpack.scss'],
+    defaultAssets: {
+      font: { family: 'Roboto' },
+      icons: false,
+    },
     treeShake: true,
     theme: {
       dark: true,
       themes: {
         dark: {
-          primary: '#d094ff',
-          accent: '#9900ff',
-          secondary: '#9b94ff',
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
+          primary,
+          accent,
+          secondary,
+          info,
+          warning,
+          error,
+          success,
         },
       },
     },
@@ -116,6 +145,20 @@ export default {
    */
   optimizedImages: {
     /* optimized Images options */
+    responsive: {
+      size: 300,
+      sizes: [200, 300],
+      format: 'jpg',
+      quality: imageQuality,
+      placeholder: true,
+      placeholderSize: 20,
+    },
+    webp: {
+      preset: 'default',
+      quality: imageQuality,
+      size: 50000,
+    },
+    pngquant: [0.3, 0.5],
   },
   /*
    ** nuxt-compress module configuration
@@ -146,16 +189,14 @@ export default {
      ** workbox module configuration
      ** https://pwa.nuxtjs.org/modules/workbox.html#options
      */
-    workbox: {
-      /* workbox options */
-    },
+    workbox: false,
     /*
      ** meta module configuration
      ** https://pwa.nuxtjs.org/modules/meta.html#options
      */
     meta: {
       /* meta options */
-      theme_color: '#85a',
+      theme_color: primary,
     },
     /*
      ** icon module configuration
@@ -170,8 +211,8 @@ export default {
      */
     manifest: {
       /* manifest options */
-      background_color: '#121212',
-      theme_color: '#85a',
+      background_color: backgroundColor,
+      theme_color: primary,
       display: 'browser',
     },
   },
@@ -181,7 +222,7 @@ export default {
    */
   sitemap: {
     // sitemap configuration
-    hostname: 'http://localhost/',
+    hostname: 'http://localhost:5000/',
   },
   /*
    ** Build configuration

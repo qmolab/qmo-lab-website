@@ -1,39 +1,27 @@
 <template>
-  <v-hover v-slot:default="{ hover }">
-    <v-card
-      :elevation="flat ? 0 : hover ? hoverElevation : elevation"
-      :class="{ 'on-hover': hover, imageCard: true }"
-      :flat="flat"
-      link
-      @click="$emit('clicked', $event)"
-    >
-      <BaseImage
-        :lazy-src="lazySrc || require('@/assets/images/logo.svg')"
-        :src="src"
-        :srcset="srcset"
-        :sizes="sizes"
-        :alt="alt"
-        :title="title"
-        :gradient="gradient"
-        :aspect-ratio="aspectRatio"
-        :contain="contain"
-        :height="height"
-        :min-height="minHeight"
-        :max-height="maxHeight"
-        :width="width"
-        :min-width="minWidth"
-        :max-width="maxWidth"
-        :position="position"
-        :tooltip-delay="tooltipDelay"
-        @error="$emit('error', $event)"
-        @load="$emit('load', $event)"
-        @loaded="$emit('loaded', $event)"
-        @sized="$emit('sized', $event)"
-      >
-        <slot />
-      </BaseImage>
-    </v-card>
-  </v-hover>
+  <BaseImage
+    :lazy-src="lazySrc"
+    :src="src"
+    :webp="webp"
+    :srcset="srcset"
+    :alt="alt"
+    :title="title"
+    :gradient="gradient"
+    :aspect-ratio="aspectRatio"
+    :contain="contain"
+    :height="height"
+    :min-height="minHeight"
+    :max-height="maxHeight"
+    :width="width"
+    :min-width="minWidth"
+    :max-width="maxWidth"
+    :position="position"
+    :tooltip-delay="tooltipDelay"
+    :class="{ imageLink: !disabled }"
+    @click="disabled ? undefined : $emit('click', $event)"
+  >
+    <slot />
+  </BaseImage>
 </template>
 
 <script>
@@ -43,9 +31,9 @@
     components: { BaseImage },
     props: {
       src: { type: [String, Object], required: true },
+      webp: { type: [String, Object], default: undefined },
       lazySrc: { type: String, default: undefined },
       srcset: { type: String, default: undefined },
-      sizes: { type: String, default: undefined },
       gradient: { type: String, default: undefined },
       alt: { type: String, default: undefined },
       title: { type: String, default: '' },
@@ -59,9 +47,15 @@
       maxWidth: { type: [Number, String], default: undefined },
       position: { type: [String, Number], default: 'center, center' },
       tooltipDelay: { type: [String, Number], default: '500' },
-      flat: { type: Boolean, default: false },
-      elevation: { type: [Number, String], default: 2 },
-      hoverElevation: { type: [Number, String], default: 12 },
+      disabled: { type: Boolean, default: false },
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  .imageLink {
+    cursor: pointer;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+</style>

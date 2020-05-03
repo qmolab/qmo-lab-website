@@ -1,5 +1,5 @@
 <template>
-  <nav style="display: flex; height: 100%; margin-bottom: -8px;">
+  <nav class="nav">
     <NavigationLink v-for="link in links" :key="link.title" :link="link" />
   </nav>
 </template>
@@ -20,4 +20,11 @@
   };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  .nav {
+    display: flex;
+    float: left;
+    height: 100%;
+    margin-bottom: -8px;
+  }
+</style>

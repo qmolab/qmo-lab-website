@@ -32,5 +32,6 @@
 <style scoped lang="scss">
   .nav {
     display: flex;
+    float: left;
   }
 </style>

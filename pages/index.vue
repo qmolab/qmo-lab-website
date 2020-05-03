@@ -1,45 +1,39 @@
+/* eslint-disable */
 <template>
-  <HeroPage class="homePage">
-    <AboutCard />
+  <HeroLayout class="homePage">
+    <v-row>
+      <v-col><h1>QMO Lab</h1></v-col>
+    </v-row>
+    <v-row>
+      <v-col v-html="aboutText" />
+    </v-row>
     <AnnouncementsCard
       :announcements="announcements"
       title="QMO LAB NEWS"
       text="For More QMO Lab Highlights, Please See Our Publications Or Visit The News Archive."
+      :max-items="3"
     />
-  </HeroPage>
+  </HeroLayout>
 </template>
 
 <script>
-  import AboutCard from '@/components/AboutCard.vue';
   import AnnouncementsCard from '@/components/AnnouncementsCard.vue';
-  import HeroPage from '@/components/HeroPage.vue';
+  import HeroLayout from '@/components/layouts/HeroLayout.vue';
 
   export default {
     components: {
-      AboutCard,
       AnnouncementsCard,
-      HeroPage,
+      HeroLayout,
     },
     data() {
       return {
-        announcements: [
-          {
-            title: 'Announcement One',
-            subtitle: 'Subtitle',
-            img: '',
-          },
-          {
-            title: 'Announcement Two',
-            subtitle: 'Subtitle',
-            img: '',
-          },
-          {
-            title: 'Announcement Three',
-            subtitle: 'Subtitle',
-            img: '',
-          },
-        ],
+        aboutText: this.$store.state.index.aboutText,
       };
+    },
+    computed: {
+      announcements() {
+        return this.$store.state.news;
+      },
     },
     head() {
       return {
@@ -48,7 +42,7 @@
           {
             hid: 'description',
             name: 'description',
-            content: 'My custom description',
+            content: 'QMO Lab @ UCR',
           },
           {
             hid: 'keywords',

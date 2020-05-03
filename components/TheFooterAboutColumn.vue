@@ -21,14 +21,37 @@
       </v-row>
     </v-col>
     <v-col cols="12" sm="3" class="socialIcons">
-      <v-btn fab small color="secondary"><v-icon>mdi-twitter</v-icon></v-btn>
-      <v-btn fab small color="#c4302b"><v-icon>mdi-youtube</v-icon></v-btn>
-      <v-btn fab small><v-icon>mdi-github</v-icon></v-btn>
+      <v-btn fab small color="#08a0e9" aria-label="Follow us on Twitter">
+        <v-icon>{{ twitterIcon }}</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        small
+        color="#c4302b"
+        aria-label="Check out our Youtube Channel"
+      >
+        <v-icon>{{ youtubeIcon }}</v-icon>
+      </v-btn>
+      <v-btn fab small color="#211F1F" aria-label="Lab Software Repository">
+        <v-icon>{{ gitHubIcon }}</v-icon>
+      </v-btn>
     </v-col>
   </v-row>
 </template>
 
-<script></script>
+<script>
+  import { mdiTwitter, mdiYoutube, mdiGithub } from '@mdi/js';
+  export default {
+    name: 'TheFooterAboutColumn',
+    data() {
+      return {
+        twitterIcon: mdiTwitter,
+        youtubeIcon: mdiYoutube,
+        gitHubIcon: mdiGithub,
+      };
+    },
+  };
+</script>
 
 <style scoped lang="scss">
   .footerAbout {

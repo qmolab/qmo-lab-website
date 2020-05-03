@@ -1,5 +1,45 @@
 <template>
-  <v-container class="newsPage">
-    <h1>This is a News Archive page</h1>
-  </v-container>
+  <HeroLayout class="newsPage">
+    <AnnouncementsCard
+      :announcements="announcements"
+      title="QMO LAB NEWS"
+      text="For More QMO Lab Highlights, Please See Our Publications or Research Pages."
+      button2-text="Research"
+      button2-target="/research"
+    />
+  </HeroLayout>
 </template>
+
+<script>
+  import AnnouncementsCard from '@/components/AnnouncementsCard.vue';
+  import HeroLayout from '@/components/layouts/HeroLayout.vue';
+
+  export default {
+    components: {
+      AnnouncementsCard,
+      HeroLayout,
+    },
+    computed: {
+      announcements() {
+        return this.$store.state.news;
+      },
+    },
+    head() {
+      return {
+        title: 'News',
+        meta: [
+          {
+            hid: 'description',
+            name: 'description',
+            content: 'QMO Lab News and Announcements',
+          },
+          {
+            hid: 'keywords',
+            name: 'keywords',
+            content: 'QMO',
+          },
+        ],
+      };
+    },
+  };
+</script>

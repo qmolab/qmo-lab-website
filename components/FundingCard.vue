@@ -13,7 +13,7 @@
         <v-col v-for="(fundingSource, n) in images" :key="n" :cols="colSpan">
           <BaseImage
             :src="fundingSource.src"
-            :lazy-src="fundingSource.lazy"
+            :webp="fundingSource.webp"
             :alt="fundingSource.alt"
             :title="fundingSource.title"
             :max-height="maxHeight"
@@ -85,26 +85,26 @@
         dummy: 0,
         images: [
           {
-            src: require('~/assets/images/funding_logos/NSF_logo.png?resize&quality=55&format=png&size=300'),
-            lazy: require('~/assets/images/funding_logos/NSF_logo.png?lqip'),
+            src: require('~/assets/images/funding_logos/NSF_logo.png?resize&format=png'),
+            webp: require('~/assets/images/funding_logos/NSF_logo.png?webp'),
             alt: 'NSF Logo',
             title: 'The National Science Foundation',
           },
           {
-            src: require('~/assets/images/funding_logos/CIFAR_logo.png?resize&quality=55&format=png&size=300'),
-            lazy: require('~/assets/images/funding_logos/CIFAR_logo.png?lqip'),
+            src: require('~/assets/images/funding_logos/CIFAR_logo.png?resize&format=png'),
+            webp: require('~/assets/images/funding_logos/CIFAR_logo.png?webp'),
             alt: 'CIFAR Logo',
             title: 'Canadian Institute for the Advanced Research',
           },
           {
-            src: require('~/assets/images/funding_logos/SHINES_logo.png?resize&quality=55&format=png&size=300'),
-            lazy: require('~/assets/images/funding_logos/SHINES_logo.png?lqip'),
+            src: require('~/assets/images/funding_logos/SHINES_logo.png?resize&format=png'),
+            webp: require('~/assets/images/funding_logos/SHINES_logo.png?webp'),
             alt: 'SHINES Logo',
             title: 'Spin and Heat in Nanoscale Electronic Systems',
           },
           {
-            src: require('~/assets/images/funding_logos/RCSA_logo.png?resize&quality=55&format=png&size=300'),
-            lazy: require('~/assets/images/funding_logos/RCSA_logo.png?lqip'),
+            src: require('~/assets/images/funding_logos/RCSA_logo.png?resize&format=png'),
+            webp: require('~/assets/images/funding_logos/RCSA_logo.png?webp'),
             alt: 'RCSA Logo',
             title: 'Research Corporation for Science Advancement',
           },
