@@ -8,13 +8,10 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "gen": "nuxt generate",
-    "deploy": "deploy.bat",
+    "gen": "nuxt generate && serve dist",
+    "deploy": "nuxt generate && deploy.bat",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "test": "jest",
-    "webpack-defaults": "webpack-defaults"
+    "test": "jest"
   },
   "dependencies": {
     "nuxt": "^2.0.0"

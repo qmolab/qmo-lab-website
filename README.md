@@ -1,6 +1,6 @@
-# qmolab
+# QMOLab
 
-> QMO Lab Website (alpha)
+> QMO Lab Website (pre-alpha)
 
 ## By David J. Mayes
 
@@ -13,12 +13,21 @@ $ npm install
 # serve with hot reload at localhost:3000
 $ npm run dev
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+# run eslint
+# Note: You should use editor extensions to lint as you work
+$ npm run lint
 
-# generate static project
-$ npm run generate
+# use jest.js to test javascript
+$ npm run test
+
+# generate project locally and serve on localhost:5000
+$ npm run gen
+
+# deploy website
+$ npm run deploy
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+This website is built with Vue and Nuxt.js. Check out [Nuxt.js docs](https://nuxtjs.org).
+This website uses Vuetify extensively. Check out [Vuetify docs](https://vuetifyjs.com/).
+
+This repository does not contain deployment or service worker scripts.

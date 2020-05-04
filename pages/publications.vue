@@ -8,6 +8,7 @@
       :resizable="true"
       :items="mainItems"
       :delay="150"
+      :xl="3"
     >
       <PublicationCard :publication="item" />
     </waterfall>
@@ -21,9 +22,6 @@
         :resizable="true"
         :items="additionalItems"
         :delay="0"
-        :cols="1"
-        :sm="2"
-        :md="2"
         :lg="2"
         :xl="2"
       >

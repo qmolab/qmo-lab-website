@@ -8,6 +8,7 @@
       :resizable="true"
       :items="mainItems"
       :delay="150"
+      :xl="3"
     >
       <ResearchCard :research="item" />
     </waterfall>

@@ -145,14 +145,14 @@ export default {
    */
   optimizedImages: {
     /* optimized Images options */
-    inlineImageLimit: 100,
+    inlineImageLimit: 500,
     responsive: {
       size: 300,
       sizes: [200, 300],
       format: 'jpg',
       quality: imageQuality,
       placeholder: true,
-      placeholderSize: 10,
+      placeholderSize: 7,
     },
     webp: {
       preset: 'default',
