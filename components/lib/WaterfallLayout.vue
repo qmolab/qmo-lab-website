@@ -50,6 +50,7 @@
           child.className += ' loaded';
         }, i * this.delay);
       });
+      this.grid.style.opacity = '1';
       setTimeout(() => {
         this.finish();
         this.loaded = 'loaded';
@@ -111,6 +112,7 @@
     margin: auto;
     position: relative;
     height: 100vh;
+    opacity: 0;
   }
   .waterfall-item {
     opacity: 0;
