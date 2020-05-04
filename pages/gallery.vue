@@ -1,9 +1,9 @@
 <template>
   <v-container class="galleryPage">
-    <h2 class="title">{{ videoGalleryTitle }}</h2>
-    <VideoGallery :videos="videoGalleryVideoIds" />
-    <h2 class="title">{{ imageGalleryTitle }}</h2>
-    <ImageGallery :gallery-images="imageGalleryImages" />
+    <h2 class="title">QMO YouTube Channel</h2>
+    <VideoGallery />
+    <h2 class="title">QMO Lab Gallery</h2>
+    <ImageGallery />
   </v-container>
 </template>
 
@@ -16,20 +16,6 @@
     components: {
       VideoGallery,
       ImageGallery,
-    },
-    computed: {
-      videoGalleryVideoIds() {
-        return this.$store.state.gallery.videoGalleryVideoIds;
-      },
-      imageGalleryImages() {
-        return this.$store.state.gallery.imageGalleryImages;
-      },
-      videoGalleryTitle() {
-        return this.$store.state.gallery.videoGalleryTitle;
-      },
-      imageGalleryTitle() {
-        return this.$store.state.gallery.imageGalleryTitle;
-      },
     },
   };
 </script>

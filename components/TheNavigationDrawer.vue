@@ -1,34 +1,32 @@
 <template>
-  <div>
-    <v-list-item>
-      <v-img
-        :src="require('~/assets/images/logo_transparent.svg')"
-        alt="test"
-      />
-    </v-list-item>
+  <v-list nav dens>
+    <v-list-item><QmoLogo /></v-list-item>
     <v-divider />
-    <NavigationLinkList :links="navLinks" />
-  </div>
+    <v-list-item
+      v-for="link in navLinks"
+      :key="link.title"
+      color="primary"
+      :to="link.to"
+      nuxt
+      dens
+    >
+      <v-list-item-icon>
+        <v-icon>{{ link.icon }}</v-icon>
+      </v-list-item-icon>
+      <v-list-item-title>{{ link.title }}</v-list-item-title>
+    </v-list-item>
+  </v-list>
 </template>
 
 <script>
-  import NavigationLinkList from '@/components/NavigationLinkList.vue';
-
+  import QmoLogo from '@/components/QmoLogo.vue';
   export default {
     name: 'TheNavigationDrawer',
-    components: {
-      NavigationLinkList,
-    },
+    components: { QmoLogo },
     props: {},
     computed: {
       navLinks() {
-        if (this.$route.path.match('/research')) {
-          return this.$store.state.navLinks.main.concat(
-            this.$store.state.navLinks.research
-          );
-        } else {
-          return this.$store.state.navLinks.main;
-        }
+        return this.$store.state.navLinks.main;
       },
     },
   };

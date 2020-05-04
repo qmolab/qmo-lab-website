@@ -1,22 +1,18 @@
 <template>
-  <div :style="containerStyle">
-    <div class="youtube" @click="start">
-      <div v-if="!isLoaded">
-        <v-img :src="thumbSource" :height="height" :width="width">
-          <v-icon :size="width / 8" class="mdiYoutube">
-            {{ mdiYoutube }}
-          </v-icon>
-        </v-img>
-      </div>
-      <iframe
-        v-else
-        frameborder="0"
-        allow="encrypted-media"
-        allowfullscreen=""
-        :src="videoSource"
-        class="frame"
-      />
-    </div>
+  <div class="youtube" @click="start">
+    <v-img v-if="!isLoaded" :src="thumbSource">
+      <v-icon class="mdiYoutube">
+        {{ mdiYoutube }}
+      </v-icon>
+    </v-img>
+    <iframe
+      v-else
+      frameborder="0"
+      allow="encrypted-media"
+      allowfullscreen=""
+      :src="videoSource"
+      class="frame"
+    />
   </div>
 </template>
 
@@ -28,14 +24,6 @@
         type: String,
         required: true,
       },
-      height: {
-        type: Number,
-        default: 360,
-      },
-      width: {
-        type: Number,
-        default: 640,
-      },
     },
     data() {
       return {
@@ -44,15 +32,6 @@
       };
     },
     computed: {
-      containerStyle() {
-        return (
-          'height:' +
-          this.height.toString() +
-          'px;max-width:' +
-          this.width.toString() +
-          'px;margin:auto;'
-        );
-      },
       videoSource() {
         if (this.videoId.length === 0) return '';
         else

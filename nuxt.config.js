@@ -51,7 +51,7 @@ export default {
     ],
   },
   router: {
-    base: process.env.NODE_ENV === 'dev' ? '/' : '/node/',
+    base: process.env.NODE_ENV !== 'production' ? '/' : '/node/',
   },
   /*
    ** Customize the progress-bar color
@@ -145,18 +145,19 @@ export default {
    */
   optimizedImages: {
     /* optimized Images options */
+    inlineImageLimit: 100,
     responsive: {
       size: 300,
       sizes: [200, 300],
       format: 'jpg',
       quality: imageQuality,
       placeholder: true,
-      placeholderSize: 20,
+      placeholderSize: 10,
     },
     webp: {
       preset: 'default',
       quality: imageQuality,
-      size: 50000,
+      size: 15000,
     },
     pngquant: [0.3, 0.5],
   },
@@ -189,7 +190,9 @@ export default {
      ** workbox module configuration
      ** https://pwa.nuxtjs.org/modules/workbox.html#options
      */
-    workbox: false,
+    workbox: {
+      /* Workbox options */
+    },
     /*
      ** meta module configuration
      ** https://pwa.nuxtjs.org/modules/meta.html#options
@@ -222,7 +225,7 @@ export default {
    */
   sitemap: {
     // sitemap configuration
-    hostname: 'http://localhost:5000/',
+    hostname: 'https://qmolab.ucr.edu/node/',
   },
   /*
    ** Build configuration

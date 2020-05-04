@@ -17,18 +17,24 @@
     </v-col>
     <v-spacer class="hidden-sm-and-down" />
     <v-col sm="auto" class="hidden-sm-and-down fill-height headerCol">
-      <NavigationLinkStrip :links="navLinks" />
+      <nav class="nav">
+        <NavigationLink
+          v-for="link in navLinks"
+          :key="link.title"
+          :link="link"
+        />
+      </nav>
     </v-col>
   </v-row>
 </template>
 
 <script>
   import { mdiMenu } from '@mdi/js';
-  import NavigationLinkStrip from '@/components/NavigationLinkStrip.vue';
+  import NavigationLink from '@/components/NavigationLink.vue';
   export default {
     name: 'TheHeader',
     components: {
-      NavigationLinkStrip,
+      NavigationLink,
     },
     props: {},
     data() {
@@ -72,5 +78,11 @@
     @media #{map-get($display-breakpoints, 'md-and-down')} {
       margin-top: 4px;
     }
+  }
+  .nav {
+    display: flex;
+    float: left;
+    height: 100%;
+    margin-bottom: -8px;
   }
 </style>
