@@ -56,10 +56,10 @@
       AnnouncementsCard,
       HeroLayout,
     },
-    computed: {
-      announcements() {
-        return this.$store.state.news;
-      },
+    asyncData({ store }) {
+      return {
+        announcements: store.state.news,
+      };
     },
     head() {
       return {

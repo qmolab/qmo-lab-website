@@ -23,10 +23,10 @@
       ResearchCard,
       Waterfall,
     },
-    computed: {
-      mainItems() {
-        return this.$store.state.research;
-      },
+    asyncData({ store }) {
+      return {
+        mainItems: store.state.research,
+      };
     },
   };
 </script>

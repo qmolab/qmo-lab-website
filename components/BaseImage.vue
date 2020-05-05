@@ -66,6 +66,12 @@
       link: { type: Boolean, default: false },
       disabled: { type: Boolean, default: false },
     },
+    asyncData({ store }) {
+      return {
+        eagerSetting: store.state.eager,
+        transitionSetting: store.state.imageTransition,
+      };
+    },
     data() {
       return { aspectRatioChecked: 0 };
     },
@@ -93,14 +99,6 @@
             ? undefined
             : this.src.placeholder || this.src.lazySrc)
         );
-      },
-      eagerSetting() {
-        // eager: { type: Boolean, default: false },
-        return this.$store.state.eager;
-      },
-      transitionSetting() {
-        // transition: { type: [Boolean, String], default: 'fade-transition' }
-        return this.$store.state.imageTransition;
       },
     },
     mounted() {

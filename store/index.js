@@ -5,8 +5,9 @@ import {
   mdiAtomVariant,
   mdiCameraIris,
   mdiLink,
+  mdiNewspaper,
 } from '@mdi/js';
-import customRoutes from '~/assets/customRoutes';
+import customRoutes from '~/assets/script/customRoutes';
 
 export const state = () => ({
   theme: 'dark',
@@ -47,7 +48,7 @@ export const state = () => ({
     ],
     hidden: [
       {
-        icon: 'mdi-microscope',
+        icon: mdiNewspaper,
         title: 'News Archive',
         to: '/news/',
       },
@@ -435,7 +436,7 @@ export const state = () => ({
     {
       title: 'Quantum photocells for next generation solar energy harvesting',
       subtitle: ``,
-      dscription: `In semiconductor photovoltaics, photoconversion efficiency is governed by a simple competition: the incident photon energy is either transferred to the crystal lattice (heat) or transferred to electrons. Quantum electronic systems promise to tip the balance in this competition by simultaneously limiting energy transfer to the lattice and enhancing energy transfer to electrons. The QMO lab explores new materials that provide the means to surpass the standard limit for photoconversion efficiency.`,
+      description: `In semiconductor photovoltaics, photoconversion efficiency is governed by a simple competition: the incident photon energy is either transferred to the crystal lattice (heat) or transferred to electrons. Quantum electronic systems promise to tip the balance in this competition by simultaneously limiting energy transfer to the lattice and enhancing energy transfer to electrons. The QMO lab explores new materials that provide the means to surpass the standard limit for photoconversion efficiency.`,
       img: require('~/assets/images/research/R1.jpg?resize'),
       webp: require('~/assets/images/research/R1.jpg?webp'),
     },
@@ -443,28 +444,28 @@ export const state = () => ({
       title:
         'Magneto-electronic photocurrent and photoluminescence of graphene',
       subtitle: ``,
-      dscription: `It has now been well established that graphene, the prototypical 2D electronic material, exhibits novel electronic and optical behavior, yet the intrinsic photoresponse is still under considerable investigation. Recent work has shown that graphene's photoresponse is mediated by hot electronic carriers, which require long time scales to cool, thus resulting in an unusual transport regime. The QMO lab continues to explore various aspects of this transport regime.`,
+      description: `It has now been well established that graphene, the prototypical 2D electronic material, exhibits novel electronic and optical behavior, yet the intrinsic photoresponse is still under considerable investigation. Recent work has shown that graphene's photoresponse is mediated by hot electronic carriers, which require long time scales to cool, thus resulting in an unusual transport regime. The QMO lab continues to explore various aspects of this transport regime.`,
       img: require('~/assets/images/research/R3.jpg?resize'),
       webp: require('~/assets/images/research/R3.jpg?webp'),
     },
     {
       title: 'Ultrafast spatio-temporal probes of atomic layer semiconductors',
       subtitle: ``,
-      dscription: `Using ultrafast photocurrent and luminescence spectroscopy, the QMO lab explores the fundamental spin, valley, and charge degrees of freedom accessible in the atomic layer semiconductors. By incorporating spatially scanned laser excitation, spatio-temporal optoelectronic measurements will be utilized to prepare and probe optically induced transient exciton populations.`,
+      description: `Using ultrafast photocurrent and luminescence spectroscopy, the QMO lab explores the fundamental spin, valley, and charge degrees of freedom accessible in the atomic layer semiconductors. By incorporating spatially scanned laser excitation, spatio-temporal optoelectronic measurements will be utilized to prepare and probe optically induced transient exciton populations.`,
       img: require('~/assets/images/research/R2.jpg?resize'),
       webp: require('~/assets/images/research/R2.jpg?webp'),
     },
     {
       title: 'Development and design of novel nanospectroscopy techniques',
       subtitle: ``,
-      dscription: `The QMO lab is very active in the area of precision optoelectronic measurements of nanoscale devices and the development of spatially and spectrally resolved optoelectronic techniques. We are currently developing ultrafast optical techniques to probe fundamental electronic behavior of quantum-confined materials such as graphene, hexagonal boron nitride, and the transition metal dichalcogenides.`,
+      description: `The QMO lab is very active in the area of precision optoelectronic measurements of nanoscale devices and the development of spatially and spectrally resolved optoelectronic techniques. We are currently developing ultrafast optical techniques to probe fundamental electronic behavior of quantum-confined materials such as graphene, hexagonal boron nitride, and the transition metal dichalcogenides.`,
       img: require('~/assets/images/research/R4.jpg?resize'),
       webp: require('~/assets/images/research/R4.jpg?webp'),
     },
     {
       title: 'Carrier Multiplication',
       subtitle: `By Fatemeh Barati`,
-      dscription: `Carrier multiplication is a phenomenon in which a single, high-energy excited electron can promote multiple additional electrons into the conduction band of a semiconductor. In conventional photocells, an absorbed photon can only excite one electron. However, by utilizing the flexibility afforded by atomic layer materials, we can engineer electronic energy scales that allow carrier multiplication to take place.`,
+      description: `Carrier multiplication is a phenomenon in which a single, high-energy excited electron can promote multiple additional electrons into the conduction band of a semiconductor. In conventional photocells, an absorbed photon can only excite one electron. However, by utilizing the flexibility afforded by atomic layer materials, we can engineer electronic energy scales that allow carrier multiplication to take place.`,
       img: 0,
       paragraphs: [
         `Carrier multiplication is a phenomenon in which a single, high-energy excited electron can promote multiple additional electrons into the conduction band of a semiconductor. In conventional photocells, an absorbed photon can only excite one electron. However, by utilizing the flexibility afforded by atomic layer materials, we can engineer electronic energy scales that allow carrier multiplication to take place.`,
@@ -492,7 +493,7 @@ export const state = () => ({
     {
       title: 'Electron-Hole Condensation',
       subtitle: `By Dennis Pleskot`,
-      dscription: `Electrons are crucial to the modern world. They power our computers, cell phones, and almost everything else we encounter in our daily lives. The physics of electrons have been extensively studied since their discovery, but never before has there been a better opportunity to observe the quantum properties of electrons than in atomic layer materials (ALMs). ALMs are materials that are bound together by strong covalent bonds within a plane and weak van der Waals forces out of the plane, allowing them to be separated into sheets that are only a few atoms thick. Due to their very nature, these materials confine the motion of electrons, allowing for the observation of novel electronic phenomena. One such phenomenon is the condensation of electrons and holes from a non-interacting gas phase to a highly interacting liquid phase. Our group has extensively studied the properties of this condensate in atomically thin MoTe<sub>2</sub>.`,
+      description: `Electrons are crucial to the modern world. They power our computers, cell phones, and almost everything else we encounter in our daily lives. The physics of electrons have been extensively studied since their discovery, but never before has there been a better opportunity to observe the quantum properties of electrons than in atomic layer materials (ALMs). ALMs are materials that are bound together by strong covalent bonds within a plane and weak van der Waals forces out of the plane, allowing them to be separated into sheets that are only a few atoms thick. Due to their very nature, these materials confine the motion of electrons, allowing for the observation of novel electronic phenomena. One such phenomenon is the condensation of electrons and holes from a non-interacting gas phase to a highly interacting liquid phase. Our group has extensively studied the properties of this condensate in atomically thin MoTe<sub>2</sub>.`,
       img: 1,
       paragraphs: [
         `Electrons are crucial to the modern world. They power our computers, cell phones, and almost everything else we encounter in our daily lives. The physics of electrons have been extensively studied since their discovery, but never before has there been a better opportunity to observe the quantum properties of electrons than in atomic layer materials (ALMs). ALMs are materials that are bound together by strong covalent bonds within a plane and weak van der Waals forces out of the plane, allowing them to be separated into sheets that are only a few atoms thick. Due to their very nature, these materials confine the motion of electrons, allowing for the observation of novel electronic phenomena. One such phenomenon is the condensation of electrons and holes from a non-interacting gas phase to a highly interacting liquid phase. Our group has extensively studied the properties of this condensate in atomically thin MoTe<sub>2</sub>.`,

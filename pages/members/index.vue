@@ -53,6 +53,12 @@
     components: {
       MemberCard,
     },
+    asyncData({ store }) {
+      return {
+        nathanProfile: store.state.members.nathanProfile,
+        members: store.state.members.members,
+      };
+    },
     data() {
       return {
         currentSwitch: true,
@@ -60,12 +66,6 @@
       };
     },
     computed: {
-      nathanProfile() {
-        return this.$store.state.members.nathanProfile;
-      },
-      members() {
-        return this.$store.state.members.members;
-      },
       switchLabel() {
         return (this.currentSwitch ? 'Current' : 'Former') + ' Student Members';
       },

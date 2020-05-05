@@ -94,3 +94,5 @@ sw.*
 
 # deploy
 *deploy*
+
+.htaccess

@@ -1,5 +1,5 @@
 // import colors from 'vuetify/es5/util/colors';
-
+import customRoutes from './assets/script/customRoutes';
 const modules = [];
 let modern = false;
 if (process.env.NODE_ENV === 'production') {
@@ -249,5 +249,20 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {},
+  },
+
+  generate: {
+    routes() {
+      const routes = [];
+      for (const [k, v] of Object.entries(customRoutes)) {
+        v.forEach((vv) => {
+          routes.push({
+            type: k,
+            route: vv.to,
+          });
+        });
+      }
+      return routes;
+    },
   },
 };

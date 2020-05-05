@@ -44,9 +44,9 @@
       announcements: { type: Array, required: true },
       maxItems: { type: Number, default: undefined },
       button1Text: { type: String, default: 'Publications' },
-      button1Target: { type: String, default: '/publications' },
+      button1Target: { type: String, default: '/publications/' },
       button2Text: { type: String, default: 'News Archive' },
-      button2Target: { type: String, default: '/news' },
+      button2Target: { type: String, default: '/news/' },
     },
     computed: {
       announcementsChecked() {

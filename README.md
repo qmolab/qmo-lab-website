@@ -25,6 +25,12 @@ $ npm run gen
 
 # deploy website
 $ npm run deploy
+
+# deploy website without regenerating
+$ npm run deployNoBuild
+
+# serve generated site on localhost
+$ npm run serve
 ```
 
 This website is built with Vue and Nuxt.js. Check out [Nuxt.js docs](https://nuxtjs.org).

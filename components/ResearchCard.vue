@@ -11,9 +11,13 @@
     />
     <v-card-title v-html="research.title" />
     <v-card-subtitle v-html="research.subtitle" />
-    <v-card-text v-html="research.dscription" />
+    <v-card-text v-html="research.description" />
     <v-card-actions v-if="research.paragraphs">
-      <v-btn text :to="`/research/${research.title.replace(/ /g, '')}`">
+      <v-btn
+        nuxg
+        text
+        :to="`/research/${research.title.replace(/ /g, '_').toLowerCase()}/`"
+      >
         Read more
         <v-icon right color="secondary">{{ openInNewIcon }}</v-icon>
       </v-btn>
