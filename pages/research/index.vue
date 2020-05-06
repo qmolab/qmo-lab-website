@@ -8,7 +8,10 @@
       :resizable="true"
       :items="mainItems"
       :delay="150"
-      :xl="3"
+      :sm="2"
+      :md="1"
+      :lg="2"
+      :xl="2"
     >
       <ResearchCard :research="item" />
     </waterfall>
@@ -25,7 +28,7 @@
     },
     asyncData({ store }) {
       return {
-        mainItems: store.state.research,
+        mainItems: store.state.research.topics,
       };
     },
   };

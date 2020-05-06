@@ -15,6 +15,7 @@
           alt="video alt"
           title="video title"
           class="videoGalleryVideoCard"
+          :aspect-ratio="16 / 9"
           :disabled="video === currentVideoID"
           :link="video !== currentVideoID"
           @click="currentVideoID = video"
@@ -69,26 +70,22 @@
 </script>
 
 <style scoped lang="scss">
-  $videoPlayerHeight: 640px !default;
-  $videoPlayerWidth: 360px !default;
+  $videoPlayerHeight: 360px !default;
+  $videoPlayerWidth: 640px !default;
   .videoGallery {
     max-width: 1280px;
     margin: auto;
     padding: 12px;
   }
   .videoGalleryPlayerContainer {
-    text-align: center;
+    margin: auto;
     height: 0;
     width: $videoPlayerWidth;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: height 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
     &.activated {
       height: $videoPlayerHeight;
-    }
-    .videoGalleryPlayer {
-      display: inline-block;
-      border-radius: 4px;
-      overflow: hidden;
-      height: $videoPlayerHeight;
-      width: $videoPlayerWidth;
     }
   }
   .videoGalleryVideoCard {
@@ -102,12 +99,5 @@
       color: $youtube-red;
       opacity: 1;
     }
-    .videoGalleryVideoImage {
-      border-radius: 4px;
-    }
-  }
-  .videoPlayer {
-    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
-    position: relative;
   }
 </style>

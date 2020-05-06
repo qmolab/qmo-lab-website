@@ -1,18 +1,20 @@
 <template>
   <div class="youtube" @click="start">
-    <v-img v-if="!isLoaded" :src="thumbSource">
-      <v-icon class="mdiYoutube">
-        {{ mdiYoutube }}
-      </v-icon>
-    </v-img>
-    <iframe
-      v-else
-      frameborder="0"
-      allow="encrypted-media"
-      allowfullscreen=""
-      :src="videoSource"
-      class="frame"
-    />
+    <v-fade-transition>
+      <v-img v-if="!isLoaded" :src="thumbSource" :aspect-ratio="16 / 9">
+        <v-icon class="mdiYoutube" :size="48">
+          {{ mdiYoutube }}
+        </v-icon>
+      </v-img>
+      <iframe
+        v-else
+        frameborder="0"
+        allow="encrypted-media"
+        allowfullscreen=""
+        :src="videoSource"
+        class="frame"
+      />
+    </v-fade-transition>
   </div>
 </template>
 
@@ -59,6 +61,7 @@
 
 <style scoped lang="scss">
   .youtube {
+    width: 100%;
     height: 100%;
     border-radius: 4px;
     overflow: hidden;

@@ -95,4 +95,8 @@ sw.*
 # deploy
 *deploy*
 
-.htaccess
+# static is filled with site specific assets
+static
+
+# store is filled with site specific data
+store

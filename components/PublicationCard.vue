@@ -20,8 +20,8 @@
     >
       <div class="textOnImage subtitle-2">{{ publication.pubInfo }}</div>
     </BaseImage>
-    <v-card-title v-html="publication.title" />
-    <v-card-text v-html="publication.text" />
+    <v-card-title><DynamicHtml :html="publication.title" /></v-card-title>
+    <v-card-text><DynamicHtml :html="publication.text" /></v-card-text>
     <v-card-actions>
       <v-btn text>
         Share
@@ -38,9 +38,10 @@
 <script>
   import { mdiOpenInNew } from '@mdi/js';
   import BaseImage from '@/components/BaseImage.vue';
+  import DynamicHtml from '@/components/DynamicHtml.vue';
   export default {
     name: 'PublicationCard',
-    components: { BaseImage },
+    components: { BaseImage, DynamicHtml },
     props: {
       publication: {
         type: Object,

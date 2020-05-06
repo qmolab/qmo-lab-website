@@ -1,35 +1,29 @@
 <template>
   <v-card class="mx-auto" :max-width="768" :min-height="200">
-    <v-row no-gutters>
+    <v-card-title class="pb-0">
+      {{ fullName }}&nbsp;&nbsp;
+      <small>({{ byline }})</small>
+    </v-card-title>
+    <v-row no-gutters class="pa-4">
       <v-col :cols="12" :sm="6" :md="largePic ? 4 : 6">
         <BaseImage
-          class="align-end pa-2"
           :src="member.img"
           :webp="member.webp"
           :aspect-ratio="5 / 4"
           :alt="fullName"
           :title="shortName"
+          class="pb-2"
         />
       </v-col>
-      <v-col>
-        <v-card-title>{{ fullName }}</v-card-title>
-        <v-card-subtitle>{{ byline }}</v-card-subtitle>
-        <v-card-text v-if="largePic" class="mb-12">
-          Research: {{ member.focus }}
+      <v-col :cols="12" :sm="6" :md="largePic ? 8 : 6">
+        <v-card-text class="pa-0 pl-4">
+          Research: <span v-html="member.focus" />
         </v-card-text>
-        <v-card-actions v-if="largePic" style="position: absolute; bottom: 0;">
-          <v-btn text> Read more about {{ shortName }} </v-btn>
-        </v-card-actions>
       </v-col>
     </v-row>
-    <v-row v-if="!largePic" no-gutters>
-      <v-col>
-        <v-card-text>Research: {{ member.focus }}</v-card-text>
-        <v-card-actions>
-          <v-btn text> Read more about {{ shortName }} </v-btn>
-        </v-card-actions>
-      </v-col>
-    </v-row>
+    <v-card-actions v-if="!largePic">
+      <v-btn text> Read more about {{ shortName }} </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -39,13 +33,13 @@
     name: 'MemberCard',
     components: { BaseImage },
     props: {
-      member: {
-        type: Object,
-        required: true,
-      },
       largePic: {
         type: Boolean,
         default: false,
+      },
+      member: {
+        type: Object,
+        required: true,
       },
     },
     computed: {

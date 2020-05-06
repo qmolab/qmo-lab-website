@@ -7,11 +7,11 @@
       :eager="eagerSetting"
       :disabled="disabled"
     >
-      <template v-slot:activator="{ on }">
+      <template v-slot:activator="{ on, value }">
         <v-img
-          :src="sourceChecked"
-          :lazy-src="lazySrcChecked"
-          :srcset="srcsetChecked"
+          :src="hoverSource && value ? hoverSource : sourceChecked"
+          :lazy-src="hvrLazySrc && value ? hvrLazySrc : lazySrcChecked"
+          :srcset="hvrSourceSet && value ? hvrSourceSet : srcsetChecked"
           :eager="eagerSetting"
           :gradient="gradient"
           :alt="alt"
@@ -24,7 +24,7 @@
           :min-width="minWidth"
           :max-width="maxWidth"
           :options="{
-            threshold: 0.5,
+            threshold: 0.1,
           }"
           transition="fade-transition"
           v-on="on"
@@ -50,6 +50,10 @@
       webp: { type: [String, Object], default: undefined },
       lazySrc: { type: String, default: undefined },
       srcset: { type: String, default: undefined },
+      hoverSrc: { type: [String, Object], default: undefined },
+      hoverWebp: { type: [String, Object], default: undefined },
+      hoverLazySrc: { type: String, default: undefined },
+      hoverSrcset: { type: String, default: undefined },
       gradient: { type: String, default: undefined },
       alt: { type: String, default: undefined },
       title: { type: String, default: '' },
@@ -73,11 +77,16 @@
       };
     },
     data() {
-      return { aspectRatioChecked: 0 };
+      return { aspectRatioChecked: undefined };
     },
     computed: {
       sourceChecked() {
-        return typeof this.src === 'string' ? this.src : this.src.src;
+        return typeof this.hoverSrc === 'string' ? this.src : this.src.src;
+      },
+      hoverSource() {
+        return !this.hoverSrc || typeof this.hoverSrc === 'string'
+          ? this.hoverSrc
+          : this.hoverSrc.src;
       },
       srcsetChecked() {
         if (this.srcset) return this.srcset;
@@ -92,12 +101,33 @@
         }
         return undefined;
       },
+      hvrSourceSet() {
+        if (this.hoverSrcset) return this.hoverSrcset;
+        else if (this.hoverSrc && typeof this.hoverSrc !== 'string') {
+          let srcset = this.hoverSrc.srcSet || this.hoverSrc.srcset;
+          if (this.hoverWebp) {
+            if (this.hoverWebp.srcSet || this.hoverWebp.srcset)
+              srcset += ' ' + this.hoverWebp.srcSet || this.hoverWebp.srcset;
+            else srcset = this.hoverWebp;
+          }
+          return srcset;
+        }
+        return undefined;
+      },
       lazySrcChecked() {
         return (
           this.lazySrc ||
           (typeof this.src === 'string'
             ? undefined
             : this.src.placeholder || this.src.lazySrc)
+        );
+      },
+      hvrLazySrc() {
+        return (
+          this.hoverLazySrc ||
+          (!this.hoverSrc || typeof this.hoverSrc === 'string'
+            ? undefined
+            : this.hoverSrc.placeholder || this.hoverSrc.lazySrc)
         );
       },
     },

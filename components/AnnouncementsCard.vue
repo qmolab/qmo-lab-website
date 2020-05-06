@@ -10,7 +10,14 @@
     >
       <div style="display: flex; align-items: center;">
         <v-avatar :size="75">
-          <v-img :src="item.img" />
+          <BaseImage
+            :src="item.img"
+            :webp="item.webp"
+            :hover-src="item.hover"
+            :hover-webp="item.hoverWebp"
+            :width="75"
+            :height="75"
+          />
         </v-avatar>
         <div>
           <v-card-title>{{ item.title }}!</v-card-title>
@@ -27,17 +34,22 @@
       </v-btn>
       <v-btn v-if="button2Text" text :to="button2Target">
         {{ button2Text }}
+        <v-icon v-if="button2Icon" right color="secondary">
+          {{ button2Icon }}
+        </v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+  import { mdiNewspaperVariantMultiple } from '@mdi/js';
+  import BaseImage from '@/components/BaseImage.vue';
   // @ is an alias to /src
 
   export default {
     name: 'Home',
-    components: {},
+    components: { BaseImage },
     props: {
       title: { type: String, default: 'Announcements' },
       text: { type: String, default: '' },
@@ -47,6 +59,10 @@
       button1Target: { type: String, default: '/publications/' },
       button2Text: { type: String, default: 'News Archive' },
       button2Target: { type: String, default: '/news/' },
+      button2Icon: {
+        type: [String, Object],
+        default: mdiNewspaperVariantMultiple,
+      },
     },
     computed: {
       announcementsChecked() {

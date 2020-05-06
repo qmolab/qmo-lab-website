@@ -82,10 +82,10 @@
     },
     methods: {
       visible(member) {
-        member.visible =
+        const visible =
           member.current === this.currentSwitch &&
           (this.groupSelection === 0 || member.level & this.groupFlags);
-        return member.visible;
+        return visible;
       },
     },
   };

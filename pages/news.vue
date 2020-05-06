@@ -21,7 +21,7 @@
     },
     asyncData({ store }) {
       return {
-        announcements: store.state.news,
+        announcements: store.state.news.announcements,
       };
     },
     head() {

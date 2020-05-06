@@ -1,17 +1,26 @@
 <template>
   <v-card class="researchCard">
-    <BaseImage
-      v-if="imgSrc"
-      class="cardImage"
-      :src="imgSrc"
-      :webp="webpSrc"
-      :alt="research.alt"
-      :title="research.title"
-      :aspect-ratio="3 / 2"
-    />
-    <v-card-title v-html="research.title" />
-    <v-card-subtitle v-html="research.subtitle" />
-    <v-card-text v-html="research.description" />
+    <v-card-title class="pb-0">
+      <DynamicHtml :html="research.title" />
+    </v-card-title>
+    <v-row class="pa-4" dense>
+      <v-col :cols="12" :md="4" :lg="6">
+        <BaseImage
+          v-if="imgSrc"
+          class="cardImage pt-1"
+          :src="imgSrc"
+          :webp="webpSrc"
+          :alt="research.alt"
+          :title="research.title"
+          :aspect-ratio="3 / 2"
+        />
+      </v-col>
+      <v-col :cols="12" :md="8" :lg="6">
+        <p>
+          <DynamicHtml :html="research.description" />
+        </p>
+      </v-col>
+    </v-row>
     <v-card-actions v-if="research.paragraphs">
       <v-btn
         nuxg
@@ -28,9 +37,10 @@
 <script>
   import { mdiOpenInNew } from '@mdi/js';
   import BaseImage from '@/components/BaseImage.vue';
+  import DynamicHtml from '@/components/DynamicHtml.vue';
   export default {
     name: 'ResearchCard',
-    components: { BaseImage },
+    components: { BaseImage, DynamicHtml },
     props: { research: { type: [Object, Array], required: true } },
     data() {
       return {
