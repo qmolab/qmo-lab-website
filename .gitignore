@@ -100,3 +100,6 @@ static
 
 # store is filled with site specific data
 store
+
+# assets/ images is filled with site specific assets
+assets/images/
