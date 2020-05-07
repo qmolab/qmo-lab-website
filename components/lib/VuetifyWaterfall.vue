@@ -39,15 +39,15 @@
       numCols() {
         switch (this.$vuetify.breakpoint.name) {
           case 'sm':
-            return Math.floor(this.sm);
+            return this.sm;
           case 'md':
-            return Math.floor(this.md);
+            return this.md;
           case 'lg':
-            return Math.floor(this.lg);
+            return this.lg;
           case 'xl':
-            return Math.floor(this.xl);
+            return this.xl;
         }
-        return Math.floor(this.cols);
+        return this.cols;
       },
     },
   };

@@ -225,7 +225,7 @@ export default {
    */
   sitemap: {
     // sitemap configuration
-    hostname: 'https://qmolab.ucr.edu/node/',
+    hostname: 'https://qmolab.ucr.edu/',
   },
   /*
    ** Build configuration

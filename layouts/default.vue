@@ -8,7 +8,7 @@
     >
       <TheNavigationDrawer />
     </v-navigation-drawer>
-    <v-app-bar hide-on-scroll app>
+    <v-app-bar hide-on-scroll app :scroll-threshold="64">
       <TheHeader @toggle-drawer="drawer = !drawer" />
     </v-app-bar>
     <v-content>

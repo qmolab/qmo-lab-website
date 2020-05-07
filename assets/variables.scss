@@ -20,8 +20,8 @@ $material-dark: (
   ),
   'app-bar': lighten($black,3%),
   'background': $black,
-  'surface': rgba(255,255,255,0.02),
-  'cards': rgba(255,255,255,0.02),
+  'surface': lighten($black,2%),
+  'cards': lighten($black,2%),
   'chips': #555,
   'dividers': rgba($white, 0.12),
   'text': (

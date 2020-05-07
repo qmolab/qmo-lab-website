@@ -1,13 +1,47 @@
 <template>
-  <v-container class="researchPage">
-    <h1>This is the research poster page</h1>
+  <v-container class="researchPosterPage">
+    <BreadCrumb />
+    <h1>QMO Lab Posters</h1>
+    <waterfall
+      id="posterWaterfall"
+      v-slot="{ item }"
+      container-id="posterWaterfall"
+      :resizable="true"
+      :items="posters"
+      :delay="150"
+      :xl="3"
+    >
+      <v-card>
+        <v-card-title>{{ item.title }}</v-card-title>
+        <v-card-subtitle>{{ item.authors }}</v-card-subtitle>
+        <v-card-text>
+          <DynamicHtml :html="item.discussion" />
+        </v-card-text>
+        <v-card-actions>
+          <v-btn text :href="item.ppt" class="hide-sm-and-down">
+            Download PPT
+            <v-icon right>{{ mdiDownload }}</v-icon>
+          </v-btn>
+          <v-btn text :href="item.pdf">
+            Download PDF
+            <v-icon right>{{ mdiDownload }}</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </waterfall>
   </v-container>
 </template>
 
 <script>
+  import { mdiDownload } from '@mdi/js';
+  import BreadCrumb from '@/components/lib/BreadCrumb.vue';
+  import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
+  import DynamicHtml from '@/components/DynamicHtml.vue';
   export default {
+    components: { BreadCrumb, Waterfall, DynamicHtml },
     data() {
       return {
+        mdiDownload,
         posters: [
           {
             name: 'SHINES',
@@ -31,8 +65,8 @@
               dependence, all of which support hot electron relaxation as the
               interlayer exciton generation mechanism.
             `,
-            pdf: '/posters/SHINES.pdf',
-            ppt: '/posters/SHINES.pptx',
+            pdf: '/node/assets/posters/SHINES.pdf',
+            ppt: '/node/assets/posters/SHINES.pptx',
           },
           {
             name: 'CAMP',
@@ -60,8 +94,8 @@
               graphene. After heterostructure assembly, resultant structures
               are analyzed by measuring optical and optoelectronic response.
             `,
-            pdf: '/posters/CAMP.pdf',
-            ppt: '/posters/CAMP.ppt',
+            pdf: '/node/assets/posters/CAMP.pdf',
+            ppt: '/node/assets/posters/CAMP.ppt',
           },
         ],
       };

@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <BreadCrumb />
     <div v-if="topic" class="researchPage">
       <h1>{{ topic.title }}</h1>
       <h2>{{ topic.subtitle }}</h2>
@@ -10,7 +11,7 @@
           class="pr-4"
           :style="item.paragraph ? '' : 'float: left;'"
         >
-          <p v-if="item.paragraph" v-html="item.paragraph" />
+          <p v-if="item.paragraph"><DynamicHtml :html="item.paragraph" /></p>
           <BaseImage
             v-else
             :src="item.img"
@@ -21,7 +22,7 @@
           />
         </div>
       </div>
-      <div v-else v-html="topic.description" />
+      <div v-else><DynamicHtml :html="topic.description" /></div>
       <div v-if="topic.youtube" class="videoPlayerContainer mt-4">
         <YoutubeEmbed :video-id="topic.youtube" />
       </div>
@@ -34,11 +35,13 @@
 </template>
 
 <script>
+  import BreadCrumb from '@/components/lib/BreadCrumb.vue';
   import BaseImage from '@/components/BaseImage.vue';
   import YoutubeEmbed from '@/components/lib/YoutubeEmbed.vue';
+  import DynamicHtml from '@/components/DynamicHtml.vue';
 
   export default {
-    components: { YoutubeEmbed, BaseImage },
+    components: { BreadCrumb, DynamicHtml, YoutubeEmbed, BaseImage },
     asyncData({ params, error, payload, store }) {
       let topic = {};
       if (payload) return { id: params.id, topic: payload };
@@ -80,5 +83,6 @@
     width: $videoPlayerWidth;
     height: $videoPlayerHeight;
     border-radius: 4px;
+    max-width: 100%;
   }
 </style>

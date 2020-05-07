@@ -17,21 +17,41 @@
       </v-col>
       <v-col :cols="12" :sm="6" :md="largePic ? 8 : 6">
         <v-card-text class="pa-0 pl-4">
-          Research: <span v-html="member.focus" />
+          Research: <DynamicHtml :html="member.focus" />
         </v-card-text>
+        <v-btn
+          v-if="!member.current && member.level & 2"
+          text
+          nuxt
+          :to="`/members/theses/`"
+          class="hide-md-and-up"
+        >
+          Dissertation
+        </v-btn>
       </v-col>
     </v-row>
     <v-card-actions v-if="!largePic">
-      <v-btn text> Read more about {{ shortName }} </v-btn>
+      <v-btn text disabled>More about {{ shortName }}</v-btn>
+      <v-btn
+        v-if="!member.current && member.level & 2"
+        text
+        nuxt
+        :to="`/members/theses/`"
+        class="hide-sm-and-down"
+      >
+        Dissertation
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+  // ${fullName.replace(/ /g, '_').toLowerCase()}
   import BaseImage from '@/components/BaseImage.vue';
+  import DynamicHtml from '@/components/DynamicHtml.vue';
   export default {
     name: 'MemberCard',
-    components: { BaseImage },
+    components: { BaseImage, DynamicHtml },
     props: {
       largePic: {
         type: Boolean,

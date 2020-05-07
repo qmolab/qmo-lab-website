@@ -23,9 +23,15 @@
               column
             >
               <v-chip>All</v-chip>
-              <v-chip>Post-Docs</v-chip>
-              <v-chip>Grad Students</v-chip>
-              <v-chip>Undergrads</v-chip>
+              <v-chip :disabled="nMembersCat[currentSwitch * 3] === 0">
+                Post-Docs
+              </v-chip>
+              <v-chip :disabled="nMembersCat[currentSwitch * 3 + 1] === 0">
+                Grad Students
+              </v-chip>
+              <v-chip :disabled="nMembersCat[currentSwitch * 3 + 2] === 0">
+                Undergrads
+              </v-chip>
             </v-chip-group>
           </v-col>
         </v-row>
@@ -44,6 +50,11 @@
         <MemberCard :member="item" />
       </v-col>
     </transition-group>
+    <v-row>
+      <v-col cols="12">
+        <v-btn text nuxt to="/members/theses/">Student Dissertations</v-btn>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -54,9 +65,14 @@
       MemberCard,
     },
     asyncData({ store }) {
+      const nMembersCat = [0, 0, 0, 0, 0, 0];
+      store.state.members.members.forEach((e) => {
+        for (let i = 0; i < 3; ++i)
+          if ((2 ** i) & e.level) nMembersCat[e.current ? i + 3 : i]++;
+      });
       return {
-        nathanProfile: store.state.members.nathanProfile,
-        members: store.state.members.members,
+        ...store.state.members,
+        nMembersCat,
       };
     },
     data() {
@@ -71,13 +87,6 @@
       },
       groupFlags() {
         return 2 ** (this.groupSelection - 1);
-      },
-      numberVisible() {
-        let i = 0;
-        this.members.Map.forEach((element, key) => {
-          if (element.visible) ++i;
-        }, this);
-        return i;
       },
     },
     methods: {

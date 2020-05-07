@@ -1,16 +1,37 @@
 <template>
   <v-row justify="center" no-gutters style="height: 100%;">
-    <v-col sm="1" class="hidden-md-and-up middle-align-text fill-height">
-      <v-btn icon @click.stop="$emit('toggle-drawer')">
+    <v-col
+      cols="12"
+      md="0"
+      class="hidden-md-and-up"
+      style="height: 100%; overflow: hidden;"
+    >
+      <v-btn icon style="float: left;" @click.stop="$emit('toggle-drawer')">
         <v-icon>{{ mdiMenu }}</v-icon>
       </v-btn>
+      <h2 class="middle-align-text fill-height">
+        <div style="overflow: hidden; width: 60vw;">
+          <div
+            style="
+              text-transform: capitalize;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+            "
+          >
+            QMO Lab
+            {{
+              this.$route.params.id
+                ? $route.name.substring(0, $route.name.length - 3) +
+                  ': ' +
+                  this.$route.params.id.replace('_', ' ')
+                : $route.name
+            }}
+          </div>
+        </div>
+      </h2>
     </v-col>
-    <h2 class="hidden-md-and-up middle-align-text fill-height">
-      QMO Lab {{ $route.name }}
-    </h2>
-    <v-spacer class="hidden-md-and-up" />
-    <v-col sm="1" class="headerCol">
-      <div class="qmoLogoLogo d-none d-sm-flex"></div>
+    <v-col md="3" class="headerCol">
       <div class="hidden-sm-and-down qmoLogoText hiddentext">
         {{ LogoAltText }}
       </div>
@@ -60,10 +81,10 @@
   }
   .qmoLogoText {
     margin-top: 16px;
-    min-width: 135px;
-    width: 135px;
+    min-width: 200px;
+    width: 200px;
     height: 60px;
-    background-position: -60px center;
+    background-position: 0 center;
     background-image: url('~assets/images/logo.svg');
     background-size: 200px;
   }

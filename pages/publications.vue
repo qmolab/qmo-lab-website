@@ -45,12 +45,12 @@
 </template>
 
 <script>
-  import PublicationCard from '@/components/PublicationCard.vue';
   import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
+  import PublicationCard from '@/components/PublicationCard.vue';
   export default {
     components: {
-      PublicationCard,
       Waterfall,
+      PublicationCard,
     },
     data() {
       return {
@@ -333,10 +333,6 @@
 </script>
 
 <style scoped lang="scss">
-  .publicationsPage {
-    max-width: 1350px;
-    margin: auto;
-  }
   .publicationsPage ::v-deep .v-card__title {
     word-break: break-word;
     text-transform: capitalize;

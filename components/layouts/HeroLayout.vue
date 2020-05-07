@@ -53,7 +53,7 @@
   @import '~vuetify/src/styles/styles.sass';
   .carousel_slider {
     height: 350px;
-    @media (max-width: 960px) {
+    @media (max-width: 1161px) {
       height: 250px;
     }
   }

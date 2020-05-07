@@ -3,22 +3,22 @@
     <v-container class="megaFooter" fluid>
       <v-row>
         <v-spacer />
-        <v-col cols="12" sm="9">
+        <v-col cols="12" sm="9" style="max-width: 380px;">
           <UcrLogo />
         </v-col>
         <v-spacer />
       </v-row>
       <v-row class="additionalActions">
         <v-col class="breakAfter" cols="12" md="4">
-          <v-btn text>Schedule a tour</v-btn>
+          <v-btn text nuxt to="/resources/tour/">Schedule a tour</v-btn>
         </v-col>
         <v-col class="breakAfter" cols="12" md="4">
-          <v-btn text>
+          <v-btn text nuxt to="/resources/potential_students/">
             Information for potential students
           </v-btn>
         </v-col>
         <v-col cols="12" md="4">
-          <v-btn text>Contact Us</v-btn>
+          <v-btn text nuxt to="/resources/contact/">Contact Us</v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -42,30 +42,87 @@
               </v-row>
             </v-col>
             <v-col cols="12" sm="3" class="socialIcons">
-              <v-btn
-                fab
-                small
-                color="#08a0e9"
-                aria-label="Follow us on Twitter"
+              <v-tooltip
+                bottom
+                :open-delay="tooltipDelay"
+                :close-delay="tooltipDelay / 2"
               >
-                <v-icon>{{ twitterIcon }}</v-icon>
-              </v-btn>
-              <v-btn
-                fab
-                small
-                color="#c4302b"
-                aria-label="Check out our Youtube Channel"
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    fab
+                    small
+                    color="#08a0e9"
+                    alt="Follow us on Twitter"
+                    aria-label="Follow us on Twitter"
+                    href="https://twitter.com/qmo_lab"
+                    v-on="on"
+                  >
+                    <v-icon>{{ mdiTwitter }}</v-icon>
+                  </v-btn>
+                </template>
+                <span>Follow us on Twitter</span>
+              </v-tooltip>
+              <v-tooltip
+                bottom
+                :open-delay="tooltipDelay"
+                :close-delay="tooltipDelay / 2"
               >
-                <v-icon>{{ youtubeIcon }}</v-icon>
-              </v-btn>
-              <v-btn
-                fab
-                small
-                color="#211F1F"
-                aria-label="Lab Software Repository"
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    fab
+                    small
+                    color="#c4302b"
+                    alt="Check out our Youtube Channel"
+                    aria-label="Check out our Youtube Channel"
+                    href="https://www.youtube.com/channel/UCJdmhoGpcmAFzVx9PolvBOA"
+                    v-on="on"
+                  >
+                    <v-icon>{{ mdiYoutube }}</v-icon>
+                  </v-btn>
+                </template>
+                <span>Check out our Youtube Channel</span>
+              </v-tooltip>
+              <v-tooltip
+                bottom
+                :open-delay="tooltipDelay"
+                :close-delay="tooltipDelay / 2"
               >
-                <v-icon>{{ gitHubIcon }}</v-icon>
-              </v-btn>
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    fab
+                    small
+                    color="#211F1F"
+                    alt="Lab Software Repository"
+                    aria-label="Lab Software Repository"
+                    href="https://github.com/qmolab"
+                    v-on="on"
+                  >
+                    <v-icon>{{ mdiGithub }}</v-icon>
+                  </v-btn>
+                </template>
+                <span>Lab Software Repository</span>
+              </v-tooltip>
+              <v-tooltip
+                bottom
+                :open-delay="tooltipDelay"
+                :close-delay="tooltipDelay / 2"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    fab
+                    small
+                    color="#211F1F"
+                    alt="Lab Software Documentation"
+                    aria-label="Lab Software Documentation"
+                    nuxt
+                    to="/resources/software/"
+                    v-on="on"
+                  >
+                    <v-icon>{{ mdiFileDocument }}</v-icon>
+                  </v-btn>
+                </template>
+                <span>Lab Software Documentation</span>
+              </v-tooltip>
             </v-col>
           </v-row>
         </v-col>
@@ -75,17 +132,19 @@
       </v-row>
     </v-container>
     <div class="copyrightNotice overline">
-      <v-btn text x-small>Lab Resources</v-btn> |
-      <v-btn text x-small>Privacy Policy</v-btn> |
-      <span class="paddLeft">
-        &copy;&nbsp; 2020 Regents of the University of California
+      <v-btn text x-small nuxt exact to="/resources/">Lab Resources</v-btn> |
+      <v-btn text x-small nuxt exact to="/resources/privacy/">
+        Privacy Policy
+      </v-btn>
+      <span>
+        | &nbsp;&copy;&nbsp; 2020 Regents of the University of California
       </span>
     </div>
   </v-footer>
 </template>
 
 <script>
-  import { mdiTwitter, mdiYoutube, mdiGithub } from '@mdi/js';
+  import { mdiTwitter, mdiYoutube, mdiGithub, mdiFileDocument } from '@mdi/js';
   import UcrLogo from '@/components/UcrLogo.vue';
   import QmoLogo from '@/components/QmoLogo.vue';
   import FundingCard from '@/components/FundingCard.vue';
@@ -98,9 +157,11 @@
     },
     data() {
       return {
-        twitterIcon: mdiTwitter,
-        youtubeIcon: mdiYoutube,
-        gitHubIcon: mdiGithub,
+        mdiTwitter,
+        mdiYoutube,
+        mdiGithub,
+        mdiFileDocument,
+        tooltipDelay: 500,
       };
     },
   };

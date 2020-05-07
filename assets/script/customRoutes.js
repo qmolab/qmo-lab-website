@@ -1,29 +1,29 @@
 export default {
   research: [
     {
-      title: 'carrier multiplication',
+      name: 'carrier multiplication',
       to: '/research/carrier_multiplication',
     },
     {
-      title: 'electron-hole condensation',
+      name: 'electron-hole condensation',
       to: '/research/electron-hole_condensation',
     },
     {
-      title: 'ultrafast optoelectronics',
+      name: 'ultrafast optoelectronics',
       to: '/research/ultrafast_optoelectronics',
     },
     {
-      title: 'atomic layer materials',
+      name: 'atomic layer materials',
       to: '/research/atomic_layer_materials',
     },
     {
-      title: 'natural regulation',
+      name: 'natural regulation',
       to: '/research/natural_regulation',
     },
   ],
   members: [
-    { title: "Max's Dissertation", to: '/members/theses/max' },
-    { title: "Dennis's Dissertation", to: '/members/theses/dennis' },
-    { title: "Fatemeh's Dissertation", to: '/members/theses/fatemeh' },
+    { name: "Max's Dissertation", to: '/members/theses/maxwell_grossnickle' },
+    { name: "Dennis's Dissertation", to: '/members/theses/dennis_pleskot' },
+    { name: "Fatemeh's Dissertation", to: '/members/theses/fatemeh_barati' },
   ],
 };

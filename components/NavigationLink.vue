@@ -4,7 +4,13 @@
     :to="link.to"
   >
     <div class="navButton">
-      <v-btn :href="href" text @click="navigate">
+      <v-btn
+        :href="href"
+        :disabled="isExactActive"
+        exact
+        text
+        @click="navigate"
+      >
         {{ link.title }}
       </v-btn>
       <div :class="{ activeLink: isExactActive, bottomBorder: true }" />
@@ -45,9 +51,6 @@
     }
     .v-btn {
       margin-bottom: 4px;
-      &:before {
-        background-color: initial;
-      }
     }
   }
 </style>

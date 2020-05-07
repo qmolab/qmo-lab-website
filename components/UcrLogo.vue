@@ -1,12 +1,12 @@
 <template>
   <a href="https://ucr.edu" target="_blank" rel="noopener">
-    <v-tooltip bottom open-delay="500">
+    <v-tooltip bottom :open-delay="500">
       <template v-slot:activator="{ on }">
         <v-img
           :src="src.src"
+          :srcset="src.srcSet"
+          :lazy-src="src.placeholder"
           :alt="alt"
-          :max-width="maxWidth"
-          class="ucrLogo"
           v-on="on"
         />
       </template>
@@ -19,10 +19,6 @@
   export default {
     name: 'UcrLogo',
     props: {
-      maxWidth: {
-        type: Number,
-        default: 380,
-      },
       title: {
         type: String,
         default: "Visit UCR's main site",
@@ -39,9 +35,3 @@
     },
   };
 </script>
-
-<style scoped lang="scss">
-  .ucrLogo {
-    margin: auto;
-  }
-</style>

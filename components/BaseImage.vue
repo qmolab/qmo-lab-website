@@ -4,16 +4,13 @@
       bottom
       :open-delay="tooltipDelay"
       :close-delay="tooltipDelay / 2"
-      :eager="eagerSetting"
-      :disabled="disabled"
+      :disabled="noTooltip"
     >
-      <template v-slot:activator="{ on, value }">
+      <template v-slot:activator="{ on }">
         <v-img
-          :src="hoverSource && value ? hoverSource : sourceChecked"
-          :lazy-src="hvrLazySrc && value ? hvrLazySrc : lazySrcChecked"
-          :srcset="hvrSourceSet && value ? hvrSourceSet : srcsetChecked"
-          :eager="eagerSetting"
-          :gradient="gradient"
+          :src="sourceChecked"
+          :lazy-src="lazySrcChecked"
+          :srcset="srcsetChecked"
           :alt="alt"
           :aspect-ratio="aspectRatioChecked"
           :contain="contain"
@@ -50,11 +47,6 @@
       webp: { type: [String, Object], default: undefined },
       lazySrc: { type: String, default: undefined },
       srcset: { type: String, default: undefined },
-      hoverSrc: { type: [String, Object], default: undefined },
-      hoverWebp: { type: [String, Object], default: undefined },
-      hoverLazySrc: { type: String, default: undefined },
-      hoverSrcset: { type: String, default: undefined },
-      gradient: { type: String, default: undefined },
       alt: { type: String, default: undefined },
       title: { type: String, default: '' },
       aspectRatio: { type: [Number, String], default: undefined },
@@ -68,25 +60,14 @@
       position: { type: [String, Number], default: 'center, center' },
       tooltipDelay: { type: [String, Number], default: '500' },
       link: { type: Boolean, default: false },
-      disabled: { type: Boolean, default: false },
-    },
-    asyncData({ store }) {
-      return {
-        eagerSetting: store.state.eager,
-        transitionSetting: store.state.imageTransition,
-      };
+      noTooltip: { type: Boolean, default: false },
     },
     data() {
       return { aspectRatioChecked: undefined };
     },
     computed: {
       sourceChecked() {
-        return typeof this.hoverSrc === 'string' ? this.src : this.src.src;
-      },
-      hoverSource() {
-        return !this.hoverSrc || typeof this.hoverSrc === 'string'
-          ? this.hoverSrc
-          : this.hoverSrc.src;
+        return typeof this.src === 'string' ? this.src : this.src.src;
       },
       srcsetChecked() {
         if (this.srcset) return this.srcset;
@@ -101,33 +82,12 @@
         }
         return undefined;
       },
-      hvrSourceSet() {
-        if (this.hoverSrcset) return this.hoverSrcset;
-        else if (this.hoverSrc && typeof this.hoverSrc !== 'string') {
-          let srcset = this.hoverSrc.srcSet || this.hoverSrc.srcset;
-          if (this.hoverWebp) {
-            if (this.hoverWebp.srcSet || this.hoverWebp.srcset)
-              srcset += ' ' + this.hoverWebp.srcSet || this.hoverWebp.srcset;
-            else srcset = this.hoverWebp;
-          }
-          return srcset;
-        }
-        return undefined;
-      },
       lazySrcChecked() {
         return (
           this.lazySrc ||
           (typeof this.src === 'string'
             ? undefined
             : this.src.placeholder || this.src.lazySrc)
-        );
-      },
-      hvrLazySrc() {
-        return (
-          this.hoverLazySrc ||
-          (!this.hoverSrc || typeof this.hoverSrc === 'string'
-            ? undefined
-            : this.hoverSrc.placeholder || this.hoverSrc.lazySrc)
         );
       },
     },

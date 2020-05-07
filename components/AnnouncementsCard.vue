@@ -13,8 +13,6 @@
           <BaseImage
             :src="item.img"
             :webp="item.webp"
-            :hover-src="item.hover"
-            :hover-webp="item.hoverWebp"
             :width="75"
             :height="75"
           />

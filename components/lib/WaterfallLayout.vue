@@ -48,7 +48,7 @@
         setTimeout(() => {
           this.updateItem(child);
           child.className += ' loaded';
-        }, i * this.delay);
+        }, Math.min(i, 6) * this.delay);
       });
       this.grid.style.opacity = '1';
       setTimeout(() => {
@@ -59,7 +59,7 @@
             passive: true,
           });
         }
-      }, this.numItems * this.delay);
+      }, Math.min(this.numItems, 6) * this.delay);
     },
     activated() {},
     updated() {},

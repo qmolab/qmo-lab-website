@@ -1,8 +1,14 @@
 <template>
   <div class="youtube" @click="start">
     <v-fade-transition>
-      <v-img v-if="!isLoaded" :src="thumbSource" :aspect-ratio="16 / 9">
-        <v-icon class="mdiYoutube" :size="48">
+      <v-img
+        v-if="!isLoaded"
+        :src="thumbSource"
+        :lazy-src="lazySource"
+        :srcset="sourceSet"
+        :aspect-ratio="16 / 9"
+      >
+        <v-icon class="mdiYoutube" :size="72">
           {{ mdiYoutube }}
         </v-icon>
       </v-img>
@@ -48,6 +54,24 @@
         else
           return (
             'https://img.youtube.com/vi/' + this.videoId + '/hqdefault.jpg'
+          );
+      },
+      lazySource() {
+        if (this.videoId.length === 0) return '';
+        else
+          return (
+            'https://img.youtube.com/vi_webp/' + this.videoId + '/default.webp'
+          );
+      },
+      sourceSet() {
+        if (this.videoId.length === 0) return '';
+        else
+          return (
+            'https://img.youtube.com/vi_webp/' +
+            this.videoId +
+            '/mqdefault.webp 320w, https://img.youtube.com/vi_webp/' +
+            this.videoId +
+            '/hqdefault.webp 480w'
           );
       },
     },
