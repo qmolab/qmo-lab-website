@@ -1,67 +1,52 @@
 <template>
   <v-container class="researchPage">
-    <h1>QMO Lag Research</h1>
-    <waterfall
-      id="researchWaterfall"
-      v-slot="{ item }"
-      container-id="researchWaterfall"
-      :resizable="true"
-      :items="mainItems"
-      :delay="150"
-      :xl="3"
-    >
-      <v-card class="itemCard">
-        <v-row class="pa-4 pt-0" dense>
-          <v-col :cols="12">
-            <BaseImage
-              v-if="item.img || item.img === 0"
-              class="ma-2"
-              :src="
-                typeof item.img === 'number'
-                  ? item.figures[item.img].img
-                  : item.img
-              "
-              :webp="
-                typeof item.img === 'number'
-                  ? item.figures[item.img].webp
-                  : item.webp
-              "
-              :alt="item.alt"
-              :title="item.title"
-              :aspect-ratio="3 / 2"
-            />
-          </v-col>
-          <v-card-title>
-            <DynamicHtml :html="item.title" />
-          </v-card-title>
-          <v-card-text>
+    <h1 class="hidden-sm-and-down">QMO Lab Research</h1>
+    <v-row>
+      <v-col v-for="(item, i) in mainItems" :key="i" cols="12" sm="6" lg="4">
+        <v-sheet
+          :class="{
+            'pt-3': true,
+            'pb-12': item.paragraphs,
+            stretchCard: true,
+          }"
+        >
+          <BaseImage
+            v-if="item.img || item.useFigureImg"
+            class="px-3 aspect-667"
+            :src="item.useFigureImg ? item.figures[item.img].img : item.img"
+            :webp="item.useFigureImg ? item.figures[item.img].webp : item.webp"
+            :alt="item.alt"
+            :title="item.title"
+            :aspect-ratio="3 / 2"
+          />
+          <div class="pt-1 px-4 title"><DynamicHtml :html="item.title" /></div>
+          <div class="pa-4 summary">
             <DynamicHtml :html="item.description" />
-          </v-card-text>
-        </v-row>
-        <v-card-actions v-if="item.paragraphs">
-          <v-btn
-            nuxt
-            text
-            :to="`/research/${item.title.replace(/ /g, '_').toLowerCase()}/`"
-          >
-            Read more
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </waterfall>
+          </div>
+          <div v-if="item.paragraphs" class="actions px-2">
+            <v-spacer />
+            <v-btn
+              nuxt
+              text
+              :to="`/research/${item.title.replace(/ /g, '_').toLowerCase()}/`"
+            >
+              Read more
+            </v-btn>
+          </div>
+        </v-sheet>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
-  import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
   import BaseImage from '@/components/BaseImage.vue';
   import DynamicHtml from '@/components/DynamicHtml.vue';
   export default {
-    components: { Waterfall, BaseImage, DynamicHtml },
+    components: { BaseImage, DynamicHtml },
     asyncData({ store }) {
-      const mainItems = store.state.research.topics;
       return {
-        mainItems,
+        mainItems: store.state.research.topics,
       };
     },
   };

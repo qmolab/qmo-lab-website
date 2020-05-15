@@ -1,12 +1,12 @@
 <template>
   <v-hover v-slot:default="{ hover }">
     <v-card
-      :elevation="flat ? 0 : canHover && hover ? elevationHover : elevation"
+      :elevation="hover ? elevationHover : elevation"
       :height="height"
       :nuxt="linkToLinkPage"
       :to="linkToLinkPage ? to : undefined"
       :color="color(hover)"
-      class="fundingCard"
+      class="transition_defualt"
     >
       <v-card-title>Lab Funding:</v-card-title>
       <v-row>
@@ -47,21 +47,9 @@
         type: Number,
         default: 3,
       },
-      tooltipDelay: {
-        type: Number,
-        default: 500,
-      },
-      canHover: {
-        type: Boolean,
-        default: true,
-      },
       linkToLinkPage: {
         type: Boolean,
         default: true,
-      },
-      flat: {
-        type: Boolean,
-        default: false,
       },
       elevation: {
         type: Number,
@@ -122,9 +110,3 @@
     },
   };
 </script>
-
-<style scoped lang="scss">
-  .fundingCard {
-    transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-</style>

@@ -1,28 +1,29 @@
 <template>
-  <div class="videoGallery">
+  <div class="px-3 pb-6">
     <div
       :class="{
-        videoGalleryPlayerContainer: true,
+        videoPlayerContainer: true,
         activated: currentVideoID !== '',
       }"
     >
       <YoutubeEmbed :video-id="currentVideoID" />
     </div>
-    <v-row v-if="displayPagination">
+    <v-row>
       <v-col
-        v-for="video in videos"
-        :key="video"
+        v-for="(video, i) in videos"
+        :key="i"
         cols="12"
         sm="6"
         md="4"
         lg="2"
+        class="py-0"
       >
         <BaseImage
           :src="`https://img.youtube.com/vi/${video}/default.jpg`"
           :srcset="`https://img.youtube.com/vi_webp/${video}/default.webp`"
           alt="video alt"
           title="video title"
-          class="videoGalleryVideoCard"
+          class="videoGalleryVideoCard hide-overflow"
           :aspect-ratio="16 / 9"
           :disabled="video === currentVideoID"
           :link="video !== currentVideoID"
@@ -46,20 +47,6 @@
       YoutubeEmbed,
       BaseImage,
     },
-    props: {
-      playerAutoPlay: {
-        type: Number,
-        default: 0,
-      },
-      playerMute: {
-        type: Boolean,
-        default: false,
-      },
-      displayPagination: {
-        type: Boolean,
-        default: true,
-      },
-    },
     data() {
       return {
         currentVideoID: '',
@@ -78,37 +65,17 @@
 </script>
 
 <style scoped lang="scss">
-  $videoPlayerHeight: 360px !default;
-  $videoPlayerWidth: 640px !default;
-  .videoGallery {
-    padding: 12px;
-  }
-  .videoGalleryPlayerContainer {
-    margin: auto;
-    max-width: 100%;
+  .videoPlayerContainer {
     height: 0;
-    width: $videoPlayerWidth;
-    border-radius: 4px;
-    overflow: hidden;
-    transition: height 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
     &.activated {
       height: $videoPlayerHeight;
+      transition: height $transition_duration $transition_func_main;
       @media (max-width: 600px) {
-        height: 300px;
-      }
-      @media (max-width: 500px) {
-        height: 250px;
-      }
-      @media (max-width: 400px) {
-        height: 200px;
-      }
-      @media (max-width: 300px) {
-        height: 140px;
+        height: 56vw;
       }
     }
   }
   .videoGalleryVideoCard {
-    overflow: hidden;
     .mdiYoutube {
       width: 20px;
     }

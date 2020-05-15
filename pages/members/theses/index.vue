@@ -1,9 +1,7 @@
 <template>
   <v-container class="thesesPage">
     <BreadCrumb />
-    <h1>
-      QMO Lab Theses
-    </h1>
+    <h1 class="hidden-sm-and-down">QMO Lab Theses</h1>
     <waterfall
       id="thesisWaterfall"
       v-slot="{ item }"
@@ -19,8 +17,8 @@
 </template>
 
 <script>
-  import BreadCrumb from '@/components/lib/BreadCrumb.vue';
   import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
+  import BreadCrumb from '@/components/lib/BreadCrumb.vue';
   import ThesisCard from '@/components/ThesisCard.vue';
   export default {
     components: { Waterfall, ThesisCard, BreadCrumb },
@@ -50,12 +48,3 @@
     },
   };
 </script>
-
-<style scoped lang="scss">
-  .thesesPage ::v-deep .v-card__title {
-    word-break: break-word;
-    text-transform: capitalize;
-    flex-direction: column;
-    align-items: stretch;
-  }
-</style>

@@ -1,7 +1,11 @@
 <template>
-  <v-card>
+  <v-sheet class="stretchCard pb-12">
     <v-list-item>
-      <v-list-item-avatar size="40" color="primary">
+      <v-list-item-avatar
+        size="40"
+        color="primary"
+        style="border: 2px solid; background-color: unset !important;"
+      >
         '{{ publication.year.substring(2) }}
       </v-list-item-avatar>
       <v-list-item-content>
@@ -10,20 +14,27 @@
     </v-list-item>
 
     <BaseImage
-      class="cardImage"
+      class="mt-2 px-3 aspect-667"
       :src="publication.img"
       :webp="publication.webp"
       :alt="publication.alt"
       :title="publication.title"
-      :width="width - 16"
+      :width="width"
       :aspect-ratio="3 / 2"
     >
-      <div class="textOnImage subtitle-2">{{ publication.pubInfo }}</div>
+      <div class="textOnImage px-4 subtitle-2">
+        {{ publication.pubInfo }}
+      </div>
     </BaseImage>
-    <v-card-title><DynamicHtml :html="publication.title" /></v-card-title>
-    <v-card-text><DynamicHtml :html="publication.text" /></v-card-text>
-    <v-card-actions>
-      <v-btn text>
+    <div class="pt-1 px-4 title">
+      <DynamicHtml :html="publication.title" />
+    </div>
+    <div class="pa-4 summary">
+      <DynamicHtml :html="publication.text" />
+    </div>
+    <div class="actions px-2">
+      <v-spacer />
+      <v-btn text disabled>
         Share
       </v-btn>
 
@@ -31,8 +42,8 @@
         Read more
         <v-icon right color="secondary">{{ openInNewIcon }}</v-icon>
       </v-btn>
-    </v-card-actions>
-  </v-card>
+    </div>
+  </v-sheet>
 </template>
 
 <script>
@@ -56,18 +67,3 @@
     },
   };
 </script>
-
-<style scoped lang="scss">
-  .cardImage ::v-deep .v-image {
-    position: relative;
-    align-items: flex-end;
-    margin: 8px;
-    .textOnImage {
-      background-color: rgba(0, 0, 0, 0.72);
-      padding: 0 8px;
-    }
-  }
-  .v-application .subtitle-1 {
-    line-height: 1rem;
-  }
-</style>

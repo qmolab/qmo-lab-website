@@ -1,8 +1,15 @@
 <template>
   <v-container class="galleryPage">
-    <h2 class="title">QMO YouTube Channel</h2>
+    <h1 class="hidden-sm-and-down">QMO Lab Gallery</h1>
+    <v-btn
+      x-large
+      text
+      class="my-2"
+      href="https://www.youtube.com/channel/UCJdmhoGpcmAFzVx9PolvBOA"
+    >
+      QMO YouTube Channel
+    </v-btn>
     <VideoGallery />
-    <h2 class="title">QMO Lab Gallery</h2>
     <ImageGallery />
   </v-container>
 </template>
@@ -19,9 +26,3 @@
     },
   };
 </script>
-
-<style scoped lang="scss">
-  .title {
-    text-align: center;
-  }
-</style>

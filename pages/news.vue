@@ -11,13 +11,13 @@
 </template>
 
 <script>
-  import AnnouncementsCard from '@/components/AnnouncementsCard.vue';
   import HeroLayout from '@/components/layouts/HeroLayout.vue';
+  import AnnouncementsCard from '@/components/AnnouncementsCard.vue';
 
   export default {
     components: {
-      AnnouncementsCard,
       HeroLayout,
+      AnnouncementsCard,
     },
     asyncData({ store }) {
       return {
@@ -26,7 +26,6 @@
     },
     head() {
       return {
-        title: 'News',
         meta: [
           {
             hid: 'description',

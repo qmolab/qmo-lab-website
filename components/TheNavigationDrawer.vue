@@ -1,35 +1,34 @@
 <template>
   <v-list nav dens>
-    <v-list-item><QmoLogo /></v-list-item>
+    <v-list-item><div class="qmoLogo" /></v-list-item>
     <v-divider />
-    <v-list-item
-      v-for="link in navLinks"
-      :key="link.title"
-      color="primary"
+    <nuxt-link
+      v-for="(link, i) in navLinks"
+      :key="i"
+      v-slot="{ href, navigate, isExactActive }"
       :to="link.to"
-      nuxt
-      dens
     >
-      <v-list-item-icon>
-        <v-icon>{{ link.icon }}</v-icon>
-      </v-list-item-icon>
-      <v-list-item-title>{{ link.title }}</v-list-item-title>
-    </v-list-item>
+      <v-list-item
+        color="primary"
+        :disabled="isExactActive"
+        dens
+        link
+        @click="navigate"
+      >
+        <v-list-item-icon>
+          <v-icon :color="isExactActive ? 'primary' : undefined">
+            {{ link.icon }}
+          </v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>{{ link.title }}</v-list-item-title>
+      </v-list-item>
+    </nuxt-link>
   </v-list>
 </template>
 
 <script>
-  import QmoLogo from '@/components/QmoLogo.vue';
   export default {
     name: 'TheNavigationDrawer',
-    components: { QmoLogo },
-    props: {},
-    computed: {
-      navLinks() {
-        return this.$store.state.navLinks.main;
-      },
-    },
+    props: { navLinks: { type: Array, required: true } },
   };
 </script>
-
-<style scoped lang="scss"></style>

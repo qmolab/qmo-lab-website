@@ -1,5 +1,5 @@
 <template>
-  <div class="youtube" @click="start">
+  <div class="youtube fill-w fill-h rel hide-overflow" @click="isLoaded = true">
     <v-fade-transition>
       <v-img
         v-if="!isLoaded"
@@ -18,7 +18,7 @@
         allow="encrypted-media"
         allowfullscreen=""
         :src="videoSource"
-        class="frame"
+        class="frame abs fill-w fill-h"
       />
     </v-fade-transition>
   </div>
@@ -37,47 +37,32 @@
       return {
         isLoaded: false,
         mdiYoutube,
+        videoSource: undefined,
+        thumbSource: undefined,
+        lazySource: undefined,
+        sourceSet: undefined,
       };
     },
-    computed: {
-      videoSource() {
-        if (this.videoId.length === 0) return '';
-        else
-          return (
-            'https://www.youtube-nocookie.com/embed/' +
-            this.videoId +
-            '?rel=0&showinfo=0'
-          );
-      },
-      thumbSource() {
-        if (this.videoId.length === 0) return '';
-        else
-          return (
-            'https://img.youtube.com/vi/' + this.videoId + '/hqdefault.jpg'
-          );
-      },
-      lazySource() {
-        if (this.videoId.length === 0) return '';
-        else
-          return (
-            'https://img.youtube.com/vi_webp/' + this.videoId + '/default.webp'
-          );
-      },
-      sourceSet() {
-        if (this.videoId.length === 0) return '';
-        else
-          return (
-            'https://img.youtube.com/vi_webp/' +
-            this.videoId +
-            '/mqdefault.webp 320w, https://img.youtube.com/vi_webp/' +
-            this.videoId +
-            '/hqdefault.webp 480w'
-          );
+    watch: {
+      videoId() {
+        this.setup();
       },
     },
+    mounted() {
+      this.setup();
+    },
     methods: {
-      start() {
-        this.isLoaded = true;
+      setup() {
+        if (this.videoId.length !== 0) {
+          const y = 'https://img.youtube.com/vi';
+          const yw = y + '_webp/';
+          this.videoSource = `https://www.youtube-nocookie.com/embed/${this.videoId}?rel=0&showinfo=0`;
+          this.thumbSource = y + '/' + this.videoId + '/hqdefault.jpg';
+          this.lazySource = yw + this.videoId + '/default.webp';
+          this.sourceSet = `${yw + this.videoId}/mqdefault.webp 320w, ${
+            yw + this.videoId
+          }/hqdefault.webp 480w`;
+        }
       },
     },
   };
@@ -85,19 +70,12 @@
 
 <style scoped lang="scss">
   .youtube {
-    width: 100%;
-    height: 100%;
     border-radius: 4px;
-    overflow: hidden;
-    position: relative;
     cursor: pointer;
 
     .frame {
-      height: 100%;
-      width: 100%;
       top: 0;
       left: 0;
-      position: absolute;
     }
     .mdiYoutube {
       z-index: 1;

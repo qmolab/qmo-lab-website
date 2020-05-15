@@ -1,55 +1,46 @@
 <template>
   <v-container class="publicationsPage">
-    <h2>Selected Publications</h2>
-    <waterfall
-      id="pubWaterfall"
-      v-slot="{ item }"
-      container-id="pubWaterfall"
-      :resizable="true"
-      :items="mainItems"
-      :delay="150"
-      :xl="3"
-    >
-      <PublicationCard :publication="item" />
-    </waterfall>
+    <h1 class="hidden-sm-and-down">Selected Publications</h1>
+    <v-row>
+      <v-col v-for="(item, i) in mainItems" :key="i" cols="12" sm="6" lg="4">
+        <PublicationCard :publication="item" />
+      </v-col>
+    </v-row>
     <br />
-    <v-card class="mx-3">
-      <v-card-title>Additional Publications and Patents</v-card-title>
-      <waterfall
-        id="pubAdditionalWaterfall"
-        v-slot="{ item }"
-        container-id="pubAdditionalWaterfall"
-        :resizable="true"
-        :items="additionalItems"
-        :delay="0"
-        :lg="2"
-        :xl="2"
-      >
-        <v-hover v-slot:default="{ hover }">
+    <v-sheet class="pa-3">
+      <div class="title">Additional Publications and Patents</div>
+      <v-row>
+        <v-col v-for="(item, i) in additionalItems" :key="i" cols="12" sm="6">
           <v-card
             :href="item.href"
+            target="blank"
+            hover
             link
-            :elevation="hover ? 6 : 1"
-            :color="color(hover)"
-            class="additionalPublicationCard"
-            :style="hover ? 'transform: scale(1.01);' : ''"
+            ripple
+            class="stretchCard"
           >
-            <v-card-title style="display: block;" v-html="item.title" />
-            <v-card-subtitle class="pl-4" v-html="item.subtitle" />
-            <v-card-text v-html="item.text" />
+            <div class="pt-1 px-4 title">
+              <DynamicHtml :html="item.title" />
+            </div>
+            <div class="pt-1 px-4 subtitle-1">
+              <DynamicHtml :html="item.subtitle" />
+            </div>
+            <div class="pa-4 summary">
+              <DynamicHtml :html="item.text" />
+            </div>
           </v-card>
-        </v-hover>
-      </waterfall>
-    </v-card>
+        </v-col>
+      </v-row>
+    </v-sheet>
   </v-container>
 </template>
 
 <script>
-  import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
+  import DynamicHtml from '@/components/DynamicHtml.vue';
   import PublicationCard from '@/components/PublicationCard.vue';
   export default {
     components: {
-      Waterfall,
+      DynamicHtml,
       PublicationCard,
     },
     data() {
@@ -324,19 +315,5 @@
         ],
       };
     },
-    methods: {
-      color(hovering) {
-        return 'rgba(255,255,255,' + (hovering ? 0.03 : 0.01).toString() + ')';
-      },
-    },
   };
 </script>
-
-<style scoped lang="scss">
-  .publicationsPage ::v-deep .v-card__title {
-    word-break: break-word;
-    text-transform: capitalize;
-    flex-direction: column;
-    align-items: stretch;
-  }
-</style>

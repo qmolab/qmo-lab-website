@@ -1,7 +1,7 @@
 <template>
-  <HeroLayout class="linksPage">
-    <h1>Useful Links</h1>
-    <div style="padding: 16px 32px;">
+  <HeroLayout class="linksPage mb-8">
+    <h1 class="px-1 hidden-sm-and-down">Useful Links</h1>
+    <div class="py-8">
       <v-btn
         text
         href="https://qmolab.ucr.edu/assets/images/socal-first-announcement.jpg"
@@ -12,7 +12,7 @@
         <v-icon right color="secondary">{{ mdiOpenInNew }}</v-icon>
       </v-btn>
     </div>
-    <v-expansion-panels multiple style="padding: 32px; padding-bottom: 64px;">
+    <v-expansion-panels multiple class="py-8">
       <v-expansion-panel v-for="(panel, i) in panels" :key="i">
         <v-expansion-panel-header :expand-icon="mdiMenuDown">
           {{ i }}
@@ -158,5 +158,3 @@
     },
   };
 </script>
-
-<style scoped lang="scss"></style>

@@ -22,14 +22,18 @@
 
   export default {
     data() {
-      return { mdiChevronRight, crumbs: [] };
+      return {
+        mdiChevronRight,
+        crumbs: [
+          {
+            to: '/',
+            text: 'Home',
+            disabled: false,
+          },
+        ],
+      };
     },
     mounted() {
-      this.crumbs.push({
-        to: '/',
-        text: 'Home',
-        disabled: false,
-      });
       const pathParts = this.$route.path
         .substr(1, this.$route.path.length - 1)
         .split('/')
@@ -37,7 +41,7 @@
       pathParts.forEach((e, i) => {
         this.crumbs.push({
           to: `/${pathParts.slice(0, i + 1).join('/')}/`,
-          text: pathParts[i].replace('_', ' '),
+          text: pathParts[i].replace(/_/g, ' '),
           disabled: i === pathParts.length - 1,
         });
       });

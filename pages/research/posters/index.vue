@@ -1,7 +1,7 @@
 <template>
   <v-container class="researchPosterPage">
     <BreadCrumb />
-    <h1>QMO Lab Posters</h1>
+    <h1 class="hidden-sm-and-down">QMO Lab Posters</h1>
     <waterfall
       id="posterWaterfall"
       v-slot="{ item }"
@@ -9,7 +9,9 @@
       :resizable="true"
       :items="posters"
       :delay="150"
-      :xl="3"
+      :sm="1"
+      :lg="2"
+      :xl="2"
     >
       <v-card>
         <v-card-title>{{ item.title }}</v-card-title>
@@ -34,8 +36,8 @@
 
 <script>
   import { mdiDownload } from '@mdi/js';
-  import BreadCrumb from '@/components/lib/BreadCrumb.vue';
   import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
+  import BreadCrumb from '@/components/lib/BreadCrumb.vue';
   import DynamicHtml from '@/components/DynamicHtml.vue';
   export default {
     components: { BreadCrumb, Waterfall, DynamicHtml },

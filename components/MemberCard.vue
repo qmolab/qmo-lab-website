@@ -1,9 +1,9 @@
 <template>
   <v-card class="mx-auto" :max-width="768" :min-height="200">
-    <v-card-title class="pb-0">
+    <div class="title pt-2 px-4">
       {{ fullName }}&nbsp;&nbsp;
-      <small>({{ byline }})</small>
-    </v-card-title>
+      <span style="font-weight: 300; font-size: 80%;">({{ byline }})</span>
+    </div>
     <v-row no-gutters class="pa-4">
       <v-col :cols="12" :sm="6" :md="largePic ? 4 : 6">
         <BaseImage
@@ -12,12 +12,15 @@
           :aspect-ratio="5 / 4"
           :alt="fullName"
           :title="shortName"
-          class="pb-2"
+          class="aspect-800"
         />
       </v-col>
       <v-col :cols="12" :sm="6" :md="largePic ? 8 : 6">
         <v-card-text class="pa-0 pl-4">
-          Research: <DynamicHtml :html="member.focus" />
+          Research:
+          <span style="font-weight: 300;">
+            <DynamicHtml :html="member.focus" />
+          </span>
         </v-card-text>
         <v-btn
           v-if="!member.current && member.level & 2"
@@ -31,6 +34,7 @@
       </v-col>
     </v-row>
     <v-card-actions v-if="!largePic">
+      <v-spacer />
       <v-btn text disabled>More about {{ shortName }}</v-btn>
       <v-btn
         v-if="!member.current && member.level & 2"
@@ -81,13 +85,3 @@
     },
   };
 </script>
-
-<style scoped lang="scss">
-  .v-card__title {
-    word-break: break-word;
-    text-transform: capitalize;
-  }
-  .v-application .subtitle-1 {
-    line-height: 1rem;
-  }
-</style>

@@ -6,10 +6,14 @@
       temporary
       app
     >
-      <TheNavigationDrawer />
+      <TheNavigationDrawer :nav-links="navLinks" />
     </v-navigation-drawer>
-    <v-app-bar hide-on-scroll app :scroll-threshold="64">
-      <TheHeader @toggle-drawer="drawer = !drawer" />
+    <v-app-bar hide-on-scroll app>
+      <TheHeader
+        :title="title"
+        :nav-links="navLinks"
+        @toggle-drawer="drawer = !drawer"
+      />
     </v-app-bar>
     <v-content>
       <nuxt />
@@ -32,7 +36,28 @@
       return {
         drawer: false,
         miniVariant: false,
-        title: 'Default Layout',
+        navLinks: undefined,
+      };
+    },
+    computed: {
+      title() {
+        const path = this.$route.path
+          .substr(1, this.$route.path.length - 1)
+          .split('/');
+        let title = (this.$route.params.id
+          ? path[path.length - 3] + ': ' + this.$route.params.id
+          : path[path.length - 2] || 'Home'
+        ).replace(/_/g, ' ');
+        if (title) title = title.charAt(0).toUpperCase() + title.slice(1);
+        return title;
+      },
+    },
+    created() {
+      this.navLinks = this.$store.state.navLinks.main;
+    },
+    head() {
+      return {
+        title: this.title,
       };
     },
   };

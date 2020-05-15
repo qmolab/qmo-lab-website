@@ -57,7 +57,7 @@ $material-dark: (
   'selection-controls': (
     'disabled': rgba($white, 0.3),
     'thumb': (
-      'inactive': lighten($black,1.5%),
+      'inactive': #bdbdbd,
       'disabled': lighten($black,0.5%)
     ),
     'track': (
@@ -127,3 +127,10 @@ $material-light: (
   'surface': $white,
   'color': $black,
 );
+
+$videoPlayerHeight: 360px !default;
+$videoPlayerWidth: 640px !default;
+
+$transition_duration: 0.28s;
+$transition_distance: 280px;
+$transition_func_main: cubic-bezier(0.4, 0, 0.2, 1);

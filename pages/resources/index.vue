@@ -1,6 +1,6 @@
 <template>
   <HeroLayout class="resourcesPage">
-    <h1>QMO Lab Resources</h1>
+    <h1 class="hidden-sm-and-down">QMO Lab Resources</h1>
     <v-list>
       <v-list-item>
         <v-btn nuxt text to="/resources/software/">Lab Software</v-btn>
@@ -10,9 +10,6 @@
       </v-list-item>
       <v-list-item>
         <v-btn nuxt text to="/research/posters/">Posters</v-btn>
-      </v-list-item>
-      <v-list-item>
-        <v-btn nuxt text to="/news/">News Archive</v-btn>
       </v-list-item>
       <v-list-item>
         <v-btn nuxt text to="/resources/tour/">Lab Tours</v-btn>

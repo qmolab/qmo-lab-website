@@ -1,60 +1,79 @@
 <template>
   <div>
     <div class="carousel_slider">
-      <BaseCarousel :slides="heroSlides" cycle />
+      <v-carousel
+        :cycle="cycle"
+        height="100%"
+        show-arrows-on-hover
+        progress
+        continuous
+        hide-delimiters
+        :next-icon="mdiChevronRight"
+        :prev-icon="mdiChevronLeft"
+        @change="cycle = !cycle"
+      >
+        <v-carousel-item
+          v-for="(slide, i) in heroSlides"
+          :key="i"
+          class="fill-h"
+        >
+          <v-img
+            :src="slide.src.src"
+            :lazy-src="slide.src.placeholder"
+            :srcset="slide.webp"
+            :alt="slide.alt"
+            cover
+            height="100%"
+          >
+            <v-row class="lightbox align-end white--text pa-2 fill-h">
+              <v-col>
+                <v-sheet
+                  link
+                  hover
+                  color="rgba(0, 0, 0, 0.3)"
+                  class="mb-8 d-inline-block"
+                >
+                  <div class="subtitle-1 capitalize pa-2">
+                    {{ slide.title }}
+                  </div>
+                </v-sheet>
+                <v-spacer />
+              </v-col>
+            </v-row>
+          </v-img>
+        </v-carousel-item>
+      </v-carousel>
     </div>
-    <BaseLayout>
+    <v-container>
       <slot />
-    </BaseLayout>
+    </v-container>
   </div>
 </template>
 <script>
-  import BaseCarousel from '@/components/BaseCarousel.vue';
-  import BaseLayout from '@/components/layouts/BaseLayout.vue';
+  import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
   export default {
-    components: { BaseCarousel, BaseLayout },
     data() {
       return {
-        heroSlides: [
-          {
-            src: require('~/assets/images/hero_carousel/jackyGloveBox2.jpg?resize&sizes[]=300,sizes[]=760,sizes[]=1240,sizes[]=1920'),
-            webp: require('~/assets/images/hero_carousel/jackyGloveBox2.jpg?webp'),
-            alt: 'Routine Lab Work Poster',
-            title: 'learn more about research projects in the QMO Labs',
-          },
-          {
-            src: require('~/assets/images/hero_carousel/e-h_liquid_banner_2.png?resize&sizes[]=300,sizes[]=760,sizes[]=1240,sizes[]=1920'),
-            webp: require('~/assets/images/hero_carousel/e-h_liquid_banner_2.png?webp'),
-            alt: 'Electron Hole Liquid',
-            title:
-              'exotic droplets: atomic layers can host novel electron-hole liquid ',
-          },
-          {
-            src: require('~/assets/images/hero_carousel/graphene_cool_low_dof_hd_cropped.png?resize&sizes[]=300,sizes[]=760,sizes[]=1240,sizes[]=1920'),
-            webp: require('~/assets/images/hero_carousel/graphene_cool_low_dof_hd_cropped.png?webp'),
-            alt: 'Clean Graphene Sheets',
-            title:
-              'clean sheets: giant photocurrents manifest in pristine graphene layers ',
-          },
-          {
-            src: require('~/assets/images/hero_carousel/green.jpg?resize&sizes[]=300,sizes[]=760,sizes[]=1240,sizes[]=1920'),
-            webp: require('~/assets/images/hero_carousel/green.jpg?webp'),
-            alt: 'Photosynthesis Poster',
-            title:
-              'green machines: quantum photocells naturally regulate internal energy flows',
-          },
-        ],
+        cycle: true,
+        heroSlides: undefined,
+        mdiChevronLeft,
+        mdiChevronRight,
       };
+    },
+    created() {
+      this.heroSlides = this.$store.state.images.heroSlides;
     },
   };
 </script>
 
 <style scoped lang="scss">
-  @import '~vuetify/src/styles/styles.sass';
   .carousel_slider {
     height: 350px;
     @media (max-width: 1161px) {
       height: 250px;
     }
+  }
+  .capitalize {
+    text-transform: capitalize;
   }
 </style>

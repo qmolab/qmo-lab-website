@@ -1,5 +1,5 @@
 <template>
-  <div :id="`${containerId}`" class="waterfall-layout">
+  <div :id="`${containerId}`" class="rel waterfall-layout mx-auto">
     <div v-for="(item, index) in items" :key="`${containerId}-item--${index}`">
       <slot
         v-bind="{
@@ -109,8 +109,6 @@
 <style lang="scss">
   $gutterSize: 16px !default;
   .waterfall-layout {
-    margin: auto;
-    position: relative;
     height: 100vh;
     opacity: 0;
   }
@@ -133,9 +131,8 @@
     &.loaded {
       opacity: 1;
       transform: translateY(0);
+      transition: $transition_duration $transition_func_main;
       transition-property: transform, top, left;
-      transition-duration: 0.28s;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 </style>

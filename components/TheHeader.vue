@@ -1,49 +1,34 @@
 <template>
-  <v-row justify="center" no-gutters style="height: 100%;">
-    <v-col
-      cols="12"
-      md="0"
-      class="hidden-md-and-up"
-      style="height: 100%; overflow: hidden;"
-    >
-      <v-btn icon style="float: left;" @click.stop="$emit('toggle-drawer')">
+  <v-row justify="center" no-gutters class="fill-h">
+    <v-col cols="12" md="0" class="hidden-md-and-up hide-overflow fill-h">
+      <v-btn icon class="float-l" @click.stop="$emit('toggle-drawer')">
         <v-icon>{{ mdiMenu }}</v-icon>
       </v-btn>
-      <h2 class="middle-align-text fill-height">
-        <div style="overflow: hidden; width: 60vw;">
-          <div
-            style="
-              text-transform: capitalize;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              overflow: hidden;
-            "
-          >
-            QMO Lab
-            {{
-              this.$route.params.id
-                ? $route.name.substring(0, $route.name.length - 3) +
-                  ': ' +
-                  this.$route.params.id.replace('_', ' ')
-                : $route.name
-            }}
-          </div>
-        </div>
-      </h2>
+      <h1 class="titleText ellipsis_text">
+        QMO Lab
+        {{ title }}
+      </h1>
     </v-col>
     <v-col md="3" class="headerCol">
-      <div class="hidden-sm-and-down qmoLogoText hiddentext">
-        {{ LogoAltText }}
-      </div>
+      <QmoLogo
+        :key="$route.path"
+        spin
+        class="hidden-sm-and-down mt-2"
+        style="max-width: 226px;"
+      />
     </v-col>
     <v-spacer class="hidden-sm-and-down" />
-    <v-col sm="auto" class="hidden-sm-and-down fill-height headerCol">
-      <nav class="nav">
-        <NavigationLink
-          v-for="link in navLinks"
-          :key="link.title"
-          :link="link"
-        />
+    <v-col sm="auto" class="hidden-sm-and-down fill-h headerCol">
+      <nav class="nav float-l d-flex align-center">
+        <NuxtLink
+          v-for="(link, i) in navLinks"
+          :key="i"
+          :to="link.to"
+          active-border
+          class="rel fill-h float-l d-flex align-center"
+        >
+          {{ link.title }}
+        </NuxtLink>
       </nav>
     </v-col>
   </v-row>
@@ -51,58 +36,28 @@
 
 <script>
   import { mdiMenu } from '@mdi/js';
-  import NavigationLink from '@/components/NavigationLink.vue';
+  import QmoLogo from '@/components/QmoLogo.vue';
+  import NuxtLink from '@/components/NuxtLink.vue';
   export default {
     name: 'TheHeader',
-    components: {
-      NavigationLink,
+    components: { QmoLogo, NuxtLink },
+    props: {
+      title: { type: String, required: true },
+      navLinks: { type: Array, required: true },
     },
-    props: {},
     data() {
-      return {
-        LogoAltText: 'Quantum Materials Optoelectronics Laboratory',
-        mdiMenu,
-      };
-    },
-    computed: {
-      navLinks() {
-        return this.$store.state.navLinks.main;
-      },
+      return { mdiMenu };
     },
   };
 </script>
 
 <style scoped lang="scss">
-  @import '~vuetify/src/styles/styles.sass';
-  .headerCol {
-    display: flex;
-    align-items: center;
-    float: left;
-  }
-  .qmoLogoText {
-    margin-top: 16px;
-    min-width: 200px;
-    width: 200px;
-    height: 60px;
-    background-position: 0 center;
-    background-image: url('~assets/images/logo.svg');
-    background-size: 200px;
-  }
-  .qmoLogoLogo {
-    margin-top: 16px;
-    min-width: 60px;
-    width: 60px;
-    height: 60px;
-    background-position: 0 center;
-    background-image: url('~assets/images/logo.svg');
-    background-size: 200px;
-    @media #{map-get($display-breakpoints, 'md-and-down')} {
-      margin-top: 4px;
-    }
+  .titleText {
+    margin-top: 6px;
+    font-size: 1.5em;
+    text-transform: capitalize;
   }
   .nav {
-    display: flex;
-    float: left;
     height: 100%;
     margin-bottom: -8px;
   }

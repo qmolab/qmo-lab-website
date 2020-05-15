@@ -1,65 +1,170 @@
 // Global stylesheet
 @import '@/assets/variables.scss';
 
-.limitWidth {
-  max-width: 90vw;
-  margin: auto;
-}
-.paddLeft {
-  padding-left: 12px;
-}
-.fundingImage {
-  margin: 0 4px;
-}
 .hiddentext {
   text-indent: 1000%;
   white-space: nowrap;
   overflow: hidden;
 }
-.padd-bottom {
-  margin-bottom: 20px;
+.fill-h {
+  height: 100% !important;
 }
-.no-padding-bottom {
-  padding-bottom: 0;
+.fill-w {
+  width: 100% !important;
 }
-.no-padding-top {
-  padding-top: 0;
+.ta-center {
+  text-align: center;
 }
-.middle-align-text {
-  display: flex;
-  float: left;
-  align-items: center;
+
+.fade-enter-active, .fade-leave-active  {
+  transition: $transition_duration $transition_func_main;
 }
-.fill-height {
-  height: 100%;
+.fade-enter-to, .fade-leave {
+  opacity: 1;
 }
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter, .fade-leave-to {
   opacity: 0;
 }
-.layout-enter-active, .layout-leave-active {
-  transition: opacity .2s;
+.cardItem-enter-active, .cardItem-leave-active  {
+  transition: $transition_duration $transition_func_main;
+  transform-origin: right center;
 }
-.layout-enter, .layout-leave-active {
-  opacity: 0.2;
+.cardItem-enter-to, .list-leave {
+  opacity: 1;
+  transform: translateX(0);
+}
+.cardItem-enter, .cardItem-leave-to {
+  opacity: 0;
+  transform: translateX($transition_distance);
+}
+.list-enter-active {
+  transition: $transition_duration $transition_func_main $transition_duration;
+}
+.list-leave-active {
+  transition: $transition_duration $transition_func_main;
+}
+.list-enter-to, .list-leave {
+  opacity: 1;
+  transform: translateY(0);
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY($transition_distance);
 }
 
-.breakAfter{
+.textOnImage {
+  background-color: rgba(0, 0, 0, 0.72);
+}
+.abs {
+  position: absolute !important;
+}
+
+.rel {
+  position: relative !important;
+}
+.hide-overflow {
+  overflow: hidden !important;
+}
+.float-l {
+  float: left;
+}
+.float-r {
+  float: right;
+}
+
+.qmoLogo {
+  background-image: url('~assets/images/logo_transparent.svg');
+  background-size: cover;
+  width: 100%;
+  height: 0;
+  padding-bottom: 31%;
+}
+
+
+.videoPlayerContainer {
+  width: $videoPlayerWidth;
+  height: $videoPlayerHeight;
+  border-radius: 4px;
+  max-width: 100%;
+  margin: auto;
+  overflow: hidden;
+}
+
+
+.aspect-667 {
+  width: 100%;
+  height: 0;
+  padding-bottom: 66.7%;
+}
+.aspect-800 {
+  width: 100%;
+  height: 0;
+  padding-bottom: 80%;
+}
+
+.stretchCard {
+  height: 100%;
   position: relative;
-  &::after {
-    content: '|';
+  .actions {
     position: absolute;
-    right: 0;
-    top: 18px;
+    bottom: 8px;
+    height: 36px;
+    width: 100%;
+    display: flex;
+  }
+  &.hover:hover {
+    transform: scale(1.01);
   }
 }
-
-.v-image__image {
-  transition: background-image 280ms cubic-bezier(0.4,0,0.2,1);
+.strike {
+  text-decoration: line-through;
+  text-decoration-color: $primary;
 }
-
+.container {
+  max-width: 1280px;
+  margin: auto;
+}
+.title {
+  text-transform: capitalize;
+}
+.light {
+  font-weight: 400;
+}
+.summary {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.375rem;
+  letter-spacing: 0.0071428571em;
+}
+.v-image {
+  align-items: flex-end;
+}
+.v-image__image {
+  transition: background-image $transition_duration $transition_func_main;
+}
+.v-card__title {
+  word-break: break-word !important;
+  text-transform: capitalize;
+  flex-direction: column;
+  align-items: stretch !important;
+}
+.v-card__actions>.v-btn {
+  flex: 0 1 auto;
+}
+.v-btn {
+  max-width: 100%;
+}
+.v-btn__content .v-icon--right {
+  margin-right: 4px !important;
+}
+.v-application .v-btn__content, .ellipsis_text {
+  max-width: 100%;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+}
 .v-icon.v-icon--svg.mdiYoutube {
   position: absolute;
   top: 50%;
@@ -67,7 +172,7 @@
   color: $dark-grey;
   transform: translate3d(-50%, -50%, 0);
   opacity: 0.8;
-  transition: 0.28s cubic-bezier(0.4,0,0.2,1);
+  transition: $transition_duration $transition_func_main;
   &::before {
     content: '';
     background-color: $light-grey;
@@ -78,8 +183,13 @@
     border-radius: 50%;
   }
 }
-.container {
-  max-width: 1280px;
-  margin: auto;
+.v-application .v-dialog {
+  box-shadow: none;
 }
 
+.v-carousel .v-responsive__content {
+  height: 100%;
+}
+.transition_defualt {
+  transition: $transition_duration $transition_func_main;
+}

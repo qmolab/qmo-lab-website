@@ -1,40 +1,39 @@
 <template>
   <v-container class="membersPage">
-    <h1>QMO Lab Members</h1>
+    <h1 class="hidden-sm-and-down">QMO Lab Members</h1>
     <v-row>
       <v-col>
         <MemberCard large-pic :member="nathanProfile" />
       </v-col>
     </v-row>
     <v-row no-gutters>
-      <v-col cols="12" sm="4" align-self="center">
+      <v-col cols="12" sm="4" class="align-self-center">
         <h2>Student Researchers:</h2>
       </v-col>
-      <v-col>
-        <v-row no-gutters>
-          <v-col>
-            <v-switch v-model="currentSwitch" :label="switchLabel" />
-          </v-col>
-          <v-col cols="12">
-            <v-chip-group
-              v-model="groupSelection"
-              mandatory
-              active-class="primary--text"
-              column
-            >
-              <v-chip>All</v-chip>
-              <v-chip :disabled="nMembersCat[currentSwitch * 3] === 0">
-                Post-Docs
-              </v-chip>
-              <v-chip :disabled="nMembersCat[currentSwitch * 3 + 1] === 0">
-                Grad Students
-              </v-chip>
-              <v-chip :disabled="nMembersCat[currentSwitch * 3 + 2] === 0">
-                Undergrads
-              </v-chip>
-            </v-chip-group>
-          </v-col>
-        </v-row>
+      <v-col cols="12" sm="8">
+        <v-form ref="filterForm">
+          <v-row no-gutters>
+            <v-col>
+              <v-switch v-slot:label v-model="currentSwitch" value>
+                <span>
+                  <v-slide-y-transition leave-absolute>
+                    <span :key="switchLabel">
+                      {{ switchLabel }}
+                    </span>
+                  </v-slide-y-transition>
+                  &nbsp;Student Members
+                </span>
+              </v-switch>
+            </v-col>
+            <v-col cols="12">
+              <MemberFilters
+                v-model="groupSelection"
+                :n-members-cat="nMembersCat"
+                :current-switch="currentSwitch"
+              />
+            </v-col>
+          </v-row>
+        </v-form>
       </v-col>
     </v-row>
     <transition-group name="list" tag="div" class="row">
@@ -59,21 +58,25 @@
 </template>
 
 <script>
+  import MemberFilters from '@/components/MemberFilters.vue';
   import MemberCard from '@/components/MemberCard.vue';
   export default {
     components: {
+      MemberFilters,
       MemberCard,
     },
-    asyncData({ store }) {
-      const nMembersCat = [0, 0, 0, 0, 0, 0];
-      store.state.members.members.forEach((e) => {
-        for (let i = 0; i < 3; ++i)
-          if ((2 ** i) & e.level) nMembersCat[e.current ? i + 3 : i]++;
+    async asyncData({ store }) {
+      return await new Promise((resolve) => {
+        const nMembersCat = [0, 0, 0, 0, 0, 0];
+        store.state.members.members.forEach((e) => {
+          for (let i = 0; i < 3; ++i)
+            if ((2 ** i) & e.level) nMembersCat[e.current ? i + 3 : i]++;
+        });
+        resolve({
+          ...store.state.members,
+          nMembersCat,
+        });
       });
-      return {
-        ...store.state.members,
-        nMembersCat,
-      };
     },
     data() {
       return {
@@ -83,35 +86,25 @@
     },
     computed: {
       switchLabel() {
-        return (this.currentSwitch ? 'Current' : 'Former') + ' Student Members';
+        return this.currentSwitch ? 'Current' : 'Former';
       },
       groupFlags() {
         return 2 ** (this.groupSelection - 1);
       },
     },
     methods: {
+      disabledButton(i) {
+        return (
+          this.groupSelection === i + 1 ||
+          this.nMembersCat[this.currentSwitch * 3 + i] === 0
+        );
+      },
       visible(member) {
-        const visible =
+        return (
           member.current === this.currentSwitch &&
-          (this.groupSelection === 0 || member.level & this.groupFlags);
-        return visible;
+          (this.groupSelection === 0 || member.level & this.groupFlags)
+        );
       },
     },
   };
 </script>
-
-<style scoped lang="scss">
-  .list-enter-active,
-  .list-leave-active {
-    transition: all 280ms;
-  }
-  .list-enter-to,
-  .list-leave {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-</style>

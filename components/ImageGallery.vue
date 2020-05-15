@@ -5,8 +5,8 @@
       v-model="currentIndex"
       :images="currentImages"
     />
-    <div v-for="(gallery, k) in galleryImages" :key="k">
-      <h3>{{ gallery.title }}</h3>
+    <div v-for="(gallery, k) in galleryImages" :key="k" class="mt-4">
+      <h2 class="px-6">{{ gallery.title }}</h2>
       <waterfall
         :id="`waterfall-${k}`"
         :key="`waterfall-${k}`"
@@ -17,9 +17,11 @@
       >
         <BaseImage
           :src="item.thumbnail"
+          :webp="item.webp"
           :alt="item.title"
           :title="item.title"
           link
+          preload
           @click="click(index, gallery.images)"
         />
       </waterfall>

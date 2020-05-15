@@ -73,20 +73,20 @@ export default {
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
-    // Doc: https://github.com/nuxt-community/vuetify-module
+    // Doc: https://www.bazzite.com/docs/nuxt-optimized-images
     '@bazzite/nuxt-optimized-images',
-    // Doc: https://github.com/DreaMinder/nuxt-payload-extractor
+    // Doc: https://github.com/nuxt-community/vuetify-module
     '@nuxtjs/vuetify',
+    // Doc: https://github.com/DreaMinder/nuxt-payload-extractor
+    'nuxt-payload-extractor',
     // Doc: https://pwa.nuxtjs.org/setup.html
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/sitemap-module
     '@nuxtjs/sitemap',
-    // Doc: https://www.bazzite.com/docs/nuxt-optimized-images
-    'nuxt-payload-extractor',
-    // Doc: https://github.com/robcresswell/nuxt-compress
-    'nuxt-compress',
     // Doc: https://github.com/nuxt-community/webpackmonitor-module
     '@nuxtjs/webpackmonitor',
+    // Doc: https://github.com/robcresswell/nuxt-compress
+    'nuxt-compress',
   ],
   /*
    ** Nuxt.js modules
@@ -157,7 +157,6 @@ export default {
     webp: {
       preset: 'default',
       quality: imageQuality,
-      size: 15000,
     },
     pngquant: [0.3, 0.5],
   },
@@ -172,13 +171,15 @@ export default {
      */
     gzip: {
       cache: true,
+      test: /\.(js|css|svg)$/,
     },
     /*
      ** brotli plugin for webpack module configuration
      ** https://github.com/mynameiswhm/brotli-webpack-plugin
      */
     brotli: {
-      threshold: 10240,
+      threshold: 0,
+      test: /\.(js|css|svg)$/,
     },
   },
   /*
@@ -190,9 +191,7 @@ export default {
      ** workbox module configuration
      ** https://pwa.nuxtjs.org/modules/workbox.html#options
      */
-    workbox: {
-      /* Workbox options */
-    },
+    workbox: {},
     /*
      ** meta module configuration
      ** https://pwa.nuxtjs.org/modules/meta.html#options
