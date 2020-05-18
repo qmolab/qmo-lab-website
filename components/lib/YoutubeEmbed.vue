@@ -4,7 +4,6 @@
       <v-img
         v-if="!isLoaded"
         :src="thumbSource"
-        :lazy-src="lazySource"
         :srcset="sourceSet"
         :aspect-ratio="16 / 9"
       >
@@ -35,11 +34,10 @@
     },
     data() {
       return {
-        isLoaded: false,
         mdiYoutube,
+        isLoaded: false,
         videoSource: undefined,
-        thumbSource: undefined,
-        lazySource: undefined,
+        thumbSource: '',
         sourceSet: undefined,
       };
     },
@@ -53,16 +51,19 @@
     },
     methods: {
       setup() {
-        if (this.videoId.length !== 0) {
-          const y = 'https://img.youtube.com/vi';
-          const yw = y + '_webp/';
-          this.videoSource = `https://www.youtube-nocookie.com/embed/${this.videoId}?rel=0&showinfo=0`;
-          this.thumbSource = y + '/' + this.videoId + '/hqdefault.jpg';
-          this.lazySource = yw + this.videoId + '/default.webp';
-          this.sourceSet = `${yw + this.videoId}/mqdefault.webp 320w, ${
-            yw + this.videoId
-          }/hqdefault.webp 480w`;
-        }
+        return new Promise((resolve) => {
+          if (this.videoId.length !== 0) {
+            const y = 'https://img.youtube.com/vi';
+            const yw = y + '_webp/';
+            this.thumbSource = y + '/' + this.videoId + '/default.jpg';
+            this.sourceSet = `${yw + this.videoId}/mqdefault.webp 320w, ${
+              yw + this.videoId
+            }/hqdefault.webp 480w`;
+            this.videoSource = `https://www.youtube-nocookie.com/embed/${this.videoId}?rel=0&showinfo=0`;
+            resolve(true);
+          }
+          resolve(false);
+        });
       },
     },
   };

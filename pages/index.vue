@@ -49,10 +49,13 @@
       HeroLayout,
       AnnouncementsCard,
     },
-    asyncData({ store }) {
-      return {
-        announcements: store.state.news.announcements,
-      };
+    async asyncData({ $axios, $payloadURL, route }) {
+      // if generated and works as client navigation, fetch previously saved static JSON payload
+      // if (process.static && process.client && $payloadURL)
+      //   return await $axios.$get($payloadURL(route));
+      // const olderAnnouncements = await $axios.$get('/news/offset/');
+      const announcements = await $axios.$get('/news/preview/');
+      return { announcements };
     },
     head() {
       return {

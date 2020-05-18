@@ -1,6 +1,6 @@
 {
   "name": "qmo-lab-website",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Upgraded QMO Lab Website",
   "author": "David Mayes",
   "license": "MIT",
@@ -8,8 +8,8 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "gen": "nuxt generate",
-    "deploy": "nuxt generate && deploy.bat",
+    "gen": "nuxt generate && gzip dist/**/*.{html,json} --extension=gz --extension=br",
+    "deploy": "npm run gen && npm run deployNoBuild",
     "deployNoBuild": "deploy.bat",
     "serve": "serve dist",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
@@ -21,6 +21,8 @@
   "devDependencies": {
     "@bazzite/nuxt-optimized-images": "^0.4.0",
     "@mdi/js": "^5.1.45",
+    "@nuxtjs/axios": "^5.10.3",
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config": "^2.0.0",
     "@nuxtjs/eslint-module": "^1.0.0",
     "@nuxtjs/pwa": "^3.0.0-0",
@@ -36,6 +38,7 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-nuxt": ">=0.4.2",
     "eslint-plugin-prettier": "^3.1.2",
+    "gzip-cli": "^1.1.1",
     "imagemin": "^6.1.0",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^8.0.0",

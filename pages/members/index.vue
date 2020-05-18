@@ -3,7 +3,7 @@
     <h1 class="hidden-sm-and-down">QMO Lab Members</h1>
     <v-row>
       <v-col>
-        <MemberCard large-pic :member="nathanProfile" />
+        <MemberCard large-pic :member="professors.nathan" />
       </v-col>
     </v-row>
     <v-row no-gutters>
@@ -68,10 +68,11 @@
     async asyncData({ store }) {
       return await new Promise((resolve) => {
         const nMembersCat = [0, 0, 0, 0, 0, 0];
-        store.state.members.members.forEach((e) => {
+        for (const prop in store.state.members.members) {
+          const e = store.state.members.members[prop];
           for (let i = 0; i < 3; ++i)
-            if ((2 ** i) & e.level) nMembersCat[e.current ? i + 3 : i]++;
-        });
+            if ((2 ** i) & e.level) nMembersCat[e.level & 8 ? i : i + 3]++;
+        }
         resolve({
           ...store.state.members,
           nMembersCat,
@@ -101,7 +102,7 @@
       },
       visible(member) {
         return (
-          member.current === this.currentSwitch &&
+          (this.currentSwitch ? member.level < 8 : member.level & 8) &&
           (this.groupSelection === 0 || member.level & this.groupFlags)
         );
       },

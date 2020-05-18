@@ -18,6 +18,8 @@
             :id="`modal-carousel-item-${i}`"
             :key="`modal-carousel-item-${i}`"
             :src="slide.href"
+            :srcset="slide.webp"
+            :lazy-src="slide.thumbnail.src"
             contain
           />
         </v-carousel>
@@ -44,7 +46,8 @@
               <v-img
                 height="100%"
                 :aspect-ratio="5 / 4"
-                :src="slide.thumbnail"
+                :src="slide.thumbnail.src"
+                :srcset="slide.webp"
               />
             </v-card>
           </v-slide-item>

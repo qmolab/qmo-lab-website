@@ -1,5 +1,4 @@
 {
-  "plugins": ["transform-remove-strict-mode"],
   "env": {
     "test": {
       "presets": [

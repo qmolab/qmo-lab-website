@@ -14,20 +14,28 @@
         </v-form>
       </div>
     </v-card-title>
-    <transition-group id="newsItems" name="cardItem" tag="div">
+    <transition-group
+      id="newsItems"
+      ref="newsItems"
+      name="cardItem"
+      tag="div"
+      :style="`height: ${height}`"
+    >
       <div v-for="item in announcementsChecked" :key="item.title" class="pa-2">
         <div class="d-flex align-center">
           <v-avatar :size="75">
-            <BaseImage
-              :src="item.img"
-              :webp="item.webp"
+            <StoreImage
+              v-if="item.imageCategory"
+              :category="item.imageCategory"
+              :sub-category="item.imageSubCategory"
+              :item-id="item.imageRef"
               :width="75"
               :height="75"
             />
           </v-avatar>
           <div class="px-4">
             <div class="title">{{ item.title }}!</div>
-            <div class="subtitle-1">{{ item.subtitle }}</div>
+            <div class="subtitle-1">{{ item.description }}</div>
           </div>
         </div>
       </div>
@@ -50,20 +58,21 @@
 </template>
 
 <script>
-  import BaseImage from '@/components/BaseImage.vue';
+  import StoreImage from '@/components/StoreImage.vue';
 
   export default {
     name: 'Home',
-    components: { BaseImage },
+    components: { StoreImage },
     props: {
       announcements: { type: Array, required: true },
     },
     data() {
       return {
         newsSwitch: true,
-        announcementsChecked: this.announcements.slice(0, 3),
+        announcementsChecked: this.announcements,
+        oldAnnouncements: undefined,
         good: true,
-        container: undefined,
+        height: 'unset',
       };
     },
     watch: {
@@ -72,23 +81,26 @@
       },
     },
     mounted() {
-      this.container = document.getElementById('newsItems');
-      this.smallHeight = this.container.getBoundingClientRect().height;
-      this.largeHeight = (this.smallHeight / 3) * this.announcements.length;
-      this.container.style.height = `${this.smallHeight}px`;
+      this.smallHeight = this.$refs.newsItems.$el.getBoundingClientRect().height;
+      this.height = `${this.smallHeight}px`;
     },
     methods: {
       poll() {
         if (this.good) this.switch();
         else setTimeout(this.poll, 56);
       },
-      switch() {
+      async switch() {
         this.good = false;
         if (this.newsSwitch) {
-          this.container.style.height = `${this.largeHeight}px`;
+          this.height = `${this.largeHeight}px`;
           this.recursivePop();
         } else {
-          this.container.style.height = `${this.largeHeight}px`;
+          if (!this.largeHeight) {
+            this.oldAnnouncements = await this.getOldNews();
+            this.largeHeight =
+              (this.smallHeight / 3) * (this.oldAnnouncements.length + 3);
+          }
+          this.height = `${this.largeHeight}px`;
           setTimeout(this.recursiveAdd, 140);
         }
       },
@@ -97,20 +109,25 @@
           this.announcementsChecked.pop();
           setTimeout(() => this.recursivePop(), 56);
         } else {
-          this.container.style.height = `${this.smallHeight}px`;
+          this.height = `${this.smallHeight}px`;
           this.good = true;
         }
       },
       recursiveAdd() {
-        if (this.announcementsChecked.length < this.announcements.length) {
-          this.announcementsChecked.push(
-            this.announcements[this.announcementsChecked.length]
-          );
-          setTimeout(() => this.recursiveAdd(), 56);
+        const l = this.announcementsChecked.length - 3;
+        if (l < this.oldAnnouncements.length) {
+          const r = this.oldAnnouncements[l];
+          if (r.title) {
+            this.announcementsChecked.push(r);
+            setTimeout(() => this.recursiveAdd(), 56);
+          }
         } else {
+          this.height = 'unset';
           this.good = true;
-          this.container.style.height = '';
         }
+      },
+      async getOldNews() {
+        return await this.$axios.$get('/news/offset/');
       },
     },
   };

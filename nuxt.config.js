@@ -1,74 +1,63 @@
 // import colors from 'vuetify/es5/util/colors';
-import customRoutes from './assets/script/customRoutes';
-const modules = [];
+import axios from 'axios';
+import {
+  primary,
+  accent,
+  secondary,
+  info,
+  warning,
+  error,
+  success,
+  backgroundColor,
+} from './assets/scss/colors';
+require('dotenv').config();
+
+// Doc: https://axios.nuxtjs.org/usage.html
+const modules = ['@nuxtjs/axios'];
 let modern = false;
+let base = '/';
+let baseUrl = 'http://localhost:3000';
 if (process.env.NODE_ENV === 'production') {
   // Doc: https://github.com/Developmint/nuxt-webfontloader
   modules.push('nuxt-webfontloader');
   modern = 'client';
+  base = process.env.ROUTER_BASE;
+  baseUrl = process.env.SITE_BASE + process.env.ROUTER_BASE;
 }
-
-const primary = '#d094ff';
-const accent = '#9900ff';
-const secondary = '#9b94ff';
-const info = '#26A69A';
-const warning = '#FFC107';
-const error = '#DD2C00';
-const success = '#00E676';
-const backgroundColor = '#121212';
 
 const imageQuality = 0.65;
 
+async function getRoute(table, routeBase, idColumn) {
+  const res = await axios.get(process.env.API_BASE + table);
+  return res.data.map((item) => {
+    return {
+      route: routeBase + item[idColumn].replace(/ /g, '_').toLowerCase(),
+      payload: item,
+    };
+  });
+}
+
 export default {
+  /*
+   ** Nuxt mode property (one of spa or universal)
+   ** https://nuxtjs.org/api/configuration-mode/
+   */
   mode: 'universal',
+
+  /*
+   ** Nuxt modern property
+   ** https://nuxtjs.org/api/configuration-modern/
+   */
   modern,
-  /*
-   ** Headers of the page
-   */
-  // modern: 'client',
-  pageTransition: 'fade',
-  layoutTransition: 'fade',
-  head: {
-    titleTemplate: '%s -  QMO Lab',
-    title: process.env.npm_package_name || '',
-    meta: [
-      { name: 'HandheldFriendly', content: 'true' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: process.env.npm_package_description || '',
-      },
-      {
-        hid: 'keywords',
-        name: 'keywords',
-        content:
-          'qmo lab, physics, quantum materials, condensed matter physics, nathan gabor, nathaniel gabor, gabor Lab, ucr physics, optoelectronics, ucr lab, graphene, nanotubes, physics',
-      },
-    ],
-    link: [
-      { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
-      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-    ],
-  },
-  router: {
-    base: process.env.NODE_ENV !== 'production' ? '/' : '/node/',
-  },
-  /*
-   ** Customize the progress-bar color
-   */
-  loading: { color: primary },
-  /*
-   ** Global CSS
-   */
-  css: ['~/assets/main.scss'],
-  /*
-   ** Plugins to load before mounting the App
-   */
-  plugins: [],
+
+  modules, // Nuxt.js modules (defined at top level)
+
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
+    // Doc: https://github.com/nuxt-community/dotenv-module
+    '@nuxtjs/dotenv',
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
@@ -88,36 +77,100 @@ export default {
     // Doc: https://github.com/robcresswell/nuxt-compress
     'nuxt-compress',
   ],
+
   /*
-   ** Nuxt.js modules
+   ** Plugins to load before mounting the App
    */
-  modules,
+  plugins: [],
+
+  /*
+   ** Router.base is required if app is running in subfolder
+   ** https://nuxtjs.org/api/configuration-router/
+   ** Guide: https://nuxtjs.org/guide/routing/
+   */
+  router: { base },
+
+  /*
+   ** Injects contents into process.env for client-side
+   ** https://nuxtjs.org/api/configuration-env
+   */
+  env: { baseUrl },
+
+  /*
+   ** Customize the progress-bar color
+   */
+  loading: { color: primary },
+
+  /*
+   ** Global CSS
+   */
+  css: ['~/assets/scss/main.scss'],
+
+  /*
+   ** Page transions improve user navigation
+   ** Accepts a vue transition class name
+   ** https://nuxtjs.org/api/configuration-transition
+   */
+  pageTransition: 'fade',
+  layoutTransition: 'fade',
+
+  /*
+   ** Default Head Meta Items
+   ** https://nuxtjs.org/api/configuration-head
+   */
+  head: {
+    titleTemplate: '%s -  QMO Lab',
+    title: '',
+    meta: [
+      { name: 'HandheldFriendly', content: 'true' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: `QMO Lab is a leader in optoelectronic investigations of novel quantum materials.`,
+      },
+      {
+        hid: 'keywords',
+        name: 'keywords',
+        content: `qmo lab, physics, quantum materials, condensed matter physics, nathan gabor, nathaniel gabor, gabor Lab, ucr physics, optoelectronics, ucr lab, graphene, nanotubes, physics`,
+      },
+    ],
+    link: [
+      {
+        rel: 'preconnect',
+        href: 'https://cdn.jsdelivr.net',
+        crossorigin: 'anonymous',
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://fonts.gstatic.com',
+        crossorigin: 'anonymous',
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://fonts.googleapis.com',
+        crossorigin: 'anonymous',
+      },
+    ],
+  },
+
+  /*
+   ** @nuxtjs/axios module configuration
+   ** https://axios.nuxtjs.org/options.html
+   */
+  axios: { baseURL: process.env.API_BASE },
+
   /*
    ** Webfontloader options
+   ** https://www.npmjs.com/package/webfontloader
    */
-  webfontloader: {
-    google: {
-      families: [], // Loads Lato font with weights 400 and 700
-    },
-  },
-  /*
-   ** Internal optimizeCSS module options
-   ** https://github.com/NMFR/optimize-css-assets-webpack-plugin
-   */
-  optimizeCSS: {
-    assetNameRegExp: /\.optimize\.css$/g,
-    cssProcessor: require('cssnano'),
-    cssProcessorPluginOptions: {
-      preset: ['default', { discardComments: { removeAll: true } }],
-    },
-    canPrint: true,
-  },
+  webfontloader: { google: { families: [] } },
+
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+    customVariables: ['~/assets/scss/variables.scss'],
     defaultAssets: {
       font: { family: 'Roboto' },
       icons: false,
@@ -138,20 +191,33 @@ export default {
       },
     },
   },
+
+  /*
+   ** Internal optimizeCSS module options
+   ** https://github.com/NMFR/optimize-css-assets-webpack-plugin
+   */
+  optimizeCSS: {
+    assetNameRegExp: /\.optimize\.css$/g,
+    cssProcessor: require('cssnano'),
+    cssProcessorPluginOptions: {
+      preset: ['default', { discardComments: { removeAll: true } }],
+    },
+    canPrint: true,
+  },
+
   /*
    ** @bazzite/nuxt-optimized-images module configuration
    ** https://www.bazzite.com/docs/nuxt-optimized-images/configuration/
    ** https://www.bazzite.com/docs/nuxt-optimized-images/example/
    */
   optimizedImages: {
-    /* optimized Images options */
     inlineImageLimit: 500,
     responsive: {
       size: 300,
       sizes: [200, 300],
       format: 'jpg',
       quality: imageQuality,
-      placeholder: true,
+      placeholder: false,
       placeholderSize: 7,
     },
     webp: {
@@ -160,6 +226,7 @@ export default {
     },
     pngquant: [0.3, 0.5],
   },
+
   /*
    ** nuxt-compress module configuration
    ** https://github.com/robcresswell/nuxt-compress
@@ -182,6 +249,7 @@ export default {
       test: /\.(js|css|svg)$/,
     },
   },
+
   /*
    ** nuxt-pwa module configuration
    ** https://pwa.nuxtjs.org/setup.html
@@ -196,36 +264,29 @@ export default {
      ** meta module configuration
      ** https://pwa.nuxtjs.org/modules/meta.html#options
      */
-    meta: {
-      /* meta options */
-      theme_color: primary,
-    },
+    meta: { theme_color: primary },
     /*
      ** icon module configuration
      ** https://pwa.nuxtjs.org/modules/icon.html#options
      */
-    icon: {
-      /* icon options */
-    },
+    icon: {},
     /*
      ** manifest module configuration
      ** https://pwa.nuxtjs.org/modules/manifest.html#options
      */
     manifest: {
-      /* manifest options */
       background_color: backgroundColor,
       theme_color: primary,
       display: 'browser',
     },
   },
+
   /*
    ** nuxt-sitemap module configuration
    ** https://github.com/nuxt-community/sitemap-module
    */
-  sitemap: {
-    // sitemap configuration
-    hostname: 'https://qmolab.ucr.edu/',
-  },
+  sitemap: { hostname: baseUrl },
+
   /*
    ** Build configuration
    ** https://nuxtjs.org/api/configuration-build
@@ -244,24 +305,36 @@ export default {
         },
       },
     },
+
     /*
      ** You can extend webpack config here
      */
     extend(config, ctx) {},
   },
 
+  /*
+   ** Generate configuration
+   ** https://nuxtjs.org/api/configuration-generate/
+   ** Guide: https://nuxtjs.org/guide/routing/
+   */
   generate: {
-    routes() {
-      const routes = [];
-      for (const [k, v] of Object.entries(customRoutes)) {
-        v.forEach((vv) => {
-          routes.push({
-            type: k,
-            route: vv.to,
-          });
-        });
-      }
-      return routes;
+    async routes() {
+      const theses = await getRoute(
+        '/theses/routes/',
+        '/members/theses/',
+        'author'
+      );
+      const research = await getRoute(
+        '/research/routes/',
+        '/research/',
+        'title'
+      );
+      const software = await getRoute(
+        '/software/routes/',
+        '/resources/software/',
+        'title'
+      );
+      return [...theses, ...research, ...software];
     },
   },
 };

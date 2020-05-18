@@ -10,7 +10,6 @@
         hide-delimiters
         :next-icon="mdiChevronRight"
         :prev-icon="mdiChevronLeft"
-        @change="cycle = !cycle"
       >
         <v-carousel-item
           v-for="(slide, i) in heroSlides"

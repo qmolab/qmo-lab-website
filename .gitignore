@@ -97,3 +97,4 @@ store
 # assets/ images is filled with site specific assets
 assets/images/
 
+axios

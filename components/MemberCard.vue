@@ -23,7 +23,7 @@
           </span>
         </v-card-text>
         <v-btn
-          v-if="!member.current && member.level & 2"
+          v-if="member.level & 10"
           text
           nuxt
           :to="`/members/theses/`"
@@ -37,7 +37,7 @@
       <v-spacer />
       <v-btn text disabled>More about {{ shortName }}</v-btn>
       <v-btn
-        v-if="!member.current && member.level & 2"
+        v-if="member.level & 10"
         text
         nuxt
         :to="`/members/theses/`"
@@ -74,13 +74,15 @@
         return this.member.nickname || this.member.first;
       },
       byline() {
-        let byline = this.member.dept;
-        if (!this.member.current) {
-          byline += ' ';
-          if (this.member.level & 2) byline += 'Ph.D. ';
-          byline += this.member.gradYear.toString();
-        }
-        return byline;
+        if (this.member.dept) {
+          return (
+            this.member.dept +
+            (this.member.level & 8
+              ? (this.member.level & 2 ? ' Ph.D. ' : ' B.S. ') +
+                this.member.gradYear.toString()
+              : '')
+          );
+        } else return this.member.title;
       },
     },
   };

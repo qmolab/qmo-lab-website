@@ -19,9 +19,10 @@
     async asyncData({ store }) {
       return await new Promise((resolve) => {
         const memberItems = ['Nathan'];
-        store.state.members.members.forEach((e) => {
+        for (const key in store.state.members.members) {
+          const e = store.state.members.members[key];
           memberItems.push(e.nickname || e.first);
-        });
+        }
         resolve({ memberItems });
       });
     },

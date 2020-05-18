@@ -1,5 +1,5 @@
 <template>
-  <v-container class="researchPage">
+  <v-container class="softwarePage">
     <BreadCrumb />
     <h1 class="hidden-sm-and-down">QMO Lab Software and Documentation</h1>
     <p class="mt-4 mx-2">
@@ -15,13 +15,15 @@
         <v-sheet class="stretchCard pb-12">
           <div class="title px-4 pt-4">{{ item.title }}</div>
           <div class="subtitle-1 px-4">{{ item.subtitle }}</div>
-          <div class="summary pa-4">{{ item.text }}</div>
+          <div class="summary pa-4">{{ item.summary }}</div>
           <div class="pt-0 actions">
             <v-spacer />
             <v-btn
               text
-              :disabled="!item.documentation"
-              :href="item.documentation"
+              nuxt
+              :to="`/resources/software/${item.title
+                .replace(/ /g, '_')
+                .toLowerCase()}/`"
             >
               Documentation
               <v-icon right color="secondary">
@@ -46,34 +48,14 @@
   import BreadCrumb from '@/components/lib/BreadCrumb.vue';
   export default {
     components: { BreadCrumb },
+    async asyncData({ $axios /* $payloadURL, route */ }) {
+      const items = await $axios.$get('/software/cards/');
+      return { items };
+    },
     data() {
       return {
         mdiDownload,
         mdiFileDocument,
-        items: [
-          {
-            title: 'Gabor Lab Toolkit',
-            subtitle: 'By Trevor Arp',
-            text: `The Gabor Lab Toolkit is a...`,
-            download: '',
-            documentation: '',
-          },
-          {
-            title: 'hyperDAQ',
-            subtitle: 'By Trevor Arp',
-            text: `hyperDAQ is based on MPDPM (Multi-parameter dynamic photo-response microscopy), a
-            growing...`,
-            download: '',
-            documentation: '',
-          },
-          {
-            title: 'Noisy Antenna',
-            subtitle: 'By Trevor Arp',
-            text: `The Noisy Antenna program...`,
-            download: '',
-            documentation: '',
-          },
-        ],
       };
     },
   };

@@ -4,12 +4,12 @@
       bottom
       :open-delay="tooltipDelay"
       :close-delay="tooltipDelay / 2"
-      :disabled="noTooltip"
+      :disabled="noTooltip || !title"
     >
       <template v-slot:activator="{ on }">
         <v-img
-          :src="sourceChecked"
-          :lazy-src="lazySrcChecked"
+          :src="src.src"
+          :lazy-src="lazySrc"
           :srcset="srcsetChecked"
           :alt="alt"
           :aspect-ratio="aspectRatioChecked"
@@ -20,9 +20,7 @@
           :width="width"
           :min-width="minWidth"
           :max-width="maxWidth"
-          :options="{
-            threshold: 0.1,
-          }"
+          :options="{ threshold: 0.1 }"
           transition="fade-transition"
           v-on="on"
         >
@@ -66,57 +64,33 @@
     data() {
       return {
         aspectRatioChecked: undefined,
-        sourceChecked: undefined,
-        srcsetChecked: undefined,
-        lazySrcChecked: undefined,
       };
     },
-    watch: {
-      src() {
-        this.updateSources();
+    computed: {
+      srcsetChecked() {
+        const srcSet = this.srcset || this.src.srcSet;
+        if (this.webp) {
+          const webpSrcSet = this.webp.srcset || this.webp.srcSet;
+          return webpSrcSet
+            ? srcSet
+              ? srcSet.concat(webpSrcSet)
+              : webpSrcSet
+            : this.webp;
+        } else {
+          return srcSet;
+        }
       },
     },
-    created() {
-      this.updateSources();
-    },
     mounted() {
-      if (this.aspectRatio || !this.preload)
+      if (this.aspectRatio || !this.preload || (this.width && this.height))
         this.aspectRatioChecked = this.aspectRatio;
-      else if (
-        !(this.width || this.height) &&
-        this.lazySrcChecked &&
-        !(this.width && this.height)
-      ) {
+      else if (this.lazySrc) {
         const img = new Image();
         img.onload = () => {
           this.aspectRatioChecked = img.naturalWidth / img.naturalHeight;
         };
-        img.src = this.lazySrcChecked;
+        img.src = this.lazySrc;
       }
-    },
-    methods: {
-      updateSources() {
-        if (typeof this.src === 'string') {
-          this.sourceChecked = this.src;
-          this.srcsetChecked = this.srcset;
-          this.lazySrcChecked = this.lazySrc;
-        } else {
-          this.sourceChecked = this.src.src;
-          const srcSet = this.srcset || this.src.srcset || this.src.srcSet;
-          if (this.webp) {
-            const webpSrcSet = this.webp.srcset || this.webp.srcSet;
-            this.srcsetChecked = webpSrcSet
-              ? srcSet
-                ? srcSet.concat(webpSrcSet)
-                : webpSrcSet
-              : this.webp;
-          } else {
-            this.srcsetChecked = srcSet;
-          }
-          this.lazySrcChecked =
-            this.lazySrc || this.src.placeholder || this.src.lazySrc;
-        }
-      },
     },
   };
 </script>

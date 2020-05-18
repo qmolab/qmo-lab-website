@@ -73,7 +73,34 @@
           </v-row>
         </v-col>
         <v-col cols="12" md="6">
-          <FundingCard :col-span="6" />
+          <v-hover v-slot:default="{ hover }">
+            <v-card
+              :elevation="hover ? 12 : 2"
+              :color="color(hover)"
+              nuxt
+              to="/links/"
+              height="initial"
+              class="transition_defualt"
+            >
+              <v-card-title>Lab Funding:</v-card-title>
+              <v-row>
+                <v-col
+                  v-for="(fundingSource, n) in fundingImages"
+                  :key="n"
+                  :cols="6"
+                >
+                  <BaseImage
+                    :src="fundingSource.src"
+                    :webp="fundingSource.webp"
+                    :alt="fundingSource.alt"
+                    :title="fundingSource.title"
+                    :max-height="80"
+                    contain
+                  />
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-hover>
         </v-col>
       </v-row>
     </v-container>
@@ -90,17 +117,17 @@
 <script>
   import { mdiTwitter, mdiYoutube, mdiGithub, mdiFileDocument } from '@mdi/js';
   import NuxtLink from '@/components/NuxtLink.vue';
-  import FundingCard from '@/components/FundingCard.vue';
+  import BaseImage from '@/components/BaseImage.vue';
   export default {
     name: 'TheFooter',
     components: {
       NuxtLink,
-      FundingCard,
+      BaseImage,
     },
     data() {
       return {
         tooltipDelay: 500,
-        ucrLogo: require('~/assets/images/ucr_logo_blGd.png?resize&format=png'),
+        ucrLogo: require('~/assets/images/ucr_logo_blGd.png?resize&format=png&placeholder=true'),
         ucrLogoWebp: require('~/assets/images/ucr_logo_blGd.png?webp'),
         icons: [
           {
@@ -136,6 +163,32 @@
           },
           { to: '/resources/contact/', text: 'Contact Us' },
         ],
+        fundingImages: [
+          {
+            src: require('~/assets/images/funding_logos/NSF_logo.png?resize&format=png'),
+            webp: require('~/assets/images/funding_logos/NSF_logo.png?webp'),
+            alt: 'NSF Logo',
+            title: 'The National Science Foundation',
+          },
+          {
+            src: require('~/assets/images/funding_logos/CIFAR_logo.png?resize&format=png'),
+            webp: require('~/assets/images/funding_logos/CIFAR_logo.png?webp'),
+            alt: 'CIFAR Logo',
+            title: 'Canadian Institute for the Advanced Research',
+          },
+          {
+            src: require('~/assets/images/funding_logos/SHINES_logo.png?resize&format=png'),
+            webp: require('~/assets/images/funding_logos/SHINES_logo.png?webp'),
+            alt: 'SHINES Logo',
+            title: 'Spin and Heat in Nanoscale Electronic Systems',
+          },
+          {
+            src: require('~/assets/images/funding_logos/RCSA_logo.png?resize&format=png'),
+            webp: require('~/assets/images/funding_logos/RCSA_logo.png?webp'),
+            alt: 'RCSA Logo',
+            title: 'Research Corporation for Science Advancement',
+          },
+        ],
       };
     },
     computed: {
@@ -147,6 +200,11 @@
           this.ucrLogo.srcSet ||
           this.ucrLogo.srcset
         );
+      },
+    },
+    methods: {
+      color(hovering) {
+        return 'rgba(255,255,255,' + (hovering ? 0.02 : 0.01).toString() + ')';
       },
     },
   };

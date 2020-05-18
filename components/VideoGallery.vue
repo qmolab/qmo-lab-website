@@ -16,18 +16,18 @@
         sm="6"
         md="4"
         lg="2"
-        class="py-0"
       >
         <BaseImage
-          :src="`https://img.youtube.com/vi/${video}/default.jpg`"
-          :srcset="`https://img.youtube.com/vi_webp/${video}/default.webp`"
-          alt="video alt"
-          title="video title"
+          :src="{ src: `https://img.youtube.com/vi/${video.src}/default.jpg` }"
+          :srcset="`https://img.youtube.com/vi_webp/${video.src}/default.webp`"
+          :alt="video.title"
+          :title="video.title"
           class="videoGalleryVideoCard hide-overflow"
           :aspect-ratio="16 / 9"
-          :disabled="video === currentVideoID"
-          :link="video !== currentVideoID"
-          @click="currentVideoID = video"
+          :disabled="video.src === currentVideoID"
+          :link="video.src !== currentVideoID"
+          :no-tooltip="video.title === ''"
+          @click="currentVideoID = video.src"
         >
           <v-icon class="mdiYoutube">{{ mdiYoutube }}</v-icon>
         </BaseImage>
@@ -47,18 +47,11 @@
       YoutubeEmbed,
       BaseImage,
     },
+    props: { videos: { type: Array, required: true } },
     data() {
       return {
         currentVideoID: '',
         mdiYoutube,
-        videos: [
-          'iOqmUeZVA0Q',
-          'aVY4od4mfnA',
-          'f6CjReJumHA',
-          'm3KhuLkpTAA',
-          'YEyQ1vrFAS8',
-          'Q9CyY_0uLJs',
-        ],
       };
     },
   };

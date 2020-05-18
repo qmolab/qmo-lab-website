@@ -1,12 +1,7 @@
 <template>
   <HeroLayout class="newsPage">
-    <AnnouncementsCard
-      :announcements="announcements"
-      title="QMO LAB NEWS"
-      text="For More QMO Lab Highlights, Please See Our Publications or Research Pages."
-      button2-text="Research"
-      button2-target="/research"
-    />
+    <h1>QMO Lab News Archive</h1>
+    <AnnouncementsCard :announcements="announcements" />
   </HeroLayout>
 </template>
 
@@ -19,10 +14,9 @@
       HeroLayout,
       AnnouncementsCard,
     },
-    asyncData({ store }) {
-      return {
-        announcements: store.state.news.announcements,
-      };
+    async asyncData({ $axios, $payloadURL, route }) {
+      const announcements = await $axios.$get('/news/preview/');
+      return { announcements };
     },
     head() {
       return {

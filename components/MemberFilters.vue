@@ -3,8 +3,7 @@
     <span
       :class="{
         'v-chip v-chip--clickable v-chip--no-color theme--dark v-size--default': true,
-        'v-chip--disabled': value === 0,
-        'primary--text': value === 0,
+        'v-chip--disabled primary--text': value === 0,
       }"
       @click="$emit('input', 0)"
     >
