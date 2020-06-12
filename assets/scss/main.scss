@@ -1,5 +1,12 @@
 // Global stylesheet
 @import '@/assets/scss/variables.scss';
+// @import url('https://fonts.googleapis.com/css?family=Cormorant+Garamond:300,400,500&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:100,300,400,500,700,900&display=swap');
+
+a {
+  text-decoration: none;
+}
 
 .hiddentext {
   text-indent: 1000%;
@@ -13,7 +20,10 @@
   width: 100% !important;
 }
 .ta-center {
-  text-align: center;
+  text-align: center !important;
+}
+.ta-right {
+  text-align: right !important;
 }
 
 .fade-enter-active, .fade-leave-active  {
@@ -38,7 +48,7 @@
   transform: translateX($transition_distance);
 }
 .list-enter-active {
-  transition: $transition_duration $transition_func_main $transition_duration;
+  transition: $transition_duration $transition_func_main;
 }
 .list-leave-active {
   transition: $transition_duration $transition_func_main;
@@ -72,6 +82,10 @@
   float: right;
 }
 
+.narrowCard {
+  max-width: 420px !important;
+}
+
 .qmoLogo {
   background-image: url('~assets/images/logo_transparent.svg');
   background-size: cover;
@@ -80,9 +94,13 @@
   padding-bottom: 31%;
 }
 
+.bg-black--80 {
+  background-color: rgba(0, 0, 0, 0.8);
+}
 
 .videoPlayerContainer {
   width: $videoPlayerWidth;
+  max-width: 100%;
   height: $videoPlayerHeight;
   border-radius: 4px;
   max-width: 100%;
@@ -116,57 +134,24 @@
     transform: scale(1.01);
   }
 }
+.text--large {
+  font-size: 1.2rem;
+}
+.text--small {
+  font-size: 0.875rem;
+}
+.text--normal {
+  font-size: 1rem;
+}
 .strike {
   text-decoration: line-through;
   text-decoration-color: $primary;
 }
-.container {
-  max-width: 1280px;
-  margin: auto;
-}
-.title {
+.cap {
   text-transform: capitalize;
 }
-.heading {
-  text-transform: capitalize;
-}
-.light {
-  font-weight: 400;
-}
-.summary {
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.375rem;
-  letter-spacing: 0.0071428571em;
-}
-.v-image {
-  align-items: flex-end;
-}
-.v-image__image {
-  transition: background-image $transition_duration $transition_func_main;
-}
-.v-card__title {
-  word-break: break-word !important;
-  text-transform: capitalize;
-  flex-direction: column;
-  align-items: stretch !important;
-}
-.v-card__actions>.v-btn {
-  flex: 0 1 auto;
-}
-.v-btn {
-  max-width: 100%;
-}
-.v-btn__content .v-icon--right {
-  margin-right: 4px !important;
-}
-.v-application .v-btn__content, .ellipsis_text {
-  max-width: 100%;
-  word-break: break-all;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  display: block;
+.minW-0 {
+  min-width: 0 !important;
 }
 .v-icon.v-icon--svg.mdiYoutube {
   position: absolute;
@@ -186,13 +171,70 @@
     border-radius: 50%;
   }
 }
-.v-application .v-dialog {
-  box-shadow: none;
+
+
+
+.v-application {
+  .v-dialog {
+    box-shadow: none;
+  }
+  .display-4,
+  .display-3,
+  .display-2,
+  .display-1,
+  .headline,
+  .title {
+    text-transform: capitalize;
+    word-break: break-word !important;
+  }
+  .title {
+    line-height: 1.5rem !important;
+  }
+  .v-card__title {
+    word-break: break-word !important;
+    text-transform: capitalize;
+    flex-direction: column;
+    align-items: stretch !important;
+  }
+  .v-btn__content, .ellipsis_text {
+    max-width: 100%;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+  }
+  .v-image {
+    align-items: flex-end;
+  }
+  .v-image__image {
+    transition: background-image $transition_duration $transition_func_main;
+  }
+  .v-card__actions>.v-btn {
+    flex: 0 1 auto;
+  }
+  .v-btn {
+    max-width: 100%;
+  }
+  .v-btn__content .v-icon--right {
+    margin-right: 4px !important;
+  }
+  .v-carousel .v-responsive__content {
+    height: 100%;
+  }
 }
 
-.v-carousel .v-responsive__content {
-  height: 100%;
-}
 .transition_defualt {
   transition: $transition_duration $transition_func_main;
+}
+
+@media (min-width: 1904px) {
+  .container {
+      max-width: 1445px !important;
+  }
+}
+.v-card {
+  .body-2 {
+    opacity: 0.8;
+  }
 }

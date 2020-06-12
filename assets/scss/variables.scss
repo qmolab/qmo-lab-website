@@ -6,22 +6,30 @@ $black: #121212;
 $white: #f5f5f5;
 $light-grey: #eeeeee;
 $dark-grey: #333;
-$primary: #d094ff;
-$secondary: #9b94ff;
+$primary: #0288D1;    // light-blue darken-2
+$secondary: #00796B;   // teal darken-2;
 $borderRadius: 4px;
-$accent: #9900ff;
+$accent: #AA00ff; //puple accent-4
 $youtube-red: #c4302b;
+$surface: lighten($black,2%);
+$header: lighten($surface,2%);
+$body-font-family: 'Roboto Condensed';
+$heading-font-family: 'Roboto';
 
-//$font-size-root: 18px;
+$font-size-root: 18px;
+$material-dark: (
+  'surface': $surface,
+  'app-bar': $header,
+  'cards': $surface,
+);
+/*
 $material-dark: (
   'status-bar': (
     'regular': $black,
     'lights-out': rgba($black, 0.2)
   ),
-  'app-bar': lighten($black,3%),
   'background': $black,
-  'surface': lighten($black,2%),
-  'cards': lighten($black,2%),
+  'surface': $surface,
   'chips': #555,
   'dividers': rgba($white, 0.12),
   'text': (
@@ -127,6 +135,7 @@ $material-light: (
   'surface': $white,
   'color': $black,
 );
+*/
 
 $videoPlayerHeight: 360px !default;
 $videoPlayerWidth: 640px !default;

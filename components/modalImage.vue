@@ -1,17 +1,14 @@
 <template>
-  <v-dialog v-model="dialog" fullscreen>
-    <div class="rel fill-h" style="background-color: rgba(0, 0, 0, 0.8);">
+  <v-overlay :value="dialog" opacity="0.9" z-index="20000">
+    <div class="overlay">
       <div class="pa-4">
         <v-carousel
           :id="`modal-carousel`"
-          :key="`modal-carousel`"
           v-model="modelValue"
           hide-delimiters
           show-arrows
           continuous
           height="80vh"
-          :next-icon="mdiChevronRight"
-          :prev-icon="mdiChevronLeft"
         >
           <v-carousel-item
             v-for="(slide, i) in images"
@@ -24,15 +21,13 @@
           />
         </v-carousel>
         <v-slide-group
-          id="modal-carousel-bsg"
-          key="modal-carousel-bsg"
+          v-if="images.length > 0"
+          :key="images[0].thumbnail.src"
           v-model="modelValue"
-          class="d-xs-none d-md-flex pt-4"
+          class="hidden-md-and-down pt-4 vh15"
           show-arrows
           center-active
-          style="height: 15vh;"
-          :next-icon="mdiChevronRight"
-          :prev-icon="mdiChevronLeft"
+          mandatory
         >
           <v-slide-item
             v-for="(slide, i) in images"
@@ -40,33 +35,31 @@
             :key="`modal-carousel-bsi-${i}`"
             v-slot:default="{ active, toggle }"
             class="mx-2"
-            style="flex: 1 1 auto;"
           >
-            <v-card :disabled="active" @click="toggle">
-              <v-img
-                height="100%"
-                :aspect-ratio="5 / 4"
-                :src="slide.thumbnail.src"
-                :srcset="slide.webp"
-              />
-            </v-card>
+            <v-img
+              max-height="13.5vh"
+              max-width="24vh"
+              :class="{ dimDown: active, pointer: !active }"
+              :src="slide.thumbnail.src"
+              :srcset="slide.webp"
+              @click="toggle"
+            />
           </v-slide-item>
         </v-slide-group>
       </div>
       <v-btn
         color="red"
         class="abs closeButton pa-0 ma-2"
-        style="top: 8px; right: 8px;"
         @click="dialog = false"
       >
-        <v-icon size="36">{{ closeIcon }}</v-icon>
+        <v-icon large>{{ closeIcon }}</v-icon>
       </v-btn>
     </div>
-  </v-dialog>
+  </v-overlay>
 </template>
 
 <script>
-  import { mdiChevronRight, mdiChevronLeft, mdiClose } from '@mdi/js';
+  import { mdiClose } from '@mdi/js';
   export default {
     name: 'ModalImage',
     components: {},
@@ -79,7 +72,7 @@
       images: { type: [Object, Array], default: undefined },
     },
     data() {
-      return { closeIcon: mdiClose, mdiChevronRight, mdiChevronLeft };
+      return { closeIcon: mdiClose };
     },
     computed: {
       dialog: {
@@ -102,10 +95,28 @@
   };
 </script>
 
-<style lang="scss" scoped>
-  .closeButton {
-    float: right;
-    min-width: 36px !important;
-    max-width: 36px;
+<style lang="scss">
+  .overlay {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    .closeButton {
+      top: 8px;
+      right: 8px;
+      min-width: 36px !important;
+      max-width: 36px;
+    }
+    .v-slide-group__content {
+      justify-content: center;
+    }
+  }
+  .vh15 {
+    height: 15vh !important;
+  }
+  .pointer {
+    cursor: pointer !important;
+  }
+  .dimDown {
+    opacity: 0.3 !important;
   }
 </style>

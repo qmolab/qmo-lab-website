@@ -1,14 +1,20 @@
 <template>
-  <div class="px-3 pb-6">
-    <div
-      :class="{
-        videoPlayerContainer: true,
-        activated: currentVideoID !== '',
-      }"
-    >
-      <YoutubeEmbed :video-id="currentVideoID" />
+  <div class="px-3 pb-6 hidden-xs-only">
+    <div>
+      <v-expand-transition>
+        <div v-if="currentVideoID !== ''" class="videoPlayerContainer">
+          <YoutubeEmbed :video-id="currentVideoID" />
+        </div>
+      </v-expand-transition>
     </div>
     <v-row>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="d-none"
+      >
+        <path id="ytIconPath" :d="mdiYoutube" />
+      </svg>
       <v-col
         v-for="(video, i) in videos"
         :key="i"
@@ -29,7 +35,18 @@
           :no-tooltip="video.title === ''"
           @click="currentVideoID = video.src"
         >
-          <v-icon class="mdiYoutube">{{ mdiYoutube }}</v-icon>
+          <span class="v-icon notranslate mdiYoutube v-icon--svg theme--dark">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              height="24"
+              width="24"
+              role="img"
+              aria-hidden="true"
+            >
+              <use href="#ytIconPath" />
+            </svg>
+          </span>
         </BaseImage>
       </v-col>
     </v-row>
@@ -43,31 +60,15 @@
 
   export default {
     name: 'VideoGallery',
-    components: {
-      YoutubeEmbed,
-      BaseImage,
-    },
+    components: { YoutubeEmbed, BaseImage },
     props: { videos: { type: Array, required: true } },
     data() {
-      return {
-        currentVideoID: '',
-        mdiYoutube,
-      };
+      return { currentVideoID: '', mdiYoutube };
     },
   };
 </script>
 
 <style scoped lang="scss">
-  .videoPlayerContainer {
-    height: 0;
-    &.activated {
-      height: $videoPlayerHeight;
-      transition: height $transition_duration $transition_func_main;
-      @media (max-width: 600px) {
-        height: 56vw;
-      }
-    }
-  }
   .videoGalleryVideoCard {
     .mdiYoutube {
       width: 20px;

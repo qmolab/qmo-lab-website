@@ -1,33 +1,32 @@
 <template>
-  <v-container class="softwareOverviewPage">
-    <BreadCrumb />
-    <h1 class="hidden-sm-and-down heading">QMO Lab Software: {{ title }}</h1>
+  <div class="softwareOverviewPage">
     <span>{{ subtitle }}</span>
-    <h2 class="ta-center mt-12 heading">{{ title }} overview</h2>
-    <p class="mt-8">{{ summary }}</p>
+    <h2 class="ta-center mt-12 headline">{{ title }} Overview</h2>
+    <div class="body-2 mt-4"><DynamicText :html="summary" /></div>
+    <h2 class="mt-12">This page is still under development!</h2>
+    <span>
+      It shall contain a general overview of the software <br />
+      Please let me know if you have any suggestions
+    </span>
     <div class="mt-12 actions">
       <v-spacer />
       <v-btn v-if="documentation" text :href="documentation">
-        Full documentation
-        <v-icon right color="secondary">
-          {{ mdiFileDocument }}
-        </v-icon>
+        <span>Full documentation</span>
+        <v-icon right color="secondary">{{ mdiFileDocument }}</v-icon>
       </v-btn>
       <v-btn v-if="download" text :href="download">
-        Download Latest
-        <v-icon right color="secondary">
-          {{ mdiDownload }}
-        </v-icon>
+        <span>Download Latest</span>
+        <v-icon right color="secondary">{{ mdiDownload }}</v-icon>
       </v-btn>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>
   import { mdiDownload, mdiFileDocument } from '@mdi/js';
-  import BreadCrumb from '@/components/lib/BreadCrumb.vue';
+  import DynamicText from '@/components/DynamicText.vue';
   export default {
-    components: { BreadCrumb },
+    components: { DynamicText },
     async asyncData({ $axios, payload, params /* $payloadURL, route */ }) {
       if (payload)
         return {

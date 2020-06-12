@@ -1,5 +1,5 @@
 <template>
-  <div :style="`max-width: ${maxWidth}`">
+  <div>
     <BaseImage
       v-if="asset"
       :src="asset.img"
@@ -9,6 +9,7 @@
       :title="asset.title"
       :alt="asset.alt"
       :aspect-ratio="aspectRatio"
+      :max-width="maxWidth"
     />
   </div>
 </template>
@@ -18,7 +19,6 @@
   export default {
     components: { BaseImage },
     props: {
-      category: { type: String, required: true },
       subCategory: { type: String, required: true },
       itemId: { type: String, required: true },
       width: { type: [String, Number], default: undefined },
@@ -28,7 +28,7 @@
     },
     computed: {
       asset() {
-        return this.$store.state[this.category][this.subCategory][this.itemId];
+        return this.$store.state.images[this.subCategory][this.itemId];
       },
     },
   };

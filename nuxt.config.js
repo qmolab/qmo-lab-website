@@ -1,6 +1,34 @@
 // import colors from 'vuetify/es5/util/colors';
 import axios from 'axios';
 import {
+  mdiCancel,
+  mdiClose,
+  mdiDelete,
+  mdiInformation,
+  mdiChevronLeft,
+  mdiChevronRight,
+  mdiCircleSlice8,
+  mdiSort,
+  mdiMenu,
+  mdiAlert,
+  mdiAlertCircle,
+  mdiRadioboxMarked,
+  mdiRadioboxBlank,
+  mdiFileDocument,
+  mdiUnfoldLessHorizontal,
+  mdiUnfoldMoreHorizontal,
+  mdiPencil,
+  mdiLoading,
+  mdiChevronDown,
+  mdiCheckboxBlankOutline,
+  mdiCheckboxIntermediate,
+  mdiCheckboxMarked,
+  mdiCheckBold,
+  // mdiStar,
+  // mdiStarOutline,
+  // mdiStarHalf,
+} from '@mdi/js';
+import {
   primary,
   accent,
   secondary,
@@ -10,34 +38,74 @@ import {
   success,
   backgroundColor,
 } from './assets/scss/colors';
+import { blacklistRoutes } from './assets/js/admin';
 require('dotenv').config();
-
+const MY_ICONS = {
+  complete: mdiCheckBold,
+  cancel: mdiCancel,
+  close: mdiClose,
+  delete: mdiDelete, // delete (e.g. v-chip close)
+  clear: mdiClose,
+  success: mdiCheckBold,
+  info: mdiInformation,
+  warning: mdiAlert,
+  error: mdiAlertCircle,
+  prev: mdiChevronLeft,
+  next: mdiChevronRight,
+  checkboxOn: mdiCheckboxMarked,
+  checkboxOff: mdiCheckboxBlankOutline,
+  checkboxIndeterminate: mdiCheckboxIntermediate,
+  delimiter: mdiCircleSlice8, // for carousel
+  sort: mdiSort,
+  expand: mdiChevronDown,
+  menu: mdiMenu,
+  // subgroup: '...',
+  dropdown: mdiChevronDown,
+  radioOn: mdiRadioboxMarked,
+  radioOff: mdiRadioboxBlank,
+  edit: mdiPencil,
+  // ratingEmpty: mdiStarOutline,
+  // ratingFull: mdiStar,
+  // ratingHalf: mdiStarHalf,
+  loading: mdiLoading,
+  // first: '...',
+  // last: '...',
+  fold: mdiUnfoldLessHorizontal,
+  unfold: mdiUnfoldMoreHorizontal,
+  file: mdiFileDocument,
+};
 // Doc: https://axios.nuxtjs.org/usage.html
-const modules = ['@nuxtjs/axios'];
+// Doc: https://auth.nuxtjs.org/guide/setup.html
+const modules = ['@nuxtjs/axios' /*, '@nuxtjs/auth' */];
 let modern = false;
 let base = '/';
 let baseUrl = 'http://localhost:3000';
 if (process.env.NODE_ENV === 'production') {
   // Doc: https://github.com/Developmint/nuxt-webfontloader
-  modules.push('nuxt-webfontloader');
+  // modules.push('nuxt-webfontloader');
   modern = 'client';
   base = process.env.ROUTER_BASE;
   baseUrl = process.env.SITE_BASE + process.env.ROUTER_BASE;
 }
 
-const imageQuality = 0.65;
+const imageQuality = 0.85;
 
 async function getRoute(table, routeBase, idColumn) {
   const res = await axios.get(process.env.API_BASE + table);
   return res.data.map((item) => {
     return {
       route: routeBase + item[idColumn].replace(/ /g, '_').toLowerCase(),
-      payload: item,
+      payload: Object.keys(item).length === 1 ? undefined : item,
     };
   });
 }
 
 export default {
+  vue: {
+    config: {
+      performance: true, // you probably should detect dev mode here
+    },
+  },
   /*
    ** Nuxt mode property (one of spa or universal)
    ** https://nuxtjs.org/api/configuration-mode/
@@ -67,13 +135,13 @@ export default {
     // Doc: https://github.com/nuxt-community/vuetify-module
     '@nuxtjs/vuetify',
     // Doc: https://github.com/DreaMinder/nuxt-payload-extractor
-    'nuxt-payload-extractor',
+    // ['nuxt-payload-extractor', { blacklist: blacklistRoutes }],
     // Doc: https://pwa.nuxtjs.org/setup.html
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/sitemap-module
     '@nuxtjs/sitemap',
     // Doc: https://github.com/nuxt-community/webpackmonitor-module
-    '@nuxtjs/webpackmonitor',
+    // '@nuxtjs/webpackmonitor',
     // Doc: https://github.com/robcresswell/nuxt-compress
     'nuxt-compress',
   ],
@@ -81,7 +149,12 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    /* { src: '~plugins/auth.js', ssr: false }, '~plugins/axios.js' */ {
+      src: '~/plugins/vue-pdf',
+      ssr: false,
+    },
+  ],
 
   /*
    ** Router.base is required if app is running in subfolder
@@ -119,7 +192,7 @@ export default {
    ** https://nuxtjs.org/api/configuration-head
    */
   head: {
-    titleTemplate: '%s -  QMO Lab',
+    titleTemplate: 'QMO Lab %s',
     title: '',
     meta: [
       { name: 'HandheldFriendly', content: 'true' },
@@ -163,7 +236,7 @@ export default {
    ** Webfontloader options
    ** https://www.npmjs.com/package/webfontloader
    */
-  webfontloader: { google: { families: [] } },
+  // webfontloader: { google: { families: [] } },
 
   /*
    ** vuetify module configuration
@@ -172,8 +245,11 @@ export default {
   vuetify: {
     customVariables: ['~/assets/scss/variables.scss'],
     defaultAssets: {
-      font: { family: 'Roboto' },
+      font: false,
       icons: false,
+    },
+    icons: {
+      values: MY_ICONS,
     },
     treeShake: true,
     theme: {
@@ -192,6 +268,46 @@ export default {
     },
   },
 
+  /* auth: {
+    redirect: {
+      login: '/admin',
+      logout: '/',
+      home: '/admin/edit',
+    },
+    strategies: {
+      google: {
+        client_id: `1003423708779-ls9sh8opm6bcc0tiep9dp24hn9ac30np.apps.googleusercontent.com`,
+        redirect_uri: 'https://qmolab.ucr.edu/node/admin/',
+      },
+    },
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/login/', method: 'post', propertyName: 'idtoken' },
+          logout: { url: '/login/', method: 'post' },
+          user: {
+            url: '/login/user_info/',
+            method: 'get',
+            propertyName: 'data',
+          },
+        },
+        tokenRequired: true,
+        tokenType: 'Bearer',
+      },
+      google: {
+        client_id: `1003423708779-ls9sh8opm6bcc0tiep9dp24hn9ac30np.apps.googleusercontent.com`,
+        user: false,
+        redirect_uri: 'https://qmolab.ucr.edu/node/admin/',
+      },
+    },
+    redirect: {
+      login: '/admin/',
+      logout: '/',
+    },
+  }, */
   /*
    ** Internal optimizeCSS module options
    ** https://github.com/NMFR/optimize-css-assets-webpack-plugin
@@ -213,8 +329,7 @@ export default {
   optimizedImages: {
     inlineImageLimit: 500,
     responsive: {
-      size: 300,
-      sizes: [200, 300],
+      size: 450,
       format: 'jpg',
       quality: imageQuality,
       placeholder: false,
@@ -285,14 +400,17 @@ export default {
    ** nuxt-sitemap module configuration
    ** https://github.com/nuxt-community/sitemap-module
    */
-  sitemap: { hostname: baseUrl },
+  sitemap: { hostname: baseUrl, exclude: blacklistRoutes },
 
   /*
    ** Build configuration
    ** https://nuxtjs.org/api/configuration-build
    */
   build: {
-    extractCSS: true,
+    transpile: ['vue-pdf'],
+    terser: { extractComments: false /* default was LICENSES */ },
+    // extractCSS: true,
+    /*
     optimization: {
       splitChunks: {
         cacheGroups: {
@@ -304,12 +422,18 @@ export default {
           },
         },
       },
-    },
+    }, */
 
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {},
+    extend(config, ctx) {
+      // config.output.globalObject = 'this';
+      config.module.rules.push({
+        test: /\.pdf$/,
+        loader: 'url-loader',
+      });
+    },
   },
 
   /*
@@ -319,6 +443,7 @@ export default {
    */
   generate: {
     async routes() {
+      const members = await getRoute('/members/routes/', '/members/', 'name');
       const theses = await getRoute(
         '/theses/routes/',
         '/members/theses/',
@@ -334,7 +459,13 @@ export default {
         '/resources/software/',
         'title'
       );
-      return [...theses, ...research, ...software];
+      return [
+        ...members,
+        ...theses,
+        ...research,
+        ...software,
+        { route: '/resources/presentations/test/' },
+      ];
     },
   },
 };

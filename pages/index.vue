@@ -1,9 +1,8 @@
 /* eslint-disable */
 <template>
-  <HeroLayout class="homePage">
-    <h1 class="hidden-sm-and-down px-1">QMO Lab</h1>
+  <div class="homePage">
     <v-row>
-      <v-col class="pa-4">
+      <v-col class="pa-4 font-weight-light" style="opacity: 0.9;">
         <p>
           Quantum mechanics is a theoretical description of reality that has
           been used to understand numerous phenomena at atomic and subatomic
@@ -37,16 +36,14 @@
       </v-col>
     </v-row>
     <AnnouncementsCard :announcements="announcements" />
-  </HeroLayout>
+  </div>
 </template>
 
 <script>
-  import HeroLayout from '@/components/layouts/HeroLayout.vue';
   import AnnouncementsCard from '@/components/AnnouncementsCard.vue';
 
   export default {
     components: {
-      HeroLayout,
       AnnouncementsCard,
     },
     async asyncData({ $axios, $payloadURL, route }) {

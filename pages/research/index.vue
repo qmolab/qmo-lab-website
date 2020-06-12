@@ -1,49 +1,58 @@
 <template>
-  <v-container class="researchPage">
-    <h1 class="hidden-sm-and-down">QMO Lab Research</h1>
-    <v-row>
-      <v-col v-for="(item, i) in items" :key="i" cols="12" sm="6" lg="4">
-        <v-sheet
+  <div class="researchPage d-flex justify-center">
+    <v-row style="max-width: 1650px;">
+      <v-col
+        v-for="(item, i) in items"
+        :key="i"
+        cols="12"
+        md="6"
+        lg="4"
+        xl="3"
+        class="narrowCard mx-auto"
+      >
+        <v-card
           :class="{
             'pt-3 stretchCard': true,
             'pb-12': item.subtitle,
+            'pb-3': !item.subtitle,
           }"
         >
           <StoreImage
-            class="px-3 aspect-667"
-            category="images"
+            class="aspect-667 px-3"
             sub-category="research"
             :item-id="item.img"
             :aspect-ratio="3 / 2"
           />
-          <div class="pt-1 px-4 title">
-            <DynamicHtml :html="item.title.replace(/_/g, ' ')" />
-          </div>
-          <div class="pa-4 summary">
-            <DynamicHtml :html="item.description" />
-          </div>
-          <div v-if="item.subtitle" class="actions px-2">
+          <v-card-title class="pt-1 title">
+            <DynamicText :html="item.title.replace(/_/g, ' ')" />
+          </v-card-title>
+          <v-card-text>
+            <DynamicText :html="item.description" />
+          </v-card-text>
+          <v-card-actions v-if="item.subtitle" class="actions">
             <v-spacer />
             <v-btn nuxt text :to="`/research/${item.title}/`">
-              Read more
+              <span>Read more</span>
+              <v-icon right color="primary">{{ mdiPageNext }}</v-icon>
             </v-btn>
-          </div>
-        </v-sheet>
+          </v-card-actions>
+        </v-card>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script>
+  import { mdiPageNext } from '@mdi/js';
   import StoreImage from '@/components/StoreImage.vue';
-  import DynamicHtml from '@/components/DynamicHtml.vue';
+  import DynamicText from '@/components/DynamicText.vue';
   export default {
-    components: { StoreImage, DynamicHtml },
+    components: { StoreImage, DynamicText },
     async asyncData({ $axios /* $payloadURL, route */ }) {
       // if (process.static && process.client && $payloadURL)
       //   return await $axios.$get($payloadURL(route));
       const items = await $axios.$get('/research/cards/');
-      return { items };
+      return { items, mdiPageNext };
     },
   };
 </script>

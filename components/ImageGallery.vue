@@ -6,7 +6,7 @@
       :images="currentImages"
     />
     <div v-for="(gallery, k) in galleryImages" :key="k" class="mt-4">
-      <h2 class="px-6">{{ gallery.title }}</h2>
+      <h2 class="px-6 headline">{{ gallery.title }}</h2>
       <waterfall
         :id="`waterfall-${k}`"
         :key="`waterfall-${k}`"
@@ -39,8 +39,8 @@
     name: 'ImageGallery',
     components: {
       Waterfall,
-      ModalImage,
       BaseImage,
+      ModalImage,
     },
     props: { galleryImages: { type: Array, required: true } },
     data() {

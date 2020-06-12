@@ -42,7 +42,10 @@
   .logoContainer {
     position: relative;
     min-width: 194px;
+    max-width: 226px;
     width: 100%;
+    opacity: 1;
+    transition: opacity 0.28s ease;
     .qmoLogo {
       position: absolute;
       top: 0;
@@ -51,6 +54,7 @@
         background-position: -1px center;
         border-radius: 50%;
         width: 30%;
+        background-color: $header;
         &.spinning {
           animation: spin 1.12s ease;
         }
@@ -61,5 +65,8 @@
         width: 68%;
       }
     }
+  }
+  .v-app-bar--hide-shadow .logoContainer {
+    opacity: 0;
   }
 </style>

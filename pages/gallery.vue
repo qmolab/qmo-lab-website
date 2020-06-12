@@ -1,31 +1,33 @@
 <template>
-  <v-container class="galleryPage">
-    <h1 class="hidden-sm-and-down">QMO Lab Gallery</h1>
+  <div class="galleryPage">
     <v-btn
       x-large
       text
       class="my-2"
       href="https://www.youtube.com/channel/UCJdmhoGpcmAFzVx9PolvBOA"
     >
-      QMO YouTube Channel
+      <span>QMO YouTube Channel</span>
+      <v-icon right color="secondary">{{ mdiYoutubeSubscription }}</v-icon>
     </v-btn>
     <VideoGallery :videos="videos" />
     <ImageGallery :gallery-images="galleryImages" />
-  </v-container>
+  </div>
 </template>
 
 <script>
-  import VideoGallery from '@/components/VideoGallery';
+  import { mdiYoutubeSubscription } from '@mdi/js';
   import ImageGallery from '@/components/ImageGallery';
+  import VideoGallery from '@/components/VideoGallery';
 
   export default {
     name: 'GalleryView',
     components: {
-      VideoGallery,
       ImageGallery,
+      VideoGallery,
     },
     data() {
       return {
+        mdiYoutubeSubscription,
         galleryImages: [
           {
             title: 'Lab Gallery',
@@ -35,8 +37,7 @@
                 href: require('~/assets/images/gallery/blue.png'),
                 thumbnail: require('~/assets/images/gallery/blue.png?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/blue.png?webp'),
-                title:
-                  'Nonlinear response in our OPO laser means it can turn a red laser into a brilliant blue',
+                title: `Nonlinear response in our OPO laser means it can turn a red laser into a brilliant blue`,
               },
               {
                 href: require('~/assets/images/gallery/laserlevel.png'),
@@ -48,64 +49,55 @@
                 href: require('~/assets/images/gallery/lasers.png'),
                 thumbnail: require('~/assets/images/gallery/lasers.png?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/lasers.png?webp'),
-                title:
-                  "The QMO Lab's original laser bank: A titanium-sapphire laser pumps an OPO laser cavity",
+                title: `The QMO Lab's original laser bank: A titanium-sapphire laser pumps an OPO laser cavity`,
               },
               {
                 href: require('~/assets/images/gallery/maxside.png'),
                 thumbnail: require('~/assets/images/gallery/maxside.png?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/maxside.png?webp'),
-                title:
-                  "The QMO Lab 'microscopes' use a series of optics to scan a laser beam across samples, measuring point-by-point",
+                title: `The QMO Lab 'microscopes' use a series of optics to scan a laser beam across samples, measuring point-by-point`,
               },
               {
                 href: require('~/assets/images/gallery/photodetector.jpg'),
                 thumbnail: require('~/assets/images/gallery/photodetector.jpg?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/photodetector.jpg?webp'),
-                title:
-                  'Featured in Nature Nanotechnology, this photodetector is one thousand times thinner than a human hair',
+                title: `Featured in Nature Nanotechnology, this photodetector is one thousand times thinner than a human hair`,
               },
               {
                 href: require('~/assets/images/gallery/cryostat2.jpg'),
                 thumbnail: require('~/assets/images/gallery/cryostat2.jpg?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/cryostat2.jpg?webp'),
-                title:
-                  'A wired-up sample sits in our optical cryostat, waiting to be measured',
+                title: `A wired-up sample sits in our optical cryostat, waiting to be measured`,
               },
               {
                 href: require('~/assets/images/gallery/poster.png'),
                 thumbnail: require('~/assets/images/gallery/poster.png?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/poster.png?webp'),
-                title:
-                  'Max and Fatemeh present their work at the 2nd Annual SHINES Symposium',
+                title: `Max and Fatemeh present their work at the 2nd Annual SHINES Symposium`,
               },
               {
                 href: require('~/assets/images/gallery/F_and_D_dice.png'),
                 thumbnail: require('~/assets/images/gallery/F_and_D_dice.png?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/F_and_D_dice.png?webp'),
-                title:
-                  'The first two PhDs from the QMO Lab, Fatemeh and Dennis!',
+                title: `The first two PhDs from the QMO Lab, Fatemeh and Dennis!`,
               },
               {
                 href: require('~/assets/images/gallery/atwork.png'),
                 thumbnail: require('~/assets/images/gallery/atwork.png?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/atwork.png?webp'),
-                title:
-                  "Working in a laser lab can invite comparisons to H.G. Well's Morlocks",
+                title: `Working in a laser lab can invite comparisons to H.G. Well's Morlocks`,
               },
               {
                 href: require('~/assets/images/gallery/mad_scientists.png'),
                 thumbnail: require('~/assets/images/gallery/mad_scientists.png?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/mad_scientists.png?webp'),
-                title:
-                  'The most successful experiments are performed in a lightning storm at the stroke of midnight',
+                title: `The most successful experiments are performed in a lightning storm at the stroke of midnight`,
               },
               {
                 href: require('~/assets/images/gallery/spectrum.png'),
                 thumbnail: require('~/assets/images/gallery/spectrum.png?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/spectrum.png?webp'),
-                title:
-                  'White light passed through a monochromator casts a beautiful rainbow on the QMO Lab logo',
+                title: `White light passed through a monochromator casts a beautiful rainbow on the QMO Lab logo`,
               },
             ],
           },
@@ -120,9 +112,9 @@
                 title: 'QMO Lab at Oak Glen 2018',
               },
               {
-                href: require('~/assets/images/gallery/aps_2018_monkey_th.jpg'),
-                thumbnail: require('~/assets/images/gallery/aps_2018_monkey_th.jpg?resize&placeholder=true'),
-                webp: require('~/assets/images/gallery/aps_2018_monkey_th.jpg?webp'),
+                href: require('~/assets/images/gallery/aps_2018_monkey.jpg'),
+                thumbnail: require('~/assets/images/gallery/aps_2018_monkey.jpg?resize&placeholder=true'),
+                webp: require('~/assets/images/gallery/aps_2018_monkey.jpg?webp'),
                 title: 'QMO Lab at APS March Meeting 2018',
               },
             ],
@@ -177,12 +169,27 @@
           },
         ],
         videos: [
-          { src: 'iOqmUeZVA0Q', title: '' },
-          { src: 'aVY4od4mfnA', title: '' },
-          { src: 'f6CjReJumHA', title: '' },
-          { src: 'm3KhuLkpTAA', title: '' },
-          { src: 'YEyQ1vrFAS8', title: '' },
-          { src: 'Q9CyY_0uLJs', title: '' },
+          { src: 'iOqmUeZVA0Q', title: 'The electron-hole liquid in MoTe2' },
+          {
+            src: 'aVY4od4mfnA',
+            title: `Twisted graphene layers pave path for unprecedented quantum control`,
+          },
+          {
+            src: 'f6CjReJumHA',
+            title: `Physicists Show How Tiny Photosensors Can Double Their Efficiency`,
+          },
+          {
+            src: 'm3KhuLkpTAA',
+            title: `'Spin'-tronics: The Next Generation of Computing (UCR Grad Slam 2018 First Runner-Up)`,
+          },
+          {
+            src: 'YEyQ1vrFAS8',
+            title: `Bicep curls with 100kg weights? The physics behind a world record!`,
+          },
+          {
+            src: 'Q9CyY_0uLJs',
+            title: `Carrier multiplication in 2D materials`,
+          },
         ],
       };
     },

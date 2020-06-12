@@ -1,88 +1,98 @@
 <template>
-  <v-card class="mx-auto mb-5 pa-2 announcementCard" elevation="2">
-    <v-card-title class="headline">
-      QMO LAB NEWS
-      <div class="float-r">
-        <v-form>
-          <v-switch v-slot:label v-model="newsSwitch" value>
-            <v-slide-y-transition leave-absolute>
-              <span :key="newsSwitch">
-                {{ newsSwitch ? 'Recent News Only' : 'All News' }}
-              </span>
-            </v-slide-y-transition>
-          </v-switch>
-        </v-form>
+  <v-card class="mx-auto mb-5 pa-2 announcementCard">
+    <div>
+      <div class="float-r" style="width: 225px;">
+        <v-switch
+          v-model="newsSwitch"
+          color="primary"
+          :label="newsSwitch ? 'Recent News Only' : 'All News'"
+        />
       </div>
-    </v-card-title>
-    <transition-group
-      id="newsItems"
-      ref="newsItems"
-      name="cardItem"
-      tag="div"
-      :style="`height: ${height}`"
-    >
-      <div v-for="item in announcementsChecked" :key="item.title" class="pa-2">
-        <div class="d-flex align-center">
-          <v-avatar :size="75">
-            <StoreImage
-              v-if="item.imageCategory"
-              :category="item.imageCategory"
-              :sub-category="item.imageSubCategory"
-              :item-id="item.imageRef"
-              :width="75"
-              :height="75"
-            />
-          </v-avatar>
-          <div class="px-4">
-            <div class="title">{{ item.title }}!</div>
-            <div class="subtitle-1">{{ item.description }}</div>
+      <v-card-title class="headline" style="min-width: 225px;">
+        QMO LAB NEWS
+      </v-card-title>
+    </div>
+    <div class="pa-4">
+      <transition-group tag="div" name="cardItem">
+        <div
+          v-for="item in announcementsChecked"
+          :key="item.title"
+          class="pa-2"
+        >
+          <div class="d-flex align-center">
+            <v-avatar
+              :size="75"
+              :color="item.imageSubCategory ? undefined : 'primary'"
+            >
+              <StoreImage
+                v-if="item.imageSubCategory && item.imageRef"
+                :sub-category="item.imageSubCategory"
+                :item-id="item.imageRef"
+                :width="75"
+                :height="75"
+              />
+            </v-avatar>
+            <div class="px-4">
+              <div class="title">
+                <PrettyDate :value="item.date" class="text--large" />
+                <span>
+                  <span>: </span>
+                  <DynamicText :html="item.title" />
+                </span>
+              </div>
+              <div class="body-2">
+                <DynamicText :html="item.description" />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </transition-group>
-    <v-card-text class="pb-0">
+      </transition-group>
+    </div>
+    <div class="pb-0 ta-right">
       For More QMO Lab Highlights, Please See Our Publications and Research
-      Pages.
-    </v-card-text>
+      Pages
+    </div>
 
     <v-card-actions class="pt-0">
       <v-spacer />
       <v-btn text to="/publications/">
-        Publications
+        <v-icon color="secondary">{{ mdiAlphaPCircle }}</v-icon>
+        <span>Publications</span>
       </v-btn>
       <v-btn text to="/research/">
-        Research
+        <v-icon color="secondary">{{ mdiAlphaRCircle }}</v-icon>
+        <span>Research</span>
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+  import { mdiAlphaRCircle, mdiAlphaPCircle } from '@mdi/js';
   import StoreImage from '@/components/StoreImage.vue';
+  import PrettyDate from '@/components/lib/PrettyDate.vue';
+  import DynamicText from '@/components/DynamicText.vue';
 
   export default {
     name: 'Home',
-    components: { StoreImage },
+    components: { StoreImage, PrettyDate, DynamicText },
     props: {
       announcements: { type: Array, required: true },
     },
     data() {
       return {
-        newsSwitch: true,
         announcementsChecked: this.announcements,
-        oldAnnouncements: undefined,
         good: true,
-        height: 'unset',
+        newsSwitch: true,
+        oldAnnouncements: undefined,
+        mdiAlphaRCircle,
+        mdiAlphaPCircle,
       };
     },
     watch: {
       newsSwitch() {
         this.poll();
       },
-    },
-    mounted() {
-      this.smallHeight = this.$refs.newsItems.$el.getBoundingClientRect().height;
-      this.height = `${this.smallHeight}px`;
     },
     methods: {
       poll() {
@@ -92,16 +102,11 @@
       async switch() {
         this.good = false;
         if (this.newsSwitch) {
-          this.height = `${this.largeHeight}px`;
           this.recursivePop();
         } else {
-          if (!this.largeHeight) {
+          if (!this.oldAnnouncements)
             this.oldAnnouncements = await this.getOldNews();
-            this.largeHeight =
-              (this.smallHeight / 3) * (this.oldAnnouncements.length + 3);
-          }
-          this.height = `${this.largeHeight}px`;
-          setTimeout(this.recursiveAdd, 140);
+          this.recursiveAdd();
         }
       },
       recursivePop() {
@@ -109,7 +114,7 @@
           this.announcementsChecked.pop();
           setTimeout(() => this.recursivePop(), 56);
         } else {
-          this.height = `${this.smallHeight}px`;
+          // this.height = `${this.smallHeight}px`;
           this.good = true;
         }
       },
@@ -122,7 +127,7 @@
             setTimeout(() => this.recursiveAdd(), 56);
           }
         } else {
-          this.height = 'unset';
+          // this.height = 'unset';
           this.good = true;
         }
       },
@@ -132,10 +137,3 @@
     },
   };
 </script>
-
-<style lang="scss" scoped>
-  #newsItems {
-    transition: height 560ms ease;
-    overflow: hidden;
-  }
-</style>

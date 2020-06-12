@@ -1,111 +1,352 @@
 <template>
-  <v-container class="membersPage">
-    <h1 class="hidden-sm-and-down">QMO Lab Members</h1>
+  <div class="membersPage">
     <v-row>
       <v-col>
-        <MemberCard large-pic :member="professors.nathan" />
-      </v-col>
-    </v-row>
-    <v-row no-gutters>
-      <v-col cols="12" sm="4" class="align-self-center">
-        <h2>Student Researchers:</h2>
-      </v-col>
-      <v-col cols="12" sm="8">
-        <v-form ref="filterForm">
-          <v-row no-gutters>
-            <v-col>
-              <v-switch v-slot:label v-model="currentSwitch" value>
-                <span>
-                  <v-slide-y-transition leave-absolute>
-                    <span :key="switchLabel">
-                      {{ switchLabel }}
-                    </span>
-                  </v-slide-y-transition>
-                  &nbsp;Student Members
-                </span>
-              </v-switch>
-            </v-col>
-            <v-col cols="12">
-              <MemberFilters
-                v-model="groupSelection"
-                :n-members-cat="nMembersCat"
-                :current-switch="currentSwitch"
+        <v-card
+          class="mx-auto stretchCard"
+          :max-width="768"
+          :min-height="200"
+          elevation="2"
+        >
+          <div class="title pt-2 px-4">
+            <span>Nathaniel Gabor </span>
+            <span class="font-weight-light text--small">
+              ({{ professors.nathan.title }})
+            </span>
+          </div>
+          <v-row no-gutters class="pa-4">
+            <v-col cols="12" md="4">
+              <StoreImage
+                sub-category="professors"
+                item-id="nathan"
+                alt="Nathan"
+                :aspect-ratio="5 / 4"
+                max-width="300"
               />
             </v-col>
+            <v-col>
+              <v-card-text class="pa-0 pl-4">
+                <span>Research:</span>
+                <span class="font-weight-light">
+                  <DynamicText :html="professors.nathan.focus" />
+                </span>
+              </v-card-text>
+            </v-col>
           </v-row>
-        </v-form>
+        </v-card>
       </v-col>
     </v-row>
-    <transition-group name="list" tag="div" class="row">
-      <v-col
-        v-for="(item, i) in members"
-        v-show="visible(item)"
-        :key="`col-${i}`"
-        cols="12"
-        sm="6"
-        md="6"
-        lg="4"
-      >
-        <MemberCard :member="item" />
+    <v-row no-gutters class="mt-12">
+      <v-col cols="12" class="align-self-center">
+        <h2 class="headline">Student Researchers:</h2>
       </v-col>
-    </transition-group>
+      <v-col cols="12" md="1" style="min-width: 50px;" align-self="center">
+        Filters:
+      </v-col>
+      <v-col cols="12" md="2" style="min-width: 320px;">
+        <v-switch
+          v-model="memberFilterSwitchCF"
+          color="accent"
+          :loading="busy"
+          :disabled="busy"
+          :label="memberFilterSwitchCF ? 'Current' : 'Former'"
+          append="Student Members"
+        />
+      </v-col>
+      <v-col align-self="center">
+        <v-chip-group
+          v-model="memberChips"
+          mandatory
+          active-class="v-chip--disabled v-chip--outlined secondary"
+        >
+          <v-chip
+            v-for="(chip, i) in chips"
+            :key="i"
+            :disabled="!(memberFilterSwitchCF ? chip.current : chip.former)"
+          >
+            <span>{{ chip.name }}</span>
+            <v-avatar right class="grey darken-4">
+              {{ memberFilterSwitchCF ? chip.current : chip.former }}
+            </v-avatar>
+          </v-chip>
+        </v-chip-group>
+      </v-col>
+    </v-row>
+    <div
+      id="memberContainer"
+      ref="memberContainer"
+      :class="{ memberContainer: true, 'memberContainer--fillAll': busy }"
+    >
+      <transition-group name="list" tag="div" class="row">
+        <v-col
+          v-for="member in shownMembers"
+          :key="member.name"
+          cols="12"
+          sm="6"
+          md="6"
+          lg="4"
+        >
+          <v-card
+            class="mx-auto stretchCard pb-10"
+            :max-width="768"
+            :min-height="200"
+            :elevation="member.isDeleted ? '12' : '2'"
+          >
+            <v-row no-gutters class="pa-4">
+              <v-col class="ml-2" style="min-width: 80px;" cols="1">
+                <v-avatar size="80">
+                  <StoreImage
+                    sub-category="members"
+                    :item-id="member.name"
+                    :alt="member.name"
+                    width="80"
+                    height="80"
+                  />
+                </v-avatar>
+              </v-col>
+              <v-col class="px-4">
+                <div class="title pt-2">
+                  {{ member.first + ' ' + member.last }}
+                </div>
+                <div class="body-2">
+                  <span>{{ member.dept }} </span>
+                  <span v-if="member.level & 8">
+                    <span v-if="member.level & 2">Ph.D.</span>
+                    <span v-else-if="member.level & 4">B.S.</span>
+                    <span v-if="member.grad_date">
+                      {{ member.grad_date.slice(2, 4) }}
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="member.level & 2">Graduate Student</span>
+                    <span v-else-if="member.level & 4">
+                      Undergraduate Student
+                    </span>
+                    <span v-else-if="member.level & 1">
+                      Post-Doctoral Researcher
+                    </span>
+                  </span>
+                </div>
+              </v-col>
+            </v-row>
+            <v-card-text class="pa-0 pl-4">
+              <div style="color: #fff;">Research:</div>
+              <span class="font-weight-light">
+                <DynamicText :html="member.focus" />
+              </span>
+            </v-card-text>
+            <div class="actions d-flex align-end">
+              <v-spacer />
+              <v-btn text small nuxt :to="`/members/${member.name}`">
+                <span>About {{ member.name }}</span>
+                <v-icon right color="primary">{{ mdiPageNext }}</v-icon>
+              </v-btn>
+              <!--
+              <v-btn
+                v-if="(member.level & 10) === 10"
+                text
+                nuxt
+                :to="`/members/theses/${(member.first + '_' + member.last).toLowerCase()}/`"
+              >
+                <span>Dissertation</span>
+                <v-icon right color="secondary">{{ mdiBookOpenVariant }}</v-icon>
+              </v-btn>
+              -->
+            </div>
+          </v-card>
+        </v-col>
+      </transition-group>
+      <v-progress-circular
+        v-show="busy"
+        size="80"
+        width="8"
+        class="progress"
+        indeterminate
+      />
+    </div>
     <v-row>
       <v-col cols="12">
-        <v-btn text nuxt to="/members/theses/">Student Dissertations</v-btn>
+        <v-btn text nuxt to="/members/theses/">
+          <span>Student Dissertations</span>
+          <v-icon color="primary" right>{{ mdiBookOpenVariant }}</v-icon>
+        </v-btn>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script>
-  import MemberFilters from '@/components/MemberFilters.vue';
-  import MemberCard from '@/components/MemberCard.vue';
-  export default {
-    components: {
-      MemberFilters,
-      MemberCard,
-    },
-    async asyncData({ store }) {
-      return await new Promise((resolve) => {
-        const nMembersCat = [0, 0, 0, 0, 0, 0];
-        for (const prop in store.state.members.members) {
-          const e = store.state.members.members[prop];
-          for (let i = 0; i < 3; ++i)
-            if ((2 ** i) & e.level) nMembersCat[e.level & 8 ? i : i + 3]++;
+  // need bit function to check if 8 is in members.level or in memberFlags or in neither
+  import { mdiPageNext, mdiBookOpenVariant } from '@mdi/js';
+  import StoreImage from '@/components/StoreImage.vue';
+  import DynamicText from '@/components/DynamicText.vue';
+
+  function recursiveFilter(
+    shown,
+    hidden,
+    filterFunc,
+    callback,
+    delayEach = 150,
+    relWaitIn = 150
+  ) {
+    const delList = [];
+    const newHidden = [];
+    const newShown = [];
+    shown.forEach((e, i) => {
+      if (filterFunc(e)) {
+        if (delList.length !== 0) {
+          delList.push(i);
+          e.isDeleted = true;
+          newShown.push(e);
         }
-        resolve({
-          ...store.state.members,
-          nMembersCat,
-        });
-      });
-    },
-    data() {
+      } else {
+        delList.push(i);
+        e.isDeleted = true;
+        newHidden.push(e);
+      }
+    });
+    const delListLength = delList.length;
+    for (let i = 0; i < delListLength; ++i) {
+      setTimeout(
+        () => shown.splice(delList[delListLength - 1 - i], 1),
+        i * delayEach
+      );
+    }
+    hidden.forEach((e) =>
+      filterFunc(e) ? newShown.push(e) : newHidden.push(e)
+    );
+    const newLength = newShown.length;
+    setTimeout(() => {
+      for (let i = 0; i < newLength; ++i)
+        setTimeout(() => {
+          newShown[i].isDeleted = false;
+          shown.push(newShown[i]);
+        }, i * delayEach);
+      setTimeout(() => callback(), (newLength + 2) * delayEach);
+    }, (delListLength + 1) * relWaitIn);
+    return newHidden;
+  }
+
+  export default {
+    components: { StoreImage, DynamicText },
+    async asyncData({ $axios, $payloadURL, route, store }) {
+      // if generated and works as client navigation, fetch previously saved static JSON payload
+      // if (process.static && process.client && $payloadURL)
+      //   return await $axios.$get($payloadURL(route));
+      // const olderAnnouncements = await $axios.$get('/news/offset/');
+      let memberList;
+      if (store.state.members.firstLoad) {
+        memberList = await $axios.$get('/members/cards/current/');
+      } else {
+        memberList = store.state.members.memberList;
+      }
+      const chips = [
+        {
+          name: 'All',
+          current: 7,
+          former: 6,
+        },
+        {
+          name: 'Post-Docs',
+          current: 0,
+          former: 1,
+        },
+        {
+          name: 'Grad Students',
+          current: 6,
+          former: 3,
+        },
+        {
+          name: 'Undergrads',
+          current: 1,
+          former: 3,
+        },
+      ];
       return {
-        currentSwitch: true,
-        groupSelection: 0,
+        chips,
+        professors: store.state.members.professors,
+        shownMembers: [],
+        hiddenMembers: memberList,
+        downloadedFormer: false,
+        busy: false,
+        mdiPageNext,
+        mdiBookOpenVariant,
       };
     },
     computed: {
-      switchLabel() {
-        return this.currentSwitch ? 'Current' : 'Former';
+      memberFlags() {
+        return 2 ** (this.memberChips - 1) + 8 * this.memberFilterSwitchCF;
       },
-      groupFlags() {
-        return 2 ** (this.groupSelection - 1);
+      memberFilterSwitchCF: {
+        get() {
+          return this.$store.state.members.currentFormerSwitch;
+        },
+        set() {
+          this.$store.commit('members/toggleCurrentFormerSwitch');
+        },
+      },
+      memberChips: {
+        get() {
+          return this.$store.state.members.memberChips;
+        },
+        set(val) {
+          this.$store.commit('members/setMemberPageFlags', val);
+        },
       },
     },
-    methods: {
-      disabledButton(i) {
-        return (
-          this.groupSelection === i + 1 ||
-          this.nMembersCat[this.currentSwitch * 3 + i] === 0
-        );
+    watch: {
+      memberFlags() {
+        if (this.$store.state.members.firstLoad) this.getFormerMembers();
+        else this.filterList();
       },
-      visible(member) {
-        return (
-          (this.currentSwitch ? member.level < 8 : member.level & 8) &&
-          (this.groupSelection === 0 || member.level & this.groupFlags)
+    },
+    created() {
+      this.filterList();
+    },
+    methods: {
+      async getFormerMembers() {
+        this.downloadedFormer = true;
+        this.hiddenMembers = [];
+        const l = await this.$axios.$get('/members/cards/former/');
+        l.forEach((e) => this.hiddenMembers.push(e));
+        this.$store.commit(
+          'members/saveMemberList',
+          this.shownMembers.concat(this.hiddenMembers)
+        );
+        this.filterList();
+      },
+      filterList() {
+        this.busy = true;
+        this.hiddenMembers = recursiveFilter(
+          this.shownMembers,
+          this.hiddenMembers,
+          (e) =>
+            8 & (e.level ^ this.memberFlags) &&
+            (!this.memberChips || e.level & this.memberFlags),
+          () => (this.busy = false)
         );
       },
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  .memberContainer {
+    transition: min-height 0.28s linear;
+    height: auto;
+    min-height: 0;
+    position: relative;
+    .progress {
+      position: absolute;
+      top: 250px;
+      left: 50%;
+      height: 80px;
+      width: 80px;
+      margin-left: -40px;
+    }
+  }
+  .memberContainer--fillAll {
+    min-height: 100vh;
+    transition: min-height 0.14s linear;
+  }
+</style>

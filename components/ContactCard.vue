@@ -1,160 +1,201 @@
 <template>
-  <v-sheet class="mx-auto my-4 pa-2 contactCard">
-    <div class="title">Contact us</div>
-    <v-form ref="contactForm" v-model="valid">
-      <v-row>
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="nameText"
-            name="nameText"
-            :rules="nameRules"
-            :counter="nameLength"
-            label="Name"
-            required
-          />
-        </v-col>
-        <v-col cols="12" md="8">
-          <v-text-field
-            v-model="emailText"
-            name="emailText"
-            :rules="emailRules"
-            label="E-mail"
-            required
-          />
-        </v-col>
-        <v-col v-if="subjectItems" cols="12">
-          <v-combobox
-            v-model="subjectText"
-            name="subjectText"
-            :items="subjectItems"
-            :rules="subjectRules"
-            :clear-icon="mdiClose"
-            :append-icon="mdiMenuDown"
-            :menu-props="{ auto: true, maxHeight: 1000 }"
-            label="Subject"
-            required
-            clearable
-            outlined
-          />
-        </v-col>
-        <v-col v-if="memberItems" cols="12">
-          <v-select
-            v-model="memberTags"
-            name="memberTags"
-            :items="memberItems"
-            :clear-icon="mdiClose"
-            :append-icon="mdiPlus"
-            multiple
-            clearable
-            label="Tag a lab member"
-            outlined
-          />
-        </v-col>
-        <v-col v-if="askForFollowUp" cols="12">
-          <v-checkbox
-            v-model="followUpCheckbox"
-            label="Recieve additional information via email"
-            :on-icon="mdiCheckboxMarked"
-            :off-icon="mdiCheckboxBlankOutline"
-            :class="{ strike: !followUpCheckbox }"
-          />
-        </v-col>
-        <slot />
-        <v-col cols="12" :md="messageCols">
-          <v-textarea
-            v-model="messageText"
-            name="messageText"
-            :rules="MessageRules"
-            :counter="messageLength"
-            label="Send us a message"
-            outlined
-            auto-grow
-            required
-          />
-        </v-col>
-      </v-row>
-      <v-col cols="12">
-        <v-spacer />
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          @click="validate"
-        >
-          Submit
-        </v-btn>
-        <v-btn color="error" class="mr-4" @click="reset">
-          Reset
-        </v-btn>
-      </v-col>
+  <v-card class="mx-auto my-4 pa-2 contactCard">
+    <v-card-title class="mb-8">
+      <span>
+        <v-icon>{{ mdiEmailEdit }}</v-icon>
+        <span class="pl-1">Contact us</span>
+      </span>
+    </v-card-title>
+    <v-form ref="contactForm" v-model="valid" class="ml-12 mr-7">
+      <TextField
+        v-model="nameText"
+        name="nameText"
+        :rules="nameRules"
+        :prepend-icon="mdiFormTextbox"
+        :counter="nameLength"
+        label="Your Name"
+        required
+      />
+      <TextField
+        v-model="emailText"
+        name="emailText"
+        :rules="emailRules"
+        :prepend-icon="mdiAt"
+        label="Email"
+        required
+      />
+      <v-combobox
+        v-if="subjectItems"
+        v-model="subjectText"
+        name="subjectText"
+        :items="subjectItems"
+        :rules="subjectRules"
+        :prepend-icon="mdiTextSubject"
+        :counter="maxSubjectLength"
+        :menu-props="{ auto: true, maxHeight: 1000 }"
+        label="Subject"
+        required
+        clearable
+        outlined
+      />
+      <MemberSelect
+        v-if="memberItems"
+        v-model="memberTags"
+        :items="memberItems"
+        :prepend-icon="mdiTag"
+        name="memberTags"
+        label="Tag a lab member"
+        multiple
+      />
+      <CheckBox
+        v-if="askForFollowUp"
+        v-model="followUpCheckbox"
+        :prepend-icon="followUpCheckbox ? mdiEmailCheck : mdiEmailMinus"
+        label="Recieve additional information via email"
+        :class="{ strike: !followUpCheckbox }"
+        style="margin-top: -20px;"
+      />
+      <DatePicker
+        v-if="date"
+        v-model="datePicker"
+        name="date"
+        label="Choose Date"
+      />
+      <TextArea
+        v-model="messageText"
+        :prepend-icon="mdiMessage"
+        name="messageText"
+        :rules="MessageRules"
+        :counter="messageLength"
+        label="Send us a message"
+        required
+      />
     </v-form>
-  </v-sheet>
+    <v-card-actions cols="12">
+      <v-spacer />
+      <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
+        <span>Submit</span>
+        <v-icon right>{{ mdiEmailSend }}</v-icon>
+      </v-btn>
+      <v-btn color="error" class="mr-4" @click="reset">
+        <span>Reset</span>
+        <v-icon right>{{ mdiRefreshCircle }}</v-icon>
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
   import {
-    mdiCheckboxBlankOutline,
-    mdiCheckboxMarked,
-    mdiClose,
-    mdiPlus,
-    mdiMenuDown,
+    mdiAt,
+    mdiEmailCheck,
+    mdiEmailMinus,
+    mdiEmailSend,
+    mdiEmailEdit,
+    mdiFormTextbox,
+    mdiMessage,
+    mdiRefreshCircle,
+    mdiTag,
+    mdiTextSubject,
   } from '@mdi/js';
+  import {
+    emailRule,
+    lengthRule,
+    requiredRule,
+  } from '@/assets/js/helperScripts.js';
+  import TextField from '@/components/lib/TextField.vue';
+  import TextArea from '@/components/lib/TextArea.vue';
+  import DatePicker from '@/components/lib/DatePicker.vue';
+  import CheckBox from '@/components/lib/CheckBox.vue';
+  import MemberSelect from '@/components/MemberSelect.vue';
   export default {
+    components: { TextField, TextArea, DatePicker, CheckBox, MemberSelect },
     props: {
       subjectItems: { type: Array, default: undefined },
       memberItems: { type: Array, default: undefined },
-      messageCols: { type: [Number, String], default: 12 },
       askForFollowUp: { type: Boolean, default: false },
       nameLength: { type: Number, default: 25 },
       messageLength: { type: Number, default: 1500 },
+      minSubjectLength: { type: Number, default: 10 },
+      maxSubjectLength: { type: Number, default: 140 },
+      maxEmailLength: { type: Number, default: 100 },
+      date: { type: Boolean, default: false },
     },
     data() {
+      const hash = this.$route.hash.slice(1).split('&');
+      const assignments = {};
+      for (let i = 0; i < hash.length; ++i) {
+        const part = hash[i].split('=');
+        assignments[part[0]] = part[1];
+      }
       return {
-        mdiCheckboxBlankOutline,
-        mdiCheckboxMarked,
-        mdiClose,
-        mdiPlus,
-        mdiMenuDown,
+        mdiAt,
+        mdiEmailCheck,
+        mdiEmailMinus,
+        mdiEmailSend,
+        mdiEmailEdit,
+        mdiFormTextbox,
+        mdiMessage,
+        mdiRefreshCircle,
+        mdiTag,
+        mdiTextSubject,
         valid: false,
         nameText: '',
         emailText: '',
-        subjectText: '',
+        subjectText: assignments.subject || '',
         messageText: '',
-        memberTags: [],
+        memberTags: assignments.tag ? [assignments.tag] : [],
         followUpCheckbox: true,
+        datePicker: new Date().toISOString().slice(0, 10),
         nameRules: [
-          (v) => !!v || 'Name is required',
-          (v) =>
-            (v && v.length <= this.nameLength) ||
-            `Name must be less than ${this.nameLength} characters`,
+          requiredRule('Name is required'),
+          lengthRule(this.nameLength, 'Name'),
         ],
-        emailRules: [
-          (v) => !!v || 'E-mail is required',
-          (v) => /.+@.+/.test(v) || 'E-mail must be valid',
+        emailRules: [requiredRule('Email is required'), emailRule()],
+        subjectRules: [
+          requiredRule('Subject is required'),
+          lengthRule(this.maxSubjectLength, 'Subject'),
         ],
-        subjectRules: [(v) => !!v || 'Subject is required'],
         MessageRules: [
-          (v) => !!v || 'Message is required',
-          (v) =>
-            (v && v.length <= this.messageLength) ||
-            `Name must be less than ${this.messageLength} characters`,
+          requiredRule('Message is required'),
+          lengthRule(this.messageLength, 'Name'),
         ],
+        cancelToken: undefined,
+        request: undefined,
       };
     },
     methods: {
       removeTag(item) {
-        this.memberTags = this.memberTags.filter((value, index, arr) => {
+        this.memberTags = this.memberTags.filter((value) => {
           return value !== item;
         });
       },
       validate() {
-        this.$refs.contactForm.validate();
+        this.$refs.contactForm.validate() && this.submit();
       },
       reset() {
         this.$refs.contactForm.reset();
       },
       resetValidation() {
         this.$refs.contactForm.resetValidation();
+      },
+      submit() {
+        this.cancelToken = this.$axios.CancelToken.source();
+        this.request = this.$axios.$post(
+          '/post/contact/',
+          {
+            name: this.nameText,
+            email: this.emailText,
+            subject: this.subjectText,
+            message: this.messageText,
+            tags: this.memberTags,
+            date: this.datePicker,
+            followUp: this.followUpCheckbox,
+          },
+          {
+            cancelToken: this.cancelToken.token,
+          }
+        );
       },
     },
   };

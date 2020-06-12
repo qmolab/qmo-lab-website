@@ -10,7 +10,7 @@
         <v-img
           :src="src.src"
           :lazy-src="lazySrc"
-          :srcset="srcsetChecked"
+          :srcset="webp || srcset || src.srcSet"
           :alt="alt"
           :aspect-ratio="aspectRatioChecked"
           :contain="contain"
@@ -62,27 +62,10 @@
       preload: { type: Boolean, default: false },
     },
     data() {
-      return {
-        aspectRatioChecked: undefined,
-      };
-    },
-    computed: {
-      srcsetChecked() {
-        const srcSet = this.srcset || this.src.srcSet;
-        if (this.webp) {
-          const webpSrcSet = this.webp.srcset || this.webp.srcSet;
-          return webpSrcSet
-            ? srcSet
-              ? srcSet.concat(webpSrcSet)
-              : webpSrcSet
-            : this.webp;
-        } else {
-          return srcSet;
-        }
-      },
+      return { aspectRatioChecked: undefined };
     },
     mounted() {
-      if (this.aspectRatio || !this.preload || (this.width && this.height))
+      if (!this.preload || this.aspectRatio || (this.width && this.height))
         this.aspectRatioChecked = this.aspectRatio;
       else if (this.lazySrc) {
         const img = new Image();

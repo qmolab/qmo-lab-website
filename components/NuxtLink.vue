@@ -18,7 +18,11 @@
       >
         <slot />
       </v-btn>
-      <div v-if="activeBorder" :class="{ bottomBorder: isExactActive }" />
+      <div
+        v-if="activeBorder"
+        :class="{ bottomBorder: isExactActive }"
+        :style="`background-color: ${$vuetify.theme.themes.dark.primary}`"
+      />
     </div>
   </nuxt-link>
 </template>
@@ -40,7 +44,7 @@
 <style lang="scss" scoped>
   .bottomBorder {
     position: absolute;
-    bottom: 0;
+    bottom: -3px;
     left: 12px;
     right: 12px;
     border-top-left-radius: 2px;
