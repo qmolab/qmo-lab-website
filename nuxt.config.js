@@ -38,7 +38,7 @@ import {
   success,
   backgroundColor,
 } from './assets/scss/colors';
-import { blacklistRoutes } from './assets/js/admin';
+
 require('dotenv').config();
 const MY_ICONS = {
   complete: mdiCheckBold,
@@ -135,7 +135,7 @@ export default {
     // Doc: https://github.com/nuxt-community/vuetify-module
     '@nuxtjs/vuetify',
     // Doc: https://github.com/DreaMinder/nuxt-payload-extractor
-    // ['nuxt-payload-extractor', { blacklist: blacklistRoutes }],
+    // ['nuxt-payload-extractor', { blacklist: [] }],
     // Doc: https://pwa.nuxtjs.org/setup.html
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/sitemap-module
@@ -268,50 +268,6 @@ export default {
     },
   },
 
-  /* auth: {
-    redirect: {
-      login: '/admin',
-      logout: '/',
-      home: '/admin/edit',
-    },
-    strategies: {
-      google: {
-        client_id: `1003423708779-ls9sh8opm6bcc0tiep9dp24hn9ac30np.apps.googleusercontent.com`,
-        redirect_uri: 'https://qmolab.ucr.edu/node/admin/',
-      },
-    },
-  },
-
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: { url: '/login/', method: 'post', propertyName: 'idtoken' },
-          logout: { url: '/login/', method: 'post' },
-          user: {
-            url: '/login/user_info/',
-            method: 'get',
-            propertyName: 'data',
-          },
-        },
-        tokenRequired: true,
-        tokenType: 'Bearer',
-      },
-      google: {
-        client_id: `1003423708779-ls9sh8opm6bcc0tiep9dp24hn9ac30np.apps.googleusercontent.com`,
-        user: false,
-        redirect_uri: 'https://qmolab.ucr.edu/node/admin/',
-      },
-    },
-    redirect: {
-      login: '/admin/',
-      logout: '/',
-    },
-  }, */
-  /*
-   ** Internal optimizeCSS module options
-   ** https://github.com/NMFR/optimize-css-assets-webpack-plugin
-   */
   optimizeCSS: {
     assetNameRegExp: /\.optimize\.css$/g,
     cssProcessor: require('cssnano'),
@@ -400,7 +356,7 @@ export default {
    ** nuxt-sitemap module configuration
    ** https://github.com/nuxt-community/sitemap-module
    */
-  sitemap: { hostname: baseUrl, exclude: blacklistRoutes },
+  sitemap: { hostname: baseUrl },
 
   /*
    ** Build configuration
