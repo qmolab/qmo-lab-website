@@ -1,16 +1,42 @@
 <template>
   <div class="linksPage mb-8">
-    <div class="py-8">
-      <v-btn
-        text
-        href="/assets/images/socal-first-announcement.jpg"
-        target="_blank"
-        rel="noopener"
+    <v-list-item
+      href="https://small.ucr.edu/"
+      target="_blank"
+      rel="noopener"
+      class="my-8"
+    >
+      <v-img
+        src="https://small.ucr.edu/assets/images/SMALL_logo_small_v2.svg"
+        alt="UCR Small Lab"
+        max-width="150"
+        style="border-radius: 4px;"
+      />
+      <v-list-item-title class="ml-2"
+        >UCR Shared Micro-Assembly and Lithography Laboratory</v-list-item-title
       >
-        <span>SoCAL First announcement</span>
-        <v-icon right color="secondary">{{ mdiOpenInNew }}</v-icon>
-      </v-btn>
-    </div>
+      <v-list-item-icon>
+        <v-icon color="secondary">{{ mdiOpenInNew }}</v-icon>
+      </v-list-item-icon>
+    </v-list-item>
+    <v-list-item to="/members/theses/">
+      <v-list-item-icon class="mx-2">
+        <v-icon color="primary"> {{ mdiBookOpen }} </v-icon>
+      </v-list-item-icon>
+      <v-list-item-title>Member Dissertations</v-list-item-title>
+    </v-list-item>
+    <v-list-item to="/research/posters/">
+      <v-list-item-icon class="mx-2">
+        <v-icon color="primary"> {{ mdiBillboard }} </v-icon>
+      </v-list-item-icon>
+      <v-list-item-title>Research Posters</v-list-item-title>
+    </v-list-item>
+    <v-list-item to="/contact/">
+      <v-list-item-icon class="mx-2">
+        <v-icon color="primary"> {{ mdiMessageArrowRight }} </v-icon>
+      </v-list-item-icon>
+      <v-list-item-title>Contact Us</v-list-item-title>
+    </v-list-item>
     <v-expansion-panels multiple class="py-8">
       <v-expansion-panel v-for="(panel, i) in panels" :key="i">
         <v-expansion-panel-header>
@@ -47,6 +73,9 @@
     mdiNotebookOutline,
     mdiOpenInNew,
     mdiVectorLink,
+    mdiBookOpen,
+    mdiBillboard,
+    mdiMessageArrowRight,
   } from '@mdi/js';
   export default {
     name: 'LinksView',
@@ -57,6 +86,9 @@
     data() {
       return {
         mdiOpenInNew,
+        mdiBookOpen,
+        mdiBillboard,
+        mdiMessageArrowRight,
         icons: {
           'Lab Funding': mdiCurrencyUsd,
           'UCR Links': mdiLinkVariant,

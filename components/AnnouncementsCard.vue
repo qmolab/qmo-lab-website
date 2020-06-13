@@ -33,8 +33,8 @@
               />
             </v-avatar>
             <div class="px-4">
-              <div class="title">
-                <PrettyDate :value="item.date" class="text--large" />
+              <div class="body-1">
+                <PrettyDate :value="item.date" />
                 <span>
                   <span>: </span>
                   <DynamicText :html="item.title" />

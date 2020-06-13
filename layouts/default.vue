@@ -125,7 +125,7 @@
         return this.$store.state.navLinks;
       },
       sideNavLinks() {
-        return { ...this.navLinks, ...this.$store.state.resourceLinks };
+        return { ...this.navLinks };
       },
     },
     head() {

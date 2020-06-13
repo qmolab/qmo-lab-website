@@ -1,5 +1,5 @@
 <template>
-  <v-overlay :value="dialog" opacity="0.9" z-index="20000">
+  <v-dialog :value="dialog" overlay-opacity="0.9" fullscreen>
     <div class="overlay">
       <div class="pa-4">
         <v-carousel
@@ -55,7 +55,7 @@
         <v-icon large>{{ closeIcon }}</v-icon>
       </v-btn>
     </div>
-  </v-overlay>
+  </v-dialog>
 </template>
 
 <script>

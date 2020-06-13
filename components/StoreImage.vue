@@ -6,11 +6,14 @@
       :webp="asset.webp"
       :width="width"
       :height="height"
-      :title="asset.title"
+      :title="figure ? undefined : asset.title"
       :alt="asset.alt"
       :aspect-ratio="aspectRatio"
       :max-width="maxWidth"
     />
+    <div v-if="figure" class="caption mb-2">
+      Figure {{ figure }}: {{ asset.title }}
+    </div>
   </div>
 </template>
 
@@ -25,6 +28,7 @@
       height: { type: [String, Number], default: undefined },
       aspectRatio: { type: [String, Number], default: undefined },
       maxWidth: { type: [String, Number], default: undefined },
+      figure: { type: Number, default: undefined },
     },
     computed: {
       asset() {

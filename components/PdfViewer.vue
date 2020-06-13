@@ -107,7 +107,7 @@
           <v-btn
             nuxt
             text
-            :to="`/resources/contact/#tag=${author}&subject=thesis`"
+            :to="`/contact/#tag=${author}&subject=thesis`"
             class="ml-2"
           >
             <span>Contact {{ author }}</span>

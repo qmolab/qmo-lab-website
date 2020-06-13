@@ -7,6 +7,7 @@
           'my-1 ta-center': true,
           'float-l mr-4': item.float === 'left',
           'float-r ml-4': item.float === 'right',
+          'mx-auto': !item.float,
         }"
         :sub-category="imageCategory"
         :item-id="item.img"
@@ -15,6 +16,7 @@
         :style="'max-width: ' + (item.float ? '30%;' : '60%;')"
         :max-width="item.maxWidth"
         :max-height="item.maxHeight"
+        :figure="figures ? 1 : undefined"
       />
       <div v-if="item.content" class="mb-2" v-html="item.content" />
     </div>
@@ -55,6 +57,10 @@
       imageCategory: {
         type: String,
         default: undefined,
+      },
+      figures: {
+        type: Boolean,
+        default: false,
       },
     },
     computed: {

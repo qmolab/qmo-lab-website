@@ -399,7 +399,6 @@ export default {
    */
   generate: {
     async routes() {
-      const members = await getRoute('/members/routes/', '/members/', 'name');
       const theses = await getRoute(
         '/theses/routes/',
         '/members/theses/',
@@ -410,18 +409,7 @@ export default {
         '/research/',
         'title'
       );
-      const software = await getRoute(
-        '/software/routes/',
-        '/resources/software/',
-        'title'
-      );
-      return [
-        ...members,
-        ...theses,
-        ...research,
-        ...software,
-        { route: '/resources/presentations/test/' },
-      ];
+      return [...theses, ...research];
     },
   },
 };

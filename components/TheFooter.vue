@@ -45,13 +45,18 @@
                 small
                 :color="item.color"
                 :href="item.href"
-                :to="item.to"
+                target="_blank"
+                rel="noopener"
                 class="ma-2"
                 :aria-label="item.title"
                 active-class="v-btn--disabled"
                 v-on="on"
               >
-                <v-icon :alt="item.title" :aria-label="item.title">
+                <v-icon
+                  :alt="item.title"
+                  :aria-label="item.title"
+                  :x-large="item.large"
+                >
                   {{ item.icon }}
                 </v-icon>
               </v-btn>
@@ -108,8 +113,7 @@
       </v-row>
     </v-container>
     <div class="copyrightNotice fill-w abs pa-2 overline ta-center">
-      <NuxtLink x-small to="/resources/">Lab Resources</NuxtLink> |
-      <NuxtLink x-small to="/resources/privacy/">Privacy Policy</NuxtLink>
+      <NuxtLink x-small to="/privacy/">Privacy Policy</NuxtLink>
       <span>
         | &nbsp;&copy;&nbsp; 2020 Regents of the University of California
       </span>
@@ -133,12 +137,12 @@
     mdiTwitter,
     mdiYoutube,
     mdiGithub,
-    mdiCodeTags,
     mdiOpenInNew,
     mdiMessage,
     mdiBusMarker,
     mdiInformationVariant,
-    mdiDatabase,
+    mdiAtom,
+    mdiAlphaS,
   } from '@mdi/js';
   import NuxtLink from '@/components/NuxtLink.vue';
   // import BaseImage from '@/components/BaseImage.vue';
@@ -170,35 +174,36 @@
           {
             icon: mdiGithub,
             title: 'Lab Software Repository',
-            href: 'https://github.com/qmolab',
+            href: 'https://github.com/qmolabucr',
             color: '#211F1F',
           },
           {
-            icon: mdiDatabase,
-            title: 'Lab Data Repository',
-            to: '/resources/data/',
-            color: 'accent',
+            icon: mdiAtom,
+            title: 'UCR Physics',
+            href: 'https://ucr.edu/',
+            color: '#2d6cc0',
           },
           {
-            icon: mdiCodeTags,
-            title: 'Lab Software Documentation',
-            to: '/resources/software/',
-            color: 'secondary',
+            icon: mdiAlphaS,
+            title: 'UCR SMALL Lab',
+            href: 'https://small.ucr.edu/',
+            color: 'green darken-2',
+            large: true,
           },
         ],
         floatingLinks: [
           {
-            to: '/resources/contact/tour/',
+            to: '/contact/tour/',
             text: 'Schedule a tour',
             icon: mdiBusMarker,
           },
           {
-            to: '/resources/contact/potential_students/',
+            to: '/contact/potential_students/',
             text: 'Information for potential students',
             icon: mdiInformationVariant,
           },
           {
-            to: '/resources/contact/',
+            to: '/contact/',
             text: 'Contact Us',
             icon: mdiMessage,
           },

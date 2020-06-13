@@ -23,7 +23,7 @@
             :item-id="item.img"
             :aspect-ratio="3 / 2"
           />
-          <v-card-title class="pt-1 title">
+          <v-card-title class="pt-1">
             <DynamicText :html="item.title.replace(/_/g, ' ')" />
           </v-card-title>
           <v-card-text>
@@ -38,6 +38,15 @@
           </v-card-actions>
         </v-card>
       </v-col>
+      <v-col
+        v-for="i in [10000, 10001, 10002]"
+        :key="i"
+        cols="12"
+        sm="6"
+        lg="4"
+        xl="3"
+        class="narrowCard mx-auto"
+      />
     </v-row>
   </div>
 </template>

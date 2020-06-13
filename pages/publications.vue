@@ -38,7 +38,9 @@
             </div>
           </BaseImage>
           <div class="pt-1 px-4 title">
-            <DynamicText :html="item.title" />
+            <span style="font-size: 0.8em;">
+              <DynamicText :html="item.title" />
+            </span>
           </div>
           <v-card-text>
             <DynamicText :html="item.description" />
@@ -69,7 +71,7 @@
           sm="6"
         >
           <v-card raised class="stretchCard mb-12">
-            <v-card-title class="title">
+            <v-card-title>
               <DynamicText :html="item.title" />
             </v-card-title>
             <v-card-subtitle>

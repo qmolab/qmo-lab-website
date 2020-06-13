@@ -30,7 +30,7 @@
         mdiYoutubeSubscription,
         galleryImages: [
           {
-            title: 'Lab Gallery',
+            title: 'Around the Lab',
             index: null,
             images: [
               {
@@ -117,53 +117,43 @@
                 webp: require('~/assets/images/gallery/aps_2018_monkey.jpg?webp'),
                 title: 'QMO Lab at APS March Meeting 2018',
               },
-            ],
-          },
-          {
-            title: 'OAK GLEN GROUP HIKE 2018',
-            index: null,
-            images: [
               {
                 href: require('~/assets/images/gallery/oakglen/oakglen_climb.jpg'),
                 thumbnail: require('~/assets/images/gallery/oakglen/oakglen_climb.jpg?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/oakglen/oakglen_climb.jpg?webp'),
-                title: 'Hiking towards Preservation Point',
+                title:
+                  'OAK GLEN GROUP HIKE 2018: Hiking towards Preservation Point',
               },
               {
                 href: require('~/assets/images/gallery/oakglen/oakglen_jed.jpg'),
                 thumbnail: require('~/assets/images/gallery/oakglen/oakglen_jed.jpg?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/oakglen/oakglen_jed.jpg?webp'),
-                title: 'Taking in the view',
+                title: 'OAK GLEN GROUP HIKE 2018: Taking in the view',
               },
               {
                 href: require('~/assets/images/gallery/oakglen/oakglen_descent.jpg'),
                 thumbnail: require('~/assets/images/gallery/oakglen/oakglen_descent.jpg?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/oakglen/oakglen_descent.jpg?webp'),
-                title: 'Descending to the valleys',
+                title: 'OAK GLEN GROUP HIKE 2018: Descending to the valleys',
               },
-            ],
-          },
-          {
-            title: 'TORREY PINES GROUP HIKE 2016',
-            index: null,
-            images: [
               {
                 href: require('~/assets/images/gallery/stairs_2016.jpg'),
                 thumbnail: require('~/assets/images/gallery/stairs_2016.jpg?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/stairs_2016.jpg?webp'),
-                title: 'Scenic Torrey Pines',
+                title: 'TORREY PINES GROUP HIKE 2016: Scenic Torrey Pines',
               },
               {
                 href: require('~/assets/images/gallery/group_2016.jpg'),
                 thumbnail: require('~/assets/images/gallery/group_2016.jpg?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/group_2016.jpg?webp'),
-                title: 'The group in 2016',
+                title: 'TORREY PINES GROUP HIKE 2016: The group in 2016',
               },
               {
                 href: require('~/assets/images/gallery/mufasa_2016.png'),
                 thumbnail: require('~/assets/images/gallery/mufasa_2016.png?resize&placeholder=true'),
                 webp: require('~/assets/images/gallery/mufasa_2016.png?webp'),
-                title: 'Professor Gabor is always with the group in spirit',
+                title:
+                  'TORREY PINES GROUP HIKE 2016: Professor Gabor is always with the group in spirit',
               },
             ],
           },

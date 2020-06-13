@@ -6,6 +6,7 @@
       class="my-8"
       :page-content="content"
       image-category="research"
+      figures
     />
     <div v-if="youtube" class="videoPlayerContainer mx-auto mt-4">
       <YoutubeEmbed :video-id="youtube" />

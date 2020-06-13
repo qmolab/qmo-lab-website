@@ -62,11 +62,7 @@
       },
     },
     async mounted() {
-      const payload = await this.getNavLinks(
-        '/members/routes/',
-        '/members/',
-        'name'
-      );
+      const payload = {};
       payload.theses = {
         title: 'theses',
         to: '/members/theses/',

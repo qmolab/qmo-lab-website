@@ -169,7 +169,7 @@
         Riverside, California 92521
       </p>
       <p>
-        <v-btn nuxt text to="/resources/contact/">
+        <v-btn nuxt text to="/contact/">
           <span>Contact Us</span>]
           <v-icon right>{{ mdiMessageArrowRight }}</v-icon>
         </v-btn>

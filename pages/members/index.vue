@@ -8,13 +8,15 @@
           :min-height="200"
           elevation="2"
         >
-          <div class="title pt-2 px-4">
-            <span>Nathaniel Gabor </span>
-            <span class="font-weight-light text--small">
-              ({{ professors.nathan.title }})
+          <v-card-title class="pb-2">
+            <span>
+              <span>Nathaniel Gabor </span>
+              <span class="font-weight-light text--small">
+                ({{ professors.nathan.title }})
+              </span>
             </span>
-          </div>
-          <v-row no-gutters class="pa-4">
+          </v-card-title>
+          <v-row no-gutters class="px-4 pb-4">
             <v-col cols="12" md="4">
               <StoreImage
                 sub-category="professors"
@@ -135,13 +137,54 @@
                 <DynamicText :html="member.focus" />
               </span>
             </v-card-text>
-            <div class="actions d-flex align-end">
+            <div class="actions d-flex align-end pr-2">
               <v-spacer />
+              <v-dialog
+                v-model="member.dialog"
+                max-width="1280"
+                style="overflow: hidden;"
+                content-class="hideOverflow"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn text small v-bind="attrs" v-on="on">
+                    <span>About {{ member.name }}</span>
+                    <v-icon right color="primary">{{ mdiPageNext }}</v-icon>
+                  </v-btn>
+                </template>
+                <v-card style="max-width: 1251px;" class="px-4 pt-2">
+                  <MemberCard :id="member.name" />
+                  <v-card-actions>
+                    <v-spacer />
+                    <v-btn
+                      v-if="(member.level & 10) === 10"
+                      nuxt
+                      text
+                      :to="dissertationRoute(member)"
+                    >
+                      <span>{{ member.name }}'s Dissertation</span>
+                      <v-icon color="primary" right>
+                        {{ mdiBookOpenVariant }}
+                      </v-icon>
+                    </v-btn>
+                    <v-btn nuxt text :to="`/contact/#tag=${member.name}`">
+                      <span>Contact {{ member.name }}</span>
+                      <v-icon color="primary" right>
+                        {{ mdiMessageArrowRight }}
+                      </v-icon>
+                    </v-btn>
+                    <v-btn text @click="member.dialog = false">
+                      <span>Close Window</span>
+                      <v-icon color="error" right>{{ mdiClose }}</v-icon>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+              <!--
               <v-btn text small nuxt :to="`/members/${member.name}`">
                 <span>About {{ member.name }}</span>
                 <v-icon right color="primary">{{ mdiPageNext }}</v-icon>
               </v-btn>
-              <!--
+
               <v-btn
                 v-if="(member.level & 10) === 10"
                 text
@@ -177,9 +220,15 @@
 
 <script>
   // need bit function to check if 8 is in members.level or in memberFlags or in neither
-  import { mdiPageNext, mdiBookOpenVariant } from '@mdi/js';
+  import {
+    mdiMessageArrowRight,
+    mdiBookOpenVariant,
+    mdiPageNext,
+    mdiClose,
+  } from '@mdi/js';
   import StoreImage from '@/components/StoreImage.vue';
   import DynamicText from '@/components/DynamicText.vue';
+  import MemberCard from '@/components/MemberCard.vue';
 
   function recursiveFilter(
     shown,
@@ -228,7 +277,7 @@
   }
 
   export default {
-    components: { StoreImage, DynamicText },
+    components: { StoreImage, DynamicText, MemberCard },
     async asyncData({ $axios, $payloadURL, route, store }) {
       // if generated and works as client navigation, fetch previously saved static JSON payload
       // if (process.static && process.client && $payloadURL)
@@ -266,11 +315,13 @@
         chips,
         professors: store.state.members.professors,
         shownMembers: [],
-        hiddenMembers: memberList,
+        hiddenMembers: memberList.map((e) => ({ ...e, dialog: false })),
         downloadedFormer: false,
         busy: false,
         mdiPageNext,
         mdiBookOpenVariant,
+        mdiMessageArrowRight,
+        mdiClose,
       };
     },
     computed: {
@@ -315,6 +366,12 @@
         );
         this.filterList();
       },
+      dissertationRoute(member) {
+        return (
+          '/members/theses/' +
+          (member.first + '_' + member.last + '/').toLowerCase()
+        );
+      },
       filterList() {
         this.busy = true;
         this.hiddenMembers = recursiveFilter(
@@ -331,6 +388,9 @@
 </script>
 
 <style lang="scss" scoped>
+  .hideOverflow {
+    overflow: hidden;
+  }
   .memberContainer {
     transition: min-height 0.28s linear;
     height: auto;
