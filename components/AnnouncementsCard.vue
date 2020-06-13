@@ -19,51 +19,54 @@
           :key="item.title"
           class="pa-2"
         >
-          <div class="d-flex align-center">
-            <v-avatar
-              :size="75"
-              :color="item.imageSubCategory ? undefined : 'primary'"
-            >
-              <StoreImage
-                v-if="item.imageSubCategory && item.imageRef"
-                :sub-category="item.imageSubCategory"
-                :item-id="item.imageRef"
-                :width="75"
-                :height="75"
-              />
-            </v-avatar>
-            <div class="px-4">
-              <div class="body-1">
-                <PrettyDate :value="item.date" />
-                <span>
-                  <span>: </span>
-                  <DynamicText :html="item.title" />
-                </span>
-              </div>
-              <div class="body-2">
-                <DynamicText :html="item.description" />
+          <v-lazy min-height="75">
+            <div class="d-flex align-center">
+              <v-avatar
+                :size="75"
+                :color="item.imageSubCategory ? undefined : 'primary'"
+              >
+                <StoreImage
+                  v-if="item.imageSubCategory && item.imageRef"
+                  :sub-category="item.imageSubCategory"
+                  :item-id="item.imageRef"
+                  :width="75"
+                  :height="75"
+                />
+              </v-avatar>
+              <div class="px-4">
+                <div class="body-1">
+                  <PrettyDate :value="item.date" />
+                  <span>
+                    <span>: </span>
+                    <DynamicText :html="item.title" />
+                  </span>
+                </div>
+                <div class="body-2">
+                  <DynamicText :html="item.description" />
+                </div>
               </div>
             </div>
-          </div>
+          </v-lazy>
         </div>
       </transition-group>
     </div>
-    <div class="pb-0 ta-right">
+    <div class="pb-0 ta-right mr-4">
       For More QMO Lab Highlights, Please See Our Publications and Research
       Pages
     </div>
-
-    <v-card-actions class="pt-0">
-      <v-spacer />
-      <v-btn text to="/publications/">
-        <v-icon color="secondary">mdi-alpha-p-circle</v-icon>
-        <span>Publications</span>
-      </v-btn>
-      <v-btn text to="/research/">
-        <v-icon color="secondary">mdi-alpha-r-circle</v-icon>
-        <span>Research</span>
-      </v-btn>
-    </v-card-actions>
+    <v-lazy>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn text to="/publications/">
+          <v-icon color="secondary">mdi-alpha-p-circle</v-icon>
+          <span>Publications</span>
+        </v-btn>
+        <v-btn text to="/research/">
+          <v-icon color="secondary">mdi-alpha-r-circle</v-icon>
+          <span>Research</span>
+        </v-btn>
+      </v-card-actions>
+    </v-lazy>
   </v-card>
 </template>
 

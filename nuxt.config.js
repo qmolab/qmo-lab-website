@@ -294,7 +294,7 @@ export default {
   build: {
     transpile: ['vue-pdf'],
     terser: { extractComments: 'NODE_LICENSES' /* default was LICENSES */ },
-    // extractCSS: true,
+    /// extractCSS: true,
     /*
     optimization: {
       splitChunks: {

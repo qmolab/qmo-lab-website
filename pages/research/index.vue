@@ -31,10 +31,22 @@
           </v-card-text>
           <v-card-actions v-if="item.subtitle" class="actions">
             <v-spacer />
-            <v-btn nuxt text :to="`/research/${item.title}/`">
+            <!--<v-btn nuxt text :to="`/research/${item.title}/`">
               <span>Read more</span>
               <v-icon right color="primary">mdi-page-next</v-icon>
-            </v-btn>
+            </v-btn>-->
+            <v-dialog v-model="item.dialog" fullscreen>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn text small v-bind="attrs" v-on="on">
+                  <span>Read more</span>
+                  <v-icon right color="primary">mdi-page-next</v-icon>
+                </v-btn>
+              </template>
+              <ResearchCard
+                :id="item.title"
+                :close="() => (item.dialog = false)"
+              />
+            </v-dialog>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -54,8 +66,10 @@
 <script>
   import StoreImage from '@/components/StoreImage.vue';
   import DynamicText from '@/components/DynamicText.vue';
+  import ResearchCard from '@/components/ResearchCard.vue';
+
   export default {
-    components: { StoreImage, DynamicText },
+    components: { StoreImage, DynamicText, ResearchCard },
     async asyncData({ $axios /* $payloadURL, route */ }) {
       // if (process.static && process.client && $payloadURL)
       //   return await $axios.$get($payloadURL(route));

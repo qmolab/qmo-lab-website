@@ -184,7 +184,7 @@
         </v-col>
       </transition-group>
       <v-progress-circular
-        v-show="busy"
+        v-if="busy"
         size="80"
         width="8"
         class="progress"

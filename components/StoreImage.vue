@@ -2,6 +2,7 @@
   <div>
     <BaseImage
       v-if="asset"
+      v-slot:caption
       :src="asset.img"
       :webp="asset.webp"
       :width="width"
@@ -10,10 +11,12 @@
       :alt="asset.alt"
       :aspect-ratio="aspectRatio"
       :max-width="maxWidth"
-    />
-    <div v-if="figure" class="caption mb-2">
-      Figure {{ figure }}: {{ asset.title }}
-    </div>
+      border
+    >
+      <div v-if="figure" class="caption mb-2">
+        Figure {{ figure }}: {{ asset.title }}
+      </div>
+    </BaseImage>
   </div>
 </template>
 
@@ -29,6 +32,7 @@
       aspectRatio: { type: [String, Number], default: undefined },
       maxWidth: { type: [String, Number], default: undefined },
       figure: { type: Number, default: undefined },
+      border: { type: Boolean, default: false },
     },
     computed: {
       asset() {

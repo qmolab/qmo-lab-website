@@ -47,12 +47,8 @@
           </v-slide-item>
         </v-slide-group>
       </div>
-      <v-btn
-        color="red"
-        class="abs closeButton pa-0 ma-2"
-        @click="dialog = false"
-      >
-        <v-icon large>mdi-close</v-icon>
+      <v-btn color="red" class="abs closeButton" fab @click="dialog = false">
+        <v-icon x-large>mdi-close</v-icon>
       </v-btn>
     </div>
   </v-dialog>
@@ -97,10 +93,8 @@
     width: 100vw;
     overflow: hidden;
     .closeButton {
-      top: 8px;
-      right: 8px;
-      min-width: 36px !important;
-      max-width: 36px;
+      top: 16px;
+      right: 16px;
     }
     .v-slide-group__content {
       justify-content: center;

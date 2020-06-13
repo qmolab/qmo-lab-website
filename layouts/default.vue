@@ -2,7 +2,7 @@
   <v-app>
     <!-- Begin Navigation Drawer -->
     <v-navigation-drawer v-model="drawer" dark temporary app>
-      <TheNavigationDrawer :nav-links="sideNavLinks" />
+      <TheNavigationDrawer v-if="drawer" :nav-links="sideNavLinks" />
     </v-navigation-drawer>
     <!-- End Navigation Drawer -->
 
@@ -78,7 +78,9 @@
     </v-content>
     <!-- End Page Content -->
     <!-- Begin Footer -->
-    <TheFooter />
+    <v-lazy transition="fade-transition" min-height="380">
+      <TheFooter />
+    </v-lazy>
     <!-- End Footer -->
   </v-app>
 </template>

@@ -63,37 +63,39 @@
     <br />
     <h2 class="headline mb-4 l-1">Additional Publications and Patents</h2>
     <v-sheet>
-      <v-row>
-        <v-col
-          v-for="(item, i) in publicationsList.filter((e) => !e.description)"
-          :key="i"
-          cols="12"
-          sm="6"
-        >
-          <v-card raised class="stretchCard mb-12">
-            <v-card-title>
-              <DynamicText :html="item.title" />
-            </v-card-title>
-            <v-card-subtitle>
-              <DynamicText :html="item.authors" />
-              <span> -- </span>
-              <DynamicText :html="item.reference" />
-            </v-card-subtitle>
-            <div v-if="item.href" class="actions">
-              <v-btn
-                text
-                small
-                :href="item.href"
-                target="_blank"
-                rel="noopener"
-              >
-                <span>{{ item.href }}</span>
-                <v-icon right color="secondary">mdi-open-in-new</v-icon>
-              </v-btn>
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
+      <v-lazy min-height="500">
+        <v-row>
+          <v-col
+            v-for="(item, i) in publicationsList.filter((e) => !e.description)"
+            :key="i"
+            cols="12"
+            sm="6"
+          >
+            <v-card raised class="stretchCard mb-12">
+              <v-card-title>
+                <DynamicText :html="item.title" />
+              </v-card-title>
+              <v-card-subtitle>
+                <DynamicText :html="item.authors" />
+                <span> -- </span>
+                <DynamicText :html="item.reference" />
+              </v-card-subtitle>
+              <div v-if="item.href" class="actions">
+                <v-btn
+                  text
+                  small
+                  :href="item.href"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span>{{ item.href }}</span>
+                  <v-icon right color="secondary">mdi-open-in-new</v-icon>
+                </v-btn>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-lazy>
     </v-sheet>
   </div>
 </template>

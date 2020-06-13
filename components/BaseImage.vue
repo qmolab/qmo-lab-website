@@ -20,6 +20,7 @@
           :width="width"
           :min-width="minWidth"
           :max-width="maxWidth"
+          :class="{ imgBorder: border }"
           :options="{ threshold: 0.1 }"
           transition="fade-transition"
           v-on="on"
@@ -34,6 +35,7 @@
       </template>
       <span>{{ title }}</span>
     </v-tooltip>
+    <slot name="caption" />
   </div>
 </template>
 
@@ -60,6 +62,7 @@
       link: { type: Boolean, default: false },
       noTooltip: { type: Boolean, default: false },
       preload: { type: Boolean, default: false },
+      border: { type: Boolean, default: false },
     },
     data() {
       return { aspectRatioChecked: undefined };
@@ -83,5 +86,8 @@
     cursor: pointer;
     border-radius: 4px;
     overflow: hidden;
+  }
+  .imgBorder {
+    border: 2px solid #212121;
   }
 </style>

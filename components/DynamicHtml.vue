@@ -17,6 +17,7 @@
         :max-width="item.maxWidth"
         :max-height="item.maxHeight"
         :figure="figures ? 1 : undefined"
+        border
       />
       <div v-if="item.content" class="mb-2" v-html="item.content" />
     </div>
