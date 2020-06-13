@@ -56,11 +56,11 @@
     <v-card-actions class="pt-0">
       <v-spacer />
       <v-btn text to="/publications/">
-        <v-icon color="secondary">{{ mdiAlphaPCircle }}</v-icon>
+        <v-icon color="secondary">mdi-alpha-p-circle</v-icon>
         <span>Publications</span>
       </v-btn>
       <v-btn text to="/research/">
-        <v-icon color="secondary">{{ mdiAlphaRCircle }}</v-icon>
+        <v-icon color="secondary">mdi-alpha-r-circle</v-icon>
         <span>Research</span>
       </v-btn>
     </v-card-actions>
@@ -68,7 +68,6 @@
 </template>
 
 <script>
-  import { mdiAlphaRCircle, mdiAlphaPCircle } from '@mdi/js';
   import StoreImage from '@/components/StoreImage.vue';
   import PrettyDate from '@/components/lib/PrettyDate.vue';
   import DynamicText from '@/components/DynamicText.vue';
@@ -85,8 +84,6 @@
         good: true,
         newsSwitch: true,
         oldAnnouncements: undefined,
-        mdiAlphaRCircle,
-        mdiAlphaPCircle,
       };
     },
     watch: {

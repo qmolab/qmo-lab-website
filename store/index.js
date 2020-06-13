@@ -1,12 +1,3 @@
-import {
-  mdiHome,
-  mdiAlphaRCircle,
-  mdiAlphaPCircle,
-  mdiAccountGroup,
-  mdiCameraIris,
-  mdiLink,
-} from '@mdi/js';
-
 export const state = () => ({
   imageTransition: 'fade-transition',
   usesHeroSlider: {
@@ -15,17 +6,15 @@ export const state = () => ({
     tour: true,
     'potential students': true,
     contact: true,
-    resources: true,
-    safety: true,
   },
   navLinks: {
     home: {
-      icon: mdiHome,
+      icon: 'mdi-home',
       title: 'Home',
       to: '/',
     },
     members: {
-      icon: mdiAccountGroup,
+      icon: 'mdi-account-group',
       title: 'Members',
       to: '/members/',
       sub: {
@@ -36,7 +25,7 @@ export const state = () => ({
       },
     },
     research: {
-      icon: mdiAlphaRCircle,
+      icon: 'mdi-alpha-r-circle',
       title: 'Research',
       to: '/research/',
       sub: {
@@ -47,17 +36,17 @@ export const state = () => ({
       },
     },
     publications: {
-      icon: mdiAlphaPCircle,
+      icon: 'mdi-alpha-p-circle',
       title: 'Publications',
       to: '/publications/',
     },
     gallery: {
-      icon: mdiCameraIris,
+      icon: 'mdi-camera-iris',
       title: 'Gallery',
       to: '/gallery/',
     },
     links: {
-      icon: mdiLink,
+      icon: 'mdi-link',
       title: 'Links',
       to: '/links/',
     },

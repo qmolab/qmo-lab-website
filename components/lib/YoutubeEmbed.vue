@@ -8,7 +8,7 @@
         :aspect-ratio="16 / 9"
       >
         <v-icon class="mdiYoutube" :size="72">
-          {{ mdiYoutube }}
+          mdi-youtube
         </v-icon>
       </v-img>
       <iframe
@@ -24,7 +24,6 @@
 </template>
 
 <script>
-  import { mdiYoutube } from '@mdi/js';
   export default {
     props: {
       videoId: {
@@ -34,7 +33,6 @@
     },
     data() {
       return {
-        mdiYoutube,
         isLoaded: false,
         videoSource: undefined,
         thumbSource: '',
@@ -79,6 +77,12 @@
       left: 0;
     }
     .mdiYoutube {
+      justify-self: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -36px;
+      margin-top: -36px;
       z-index: 1;
     }
     &:hover .mdiYoutube {

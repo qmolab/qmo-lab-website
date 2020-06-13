@@ -1,34 +1,6 @@
 // import colors from 'vuetify/es5/util/colors';
 import axios from 'axios';
 import {
-  mdiCancel,
-  mdiClose,
-  mdiDelete,
-  mdiInformation,
-  mdiChevronLeft,
-  mdiChevronRight,
-  mdiCircleSlice8,
-  mdiSort,
-  mdiMenu,
-  mdiAlert,
-  mdiAlertCircle,
-  mdiRadioboxMarked,
-  mdiRadioboxBlank,
-  mdiFileDocument,
-  mdiUnfoldLessHorizontal,
-  mdiUnfoldMoreHorizontal,
-  mdiPencil,
-  mdiLoading,
-  mdiChevronDown,
-  mdiCheckboxBlankOutline,
-  mdiCheckboxIntermediate,
-  mdiCheckboxMarked,
-  mdiCheckBold,
-  // mdiStar,
-  // mdiStarOutline,
-  // mdiStarHalf,
-} from '@mdi/js';
-import {
   primary,
   accent,
   secondary,
@@ -40,49 +12,12 @@ import {
 } from './assets/scss/colors';
 
 require('dotenv').config();
-const MY_ICONS = {
-  complete: mdiCheckBold,
-  cancel: mdiCancel,
-  close: mdiClose,
-  delete: mdiDelete, // delete (e.g. v-chip close)
-  clear: mdiClose,
-  success: mdiCheckBold,
-  info: mdiInformation,
-  warning: mdiAlert,
-  error: mdiAlertCircle,
-  prev: mdiChevronLeft,
-  next: mdiChevronRight,
-  checkboxOn: mdiCheckboxMarked,
-  checkboxOff: mdiCheckboxBlankOutline,
-  checkboxIndeterminate: mdiCheckboxIntermediate,
-  delimiter: mdiCircleSlice8, // for carousel
-  sort: mdiSort,
-  expand: mdiChevronDown,
-  menu: mdiMenu,
-  // subgroup: '...',
-  dropdown: mdiChevronDown,
-  radioOn: mdiRadioboxMarked,
-  radioOff: mdiRadioboxBlank,
-  edit: mdiPencil,
-  // ratingEmpty: mdiStarOutline,
-  // ratingFull: mdiStar,
-  // ratingHalf: mdiStarHalf,
-  loading: mdiLoading,
-  // first: '...',
-  // last: '...',
-  fold: mdiUnfoldLessHorizontal,
-  unfold: mdiUnfoldMoreHorizontal,
-  file: mdiFileDocument,
-};
 // Doc: https://axios.nuxtjs.org/usage.html
-// Doc: https://auth.nuxtjs.org/guide/setup.html
-const modules = ['@nuxtjs/axios' /*, '@nuxtjs/auth' */];
+const modules = ['@nuxtjs/axios'];
 let modern = false;
 let base = '/';
 let baseUrl = 'http://localhost:3000';
 if (process.env.NODE_ENV === 'production') {
-  // Doc: https://github.com/Developmint/nuxt-webfontloader
-  // modules.push('nuxt-webfontloader');
   modern = 'client';
   base = process.env.ROUTER_BASE;
   baseUrl = process.env.SITE_BASE + process.env.ROUTER_BASE;
@@ -103,7 +38,7 @@ async function getRoute(table, routeBase, idColumn) {
 export default {
   vue: {
     config: {
-      performance: true, // you probably should detect dev mode here
+      performance: process.env.NODE_ENV !== 'production', // you probably should detect dev mode here
     },
   },
   /*
@@ -150,7 +85,7 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    /* { src: '~plugins/auth.js', ssr: false }, '~plugins/axios.js' */ {
+    {
       src: '~/plugins/vue-pdf',
       ssr: false,
     },
@@ -233,12 +168,6 @@ export default {
   axios: { baseURL: process.env.API_BASE },
 
   /*
-   ** Webfontloader options
-   ** https://www.npmjs.com/package/webfontloader
-   */
-  // webfontloader: { google: { families: [] } },
-
-  /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
    */
@@ -246,11 +175,11 @@ export default {
     customVariables: ['~/assets/scss/variables.scss'],
     defaultAssets: {
       font: false,
-      icons: false,
+      // icons: false,
     },
-    icons: {
+    /* icons: {
       values: MY_ICONS,
-    },
+    }, */
     treeShake: true,
     theme: {
       dark: true,
@@ -364,7 +293,7 @@ export default {
    */
   build: {
     transpile: ['vue-pdf'],
-    terser: { extractComments: false /* default was LICENSES */ },
+    terser: { extractComments: 'NODE_LICENSES' /* default was LICENSES */ },
     // extractCSS: true,
     /*
     optimization: {

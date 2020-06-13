@@ -49,7 +49,7 @@
                 >
                   {{ slide.title }}
                   <v-icon v-if="slide.href" right color="secondary">
-                    {{ mdiOpenInNew }}
+                    mdi-open-in-new
                   </v-icon>
                 </v-btn>
               </div>
@@ -84,7 +84,6 @@
 </template>
 
 <script>
-  import { mdiOpenInNew } from '@mdi/js';
   import TheNavigationDrawer from '@/components/TheNavigationDrawer.vue';
   import TheHeader from '@/components/TheHeader.vue';
   import TheFooter from '@/components/TheFooter.vue';
@@ -96,7 +95,7 @@
       TheFooter,
     },
     data() {
-      return { drawer: false, cycle: true, mdiOpenInNew };
+      return { drawer: false, cycle: true };
     },
     computed: {
       heroSlides() {

@@ -46,7 +46,7 @@
                   {{ item.reference }}
                 </span>
                 <v-list-item-icon class="mt-2">
-                  <v-icon color="secondary">{{ mdiOpenInNew }}</v-icon>
+                  <v-icon color="secondary">mdi-open-in-new</v-icon>
                 </v-list-item-icon>
               </v-col>
             </v-row>
@@ -73,21 +73,20 @@
     </v-col>
     <v-col>
       <v-btn v-if="cv" text :href="cv" target="_blank" rel="noopener">
-        <v-icon color="blue-grey">{{ mdiFileAccount }}</v-icon>
+        <v-icon color="blue-grey">mdi-file-account</v-icon>
         <span>{{ name }}'s CV</span>
-        <v-icon color="secondary">{{ mdiOpenInNew }}</v-icon>
+        <v-icon color="secondary">mdi-open-in-new</v-icon>
       </v-btn>
       <v-btn v-if="website" text :href="website" target="_blank" rel="noopener">
-        <v-icon color="primary" right>{{ mdiWeb }}</v-icon>
+        <v-icon color="primary" right>mdi-web</v-icon>
         <span>{{ name }}'s Website</span>
-        <v-icon color="secondary" right>{{ mdiOpenInNew }}</v-icon>
+        <v-icon color="secondary" right>mdi-open-in-new</v-icon>
       </v-btn>
     </v-col>
   </v-row>
 </template>
 
 <script>
-  import { mdiOpenInNew, mdiWeb, mdiFileAccount } from '@mdi/js';
   import StoreImage from '@/components/StoreImage.vue';
   import DynamicText from '@/components/DynamicText.vue';
   import PrettyDate from '@/components/lib/PrettyDate.vue';
@@ -97,9 +96,6 @@
     props: { id: { type: String, required: true } },
     data() {
       return {
-        mdiOpenInNew,
-        mdiWeb,
-        mdiFileAccount,
         titles: [
           'Post Doctoral Researcher',
           'Grad Student',

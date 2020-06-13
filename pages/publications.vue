@@ -49,12 +49,12 @@
             <v-spacer />
             <v-btn text disabled>
               <span>Share</span>
-              <v-icon right color="secondary">{{ mdiShareVariant }}</v-icon>
+              <v-icon right color="secondary">mdi-share-variant</v-icon>
             </v-btn>
 
             <v-btn text :href="item.href" target="_blank" rel="noopener">
               <span>Read more</span>
-              <v-icon right color="secondary">{{ mdiOpenInNew }}</v-icon>
+              <v-icon right color="secondary">mdi-open-in-new</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -88,7 +88,7 @@
                 rel="noopener"
               >
                 <span>{{ item.href }}</span>
-                <v-icon right color="secondary">{{ mdiOpenInNew }}</v-icon>
+                <v-icon right color="secondary">mdi-open-in-new</v-icon>
               </v-btn>
             </div>
           </v-card>
@@ -99,7 +99,6 @@
 </template>
 
 <script>
-  import { mdiOpenInNew, mdiShareVariant } from '@mdi/js';
   import BaseImage from '@/components/BaseImage.vue';
   import DynamicText from '@/components/DynamicText.vue';
   export default {
@@ -112,11 +111,7 @@
       // if (process.static && process.client && $payloadURL)
       //   return await $axios.$get($payloadURL(route));
       const publicationsList = await $axios.$get('/publications/cards/');
-      return {
-        mdiOpenInNew,
-        mdiShareVariant,
-        publicationsList,
-      };
+      return { publicationsList };
     },
     data() {
       return {

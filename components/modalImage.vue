@@ -52,14 +52,13 @@
         class="abs closeButton pa-0 ma-2"
         @click="dialog = false"
       >
-        <v-icon large>{{ closeIcon }}</v-icon>
+        <v-icon large>mdi-close</v-icon>
       </v-btn>
     </div>
   </v-dialog>
 </template>
 
 <script>
-  import { mdiClose } from '@mdi/js';
   export default {
     name: 'ModalImage',
     components: {},
@@ -70,9 +69,6 @@
     props: {
       value: { type: [Number, String], default: -1 },
       images: { type: [Object, Array], default: undefined },
-    },
-    data() {
-      return { closeIcon: mdiClose };
     },
     computed: {
       dialog: {

@@ -33,7 +33,7 @@
             <v-spacer />
             <v-btn nuxt text :to="`/research/${item.title}/`">
               <span>Read more</span>
-              <v-icon right color="primary">{{ mdiPageNext }}</v-icon>
+              <v-icon right color="primary">mdi-page-next</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -52,7 +52,6 @@
 </template>
 
 <script>
-  import { mdiPageNext } from '@mdi/js';
   import StoreImage from '@/components/StoreImage.vue';
   import DynamicText from '@/components/DynamicText.vue';
   export default {
@@ -61,7 +60,7 @@
       // if (process.static && process.client && $payloadURL)
       //   return await $axios.$get($payloadURL(route));
       const items = await $axios.$get('/research/cards/');
-      return { items, mdiPageNext };
+      return { items };
     },
   };
 </script>

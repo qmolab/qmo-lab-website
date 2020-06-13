@@ -37,7 +37,7 @@
               .toLowerCase()}/`"
           >
             <span>Read more</span>
-            <v-icon right color="secondary">{{ mdiPageNext }}</v-icon>
+            <v-icon right color="secondary">mdi-page-next</v-icon>
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -46,7 +46,6 @@
 </template>
 
 <script>
-  import { mdiPageNext } from '@mdi/js';
   import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
   import StoreImage from '@/components/StoreImage.vue';
   export default {
@@ -56,9 +55,6 @@
       //   return await $axios.$get($payloadURL(route));
       const memberTheses = await $axios.$get('/theses/cards/');
       return { memberTheses };
-    },
-    data() {
-      return { mdiPageNext };
     },
   };
 </script>

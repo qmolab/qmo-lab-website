@@ -42,9 +42,6 @@
         </div>
       </div>
     </nuxt-link>
-    <v-list-item>
-      <v-switch v-model="$vuetify.theme.dark" class="my-8" label="Dark Theme" />
-    </v-list-item>
   </v-list>
 </template>
 

@@ -171,7 +171,7 @@
       <p>
         <v-btn nuxt text to="/contact/">
           <span>Contact Us</span>]
-          <v-icon right>{{ mdiMessageArrowRight }}</v-icon>
+          <v-icon right>mdi-message-arrow-right</v-icon>
         </v-btn>
       </p>
       <p>Effective as of May 19, 2020</p>
@@ -184,18 +184,13 @@
       rel="noopener"
     >
       <span>UCR Privacy Policy</span>
-      <v-icon right color="secondary">{{ mdiOpenInNew }}</v-icon>
+      <v-icon right color="secondary">mdi-open-in-new</v-icon>
     </v-btn>
   </div>
 </template>
 
 <script>
-  import { mdiOpenInNew, mdiMessageArrowRight } from '@mdi/js';
-  export default {
-    data() {
-      return { mdiOpenInNew, mdiMessageArrowRight };
-    },
-  };
+  export default {};
 </script>
 <style lang="scss" scoped>
   .privacyPolicyPage {

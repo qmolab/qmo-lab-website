@@ -16,24 +16,24 @@
         >UCR Shared Micro-Assembly and Lithography Laboratory</v-list-item-title
       >
       <v-list-item-icon>
-        <v-icon color="secondary">{{ mdiOpenInNew }}</v-icon>
+        <v-icon color="secondary">mdi-open-in-new</v-icon>
       </v-list-item-icon>
     </v-list-item>
     <v-list-item to="/members/theses/">
       <v-list-item-icon class="mx-2">
-        <v-icon color="primary"> {{ mdiBookOpen }} </v-icon>
+        <v-icon color="primary">mdi-book-open</v-icon>
       </v-list-item-icon>
-      <v-list-item-title>Member Dissertations</v-list-item-title>
+      <v-list-item-title>Dissertations</v-list-item-title>
     </v-list-item>
     <v-list-item to="/research/posters/">
       <v-list-item-icon class="mx-2">
-        <v-icon color="primary"> {{ mdiBillboard }} </v-icon>
+        <v-icon color="primary">mdi-billboard</v-icon>
       </v-list-item-icon>
       <v-list-item-title>Research Posters</v-list-item-title>
     </v-list-item>
     <v-list-item to="/contact/">
       <v-list-item-icon class="mx-2">
-        <v-icon color="primary"> {{ mdiMessageArrowRight }} </v-icon>
+        <v-icon color="primary">mdi-message-arrow-right</v-icon>
       </v-list-item-icon>
       <v-list-item-title>Contact Us</v-list-item-title>
     </v-list-item>
@@ -56,7 +56,7 @@
             >
               <v-list-item-title>{{ item.linkText }}</v-list-item-title>
               <v-list-item-icon>
-                <v-icon color="secondary">{{ mdiOpenInNew }}</v-icon>
+                <v-icon color="secondary">mdi-open-in-new</v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list>
@@ -67,16 +67,6 @@
 </template>
 
 <script>
-  import {
-    mdiCurrencyUsd,
-    mdiLinkVariant,
-    mdiNotebookOutline,
-    mdiOpenInNew,
-    mdiVectorLink,
-    mdiBookOpen,
-    mdiBillboard,
-    mdiMessageArrowRight,
-  } from '@mdi/js';
   export default {
     name: 'LinksView',
     async asyncData({ $axios /* $payloadURL, route */ }) {
@@ -85,15 +75,11 @@
     },
     data() {
       return {
-        mdiOpenInNew,
-        mdiBookOpen,
-        mdiBillboard,
-        mdiMessageArrowRight,
         icons: {
-          'Lab Funding': mdiCurrencyUsd,
-          'UCR Links': mdiLinkVariant,
-          'Science Journals': mdiNotebookOutline,
-          'Other Groups': mdiVectorLink,
+          'Lab Funding': 'mdi-currency-usd',
+          'UCR Links': 'mdi-link-variant',
+          'Science Journals': 'mdi-notebook-outline',
+          'Other Groups': 'mdi-vector-link',
         },
       };
     },

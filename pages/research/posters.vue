@@ -23,14 +23,14 @@
                     :href="posterFolder + item.ppt"
                     class="hide-sm-and-down"
                   >
-                    <v-icon class="pb-1">{{ mdiFilePowerpoint }}</v-icon>
+                    <v-icon class="pb-1">mdi-file-powerpoint</v-icon>
                     Download PPT
-                    <v-icon right class="pb-1">{{ mdiDownload }}</v-icon>
+                    <v-icon right class="pb-1">mdi-download</v-icon>
                   </v-btn>
                   <v-btn text :href="posterFolder + item.pdf">
-                    <v-icon class="pb-1">{{ mdiFilePdf }}</v-icon>
+                    <v-icon class="pb-1">mdi-file-pdf</v-icon>
                     Download PDF
-                    <v-icon right class="pb-1">{{ mdiDownload }}</v-icon>
+                    <v-icon right class="pb-1">mdi-download</v-icon>
                   </v-btn>
                 </div>
               </div>
@@ -43,7 +43,6 @@
 </template>
 
 <script>
-  import { mdiFilePowerpoint, mdiFilePdf, mdiDownload } from '@mdi/js';
   import DynamicText from '@/components/DynamicText.vue';
   export default {
     components: { DynamicText },
@@ -53,9 +52,6 @@
     },
     data() {
       return {
-        mdiFilePowerpoint,
-        mdiFilePdf,
-        mdiDownload,
         posterFolder: process.env.ROUTER_BASE + 'assets/posters/',
         img: require('~/assets/images/posters/SHINES.png?resize'),
       };

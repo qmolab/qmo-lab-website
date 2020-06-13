@@ -9,7 +9,7 @@
     :clearable="clearable"
     :multiple="multiple"
     :rules="rules"
-    :prepend-icon="mdiTag"
+    prepend-icon="mdi-tag"
     :menu-props="{ auto: true, maxHeight: 2000 }"
     @input="$emit('update', $event)"
   >
@@ -43,7 +43,6 @@
   </v-select>
 </template>
 <script>
-  import { mdiTag } from '@mdi/js';
   import StoreImage from '@/components/StoreImage.vue';
   export default {
     components: { StoreImage },
@@ -61,7 +60,6 @@
       multiple: { type: Boolean, default: true },
       prependIcon: { type: String, default: undefined },
     },
-    data: () => ({ mdiTag }),
     computed: {
       rules() {
         return this.required

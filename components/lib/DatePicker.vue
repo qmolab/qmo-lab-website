@@ -10,12 +10,13 @@
     min-width="290px"
   >
     <template v-slot:activator="{ on }">
-      <TextField
+      <v-text-field
         :value="dateText"
         :name="name"
         :label="label"
-        :prepend-icon="mdiCalendar"
+        prepend-icon="mdi-calendar"
         readonly
+        outlined
         :on="on"
       />
     </template>
@@ -23,21 +24,18 @@
       <v-spacer />
       <v-btn right color="error" text @click="menu = false">
         <span>Cancel</span>
-        <v-icon right>{{ mdiCancel }}</v-icon>
+        <v-icon right>mdi-cancel</v-icon>
       </v-btn>
       <v-btn right color="success" text @click="save">
         <span>OK</span>
-        <v-icon right>{{ mdiCheckOutline }}</v-icon>
+        <v-icon right>mdi-check-outline</v-icon>
       </v-btn>
     </v-date-picker>
   </v-menu>
 </template>
 
 <script>
-  import { mdiCalendar, mdiCancel, mdiCheckOutline } from '@mdi/js';
-  import TextField from '@/components/lib/TextField.vue';
   export default {
-    components: { TextField },
     model: {
       prop: 'value',
       event: 'change',
@@ -51,9 +49,6 @@
     data() {
       return {
         menu: false,
-        mdiCalendar,
-        mdiCancel,
-        mdiCheckOutline,
         date: this.getDate(),
       };
     },

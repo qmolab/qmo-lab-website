@@ -62,7 +62,7 @@
               </v-btn>
             </template>
             <span>{{ item.title }}</span>
-            <v-icon v-if="item.href">{{ mdiOpenInNew }}</v-icon>
+            <v-icon v-if="item.href">mdi-open-in-new</v-icon>
           </v-tooltip>
         </v-col>
         <v-col
@@ -126,24 +126,13 @@
     >
       <span>
         <span>Visit the Official UCR Website</span>
-        <v-icon>{{ mdiOpenInNew }}</v-icon>
+        <v-icon>mdi-open-in-new</v-icon>
       </span>
     </v-tooltip>
   </v-footer>
 </template>
 
 <script>
-  import {
-    mdiTwitter,
-    mdiYoutube,
-    mdiGithub,
-    mdiOpenInNew,
-    mdiMessage,
-    mdiBusMarker,
-    mdiInformationVariant,
-    mdiAtom,
-    mdiAlphaS,
-  } from '@mdi/js';
   import NuxtLink from '@/components/NuxtLink.vue';
   // import BaseImage from '@/components/BaseImage.vue';
   export default {
@@ -154,37 +143,36 @@
     },
     data() {
       return {
-        mdiOpenInNew,
         tooltipDelay: 500,
         ucrLogo: require('~/assets/images/ucr_logo_blGd.png?resize&format=png&placeholder=true'),
         ucrLogoWebp: require('~/assets/images/ucr_logo_blGd.png?webp'),
         icons: [
           {
-            icon: mdiTwitter,
+            icon: 'mdi-twitter',
             title: 'Follow us on Twitter',
             href: 'https://twitter.com/qmo_lab',
             color: '#08a0e9',
           },
           {
-            icon: mdiYoutube,
+            icon: 'mdi-youtube',
             title: 'Check out our Youtube Channel',
             href: 'https://www.youtube.com/channel/UCJdmhoGpcmAFzVx9PolvBOA',
             color: '#c4302b',
           },
           {
-            icon: mdiGithub,
+            icon: 'mdi-github',
             title: 'Lab Software Repository',
             href: 'https://github.com/qmolabucr',
             color: '#211F1F',
           },
           {
-            icon: mdiAtom,
+            icon: 'mdi-atom',
             title: 'UCR Physics',
-            href: 'https://ucr.edu/',
+            href: 'https://physics.ucr.edu/',
             color: '#2d6cc0',
           },
           {
-            icon: mdiAlphaS,
+            icon: 'mdi-alpha-s',
             title: 'UCR SMALL Lab',
             href: 'https://small.ucr.edu/',
             color: 'green darken-2',
@@ -195,17 +183,17 @@
           {
             to: '/contact/tour/',
             text: 'Schedule a tour',
-            icon: mdiBusMarker,
+            icon: 'mdi-bus-marker',
           },
           {
             to: '/contact/potential_students/',
             text: 'Information for potential students',
-            icon: mdiInformationVariant,
+            icon: 'mdi-information-variant',
           },
           {
             to: '/contact/',
             text: 'Contact Us',
-            icon: mdiMessage,
+            icon: 'mdi-message',
           },
         ],
         fundingImages: [

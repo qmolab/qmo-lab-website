@@ -148,7 +148,7 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn text small v-bind="attrs" v-on="on">
                     <span>About {{ member.name }}</span>
-                    <v-icon right color="primary">{{ mdiPageNext }}</v-icon>
+                    <v-icon right color="primary">mdi-page-next</v-icon>
                   </v-btn>
                 </template>
                 <v-card style="max-width: 1251px;" class="px-4 pt-2">
@@ -163,38 +163,22 @@
                     >
                       <span>{{ member.name }}'s Dissertation</span>
                       <v-icon color="primary" right>
-                        {{ mdiBookOpenVariant }}
+                        mdi-book-open-variant
                       </v-icon>
                     </v-btn>
                     <v-btn nuxt text :to="`/contact/#tag=${member.name}`">
                       <span>Contact {{ member.name }}</span>
                       <v-icon color="primary" right>
-                        {{ mdiMessageArrowRight }}
+                        mdi-message-arrow-right
                       </v-icon>
                     </v-btn>
                     <v-btn text @click="member.dialog = false">
                       <span>Close Window</span>
-                      <v-icon color="error" right>{{ mdiClose }}</v-icon>
+                      <v-icon color="error" right>mdi-close</v-icon>
                     </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
-              <!--
-              <v-btn text small nuxt :to="`/members/${member.name}`">
-                <span>About {{ member.name }}</span>
-                <v-icon right color="primary">{{ mdiPageNext }}</v-icon>
-              </v-btn>
-
-              <v-btn
-                v-if="(member.level & 10) === 10"
-                text
-                nuxt
-                :to="`/members/theses/${(member.first + '_' + member.last).toLowerCase()}/`"
-              >
-                <span>Dissertation</span>
-                <v-icon right color="secondary">{{ mdiBookOpenVariant }}</v-icon>
-              </v-btn>
-              -->
             </div>
           </v-card>
         </v-col>
@@ -211,7 +195,7 @@
       <v-col cols="12">
         <v-btn text nuxt to="/members/theses/">
           <span>Student Dissertations</span>
-          <v-icon color="primary" right>{{ mdiBookOpenVariant }}</v-icon>
+          <v-icon color="primary" right>mdi-book-open-variant</v-icon>
         </v-btn>
       </v-col>
     </v-row>
@@ -219,13 +203,6 @@
 </template>
 
 <script>
-  // need bit function to check if 8 is in members.level or in memberFlags or in neither
-  import {
-    mdiMessageArrowRight,
-    mdiBookOpenVariant,
-    mdiPageNext,
-    mdiClose,
-  } from '@mdi/js';
   import StoreImage from '@/components/StoreImage.vue';
   import DynamicText from '@/components/DynamicText.vue';
   import MemberCard from '@/components/MemberCard.vue';
@@ -318,10 +295,6 @@
         hiddenMembers: memberList.map((e) => ({ ...e, dialog: false })),
         downloadedFormer: false,
         busy: false,
-        mdiPageNext,
-        mdiBookOpenVariant,
-        mdiMessageArrowRight,
-        mdiClose,
       };
     },
     computed: {

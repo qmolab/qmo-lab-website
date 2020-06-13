@@ -2,26 +2,28 @@
   <v-card class="mx-auto my-4 pa-2 contactCard">
     <v-card-title class="mb-8">
       <span>
-        <v-icon>{{ mdiEmailEdit }}</v-icon>
+        <v-icon>mdi-email-edit</v-icon>
         <span class="pl-1">Contact us</span>
       </span>
     </v-card-title>
     <v-form ref="contactForm" v-model="valid" class="ml-12 mr-7">
-      <TextField
+      <v-text-field
         v-model="nameText"
         name="nameText"
         :rules="nameRules"
-        :prepend-icon="mdiFormTextbox"
+        prepend-icon="mdi-form-textbox"
         :counter="nameLength"
         label="Your Name"
         required
+        outlined
       />
-      <TextField
+      <v-text-field
         v-model="emailText"
         name="emailText"
         :rules="emailRules"
-        :prepend-icon="mdiAt"
+        prepend-icon="mdi-at"
         label="Email"
+        outlined
         required
       />
       <v-combobox
@@ -30,7 +32,7 @@
         name="subjectText"
         :items="subjectItems"
         :rules="subjectRules"
-        :prepend-icon="mdiTextSubject"
+        prepend-icon="mdi-text-subject"
         :counter="maxSubjectLength"
         :menu-props="{ auto: true, maxHeight: 1000 }"
         label="Subject"
@@ -42,15 +44,15 @@
         v-if="memberItems"
         v-model="memberTags"
         :items="memberItems"
-        :prepend-icon="mdiTag"
+        prepend-icon="mdi-tag"
         name="memberTags"
         label="Tag a lab member"
         multiple
       />
-      <CheckBox
+      <v-checkbox
         v-if="askForFollowUp"
         v-model="followUpCheckbox"
-        :prepend-icon="followUpCheckbox ? mdiEmailCheck : mdiEmailMinus"
+        :prepend-icon="followUpCheckbox ? 'mdi-email-check' : 'mdi-email-minus'"
         label="Recieve additional information via email"
         :class="{ strike: !followUpCheckbox }"
         style="margin-top: -20px;"
@@ -61,25 +63,27 @@
         name="date"
         label="Choose Date"
       />
-      <TextArea
+      <v-textarea
         v-model="messageText"
-        :prepend-icon="mdiMessage"
+        prepend-icon="mdi-message"
         name="messageText"
         :rules="MessageRules"
         :counter="messageLength"
         label="Send us a message"
         required
+        outlined
+        auto-grow
       />
     </v-form>
     <v-card-actions cols="12">
       <v-spacer />
       <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
         <span>Submit</span>
-        <v-icon right>{{ mdiEmailSend }}</v-icon>
+        <v-icon right>mdi-email-send</v-icon>
       </v-btn>
       <v-btn color="error" class="mr-4" @click="reset">
         <span>Reset</span>
-        <v-icon right>{{ mdiRefreshCircle }}</v-icon>
+        <v-icon right>mdi-refresh-circle</v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -87,29 +91,14 @@
 
 <script>
   import {
-    mdiAt,
-    mdiEmailCheck,
-    mdiEmailMinus,
-    mdiEmailSend,
-    mdiEmailEdit,
-    mdiFormTextbox,
-    mdiMessage,
-    mdiRefreshCircle,
-    mdiTag,
-    mdiTextSubject,
-  } from '@mdi/js';
-  import {
     emailRule,
     lengthRule,
     requiredRule,
   } from '@/assets/js/helperScripts.js';
-  import TextField from '@/components/lib/TextField.vue';
-  import TextArea from '@/components/lib/TextArea.vue';
   import DatePicker from '@/components/lib/DatePicker.vue';
-  import CheckBox from '@/components/lib/CheckBox.vue';
   import MemberSelect from '@/components/MemberSelect.vue';
   export default {
-    components: { TextField, TextArea, DatePicker, CheckBox, MemberSelect },
+    components: { DatePicker, MemberSelect },
     props: {
       subjectItems: { type: Array, default: undefined },
       memberItems: { type: Array, default: undefined },
@@ -129,16 +118,6 @@
         assignments[part[0]] = part[1];
       }
       return {
-        mdiAt,
-        mdiEmailCheck,
-        mdiEmailMinus,
-        mdiEmailSend,
-        mdiEmailEdit,
-        mdiFormTextbox,
-        mdiMessage,
-        mdiRefreshCircle,
-        mdiTag,
-        mdiTextSubject,
         valid: false,
         nameText: '',
         emailText: '',

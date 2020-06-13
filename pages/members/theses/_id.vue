@@ -34,12 +34,6 @@
 </template>
 
 <script>
-  import {
-    mdiMessageArrowRight,
-    mdiPageNext,
-    mdiFilePdf,
-    mdiDownload,
-  } from '@mdi/js';
   import StoreImage from '@/components/StoreImage.vue';
   import DynamicText from '@/components/DynamicText.vue';
   import PdfViewer from '@/components/PdfViewer.vue';
@@ -79,10 +73,6 @@
       }
     },
     data: () => ({
-      mdiPageNext,
-      mdiMessageArrowRight,
-      mdiFilePdf,
-      mdiDownload,
       bookmarks: {
         max: {
           startPage: 13,

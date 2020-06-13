@@ -7,7 +7,7 @@
       href="https://www.youtube.com/channel/UCJdmhoGpcmAFzVx9PolvBOA"
     >
       <span>QMO YouTube Channel</span>
-      <v-icon right color="secondary">{{ mdiYoutubeSubscription }}</v-icon>
+      <v-icon right color="secondary">mdi-youtube-subscription</v-icon>
     </v-btn>
     <VideoGallery :videos="videos" />
     <ImageGallery :gallery-images="galleryImages" />
@@ -15,7 +15,6 @@
 </template>
 
 <script>
-  import { mdiYoutubeSubscription } from '@mdi/js';
   import ImageGallery from '@/components/ImageGallery';
   import VideoGallery from '@/components/VideoGallery';
 
@@ -27,7 +26,6 @@
     },
     data() {
       return {
-        mdiYoutubeSubscription,
         galleryImages: [
           {
             title: 'Around the Lab',

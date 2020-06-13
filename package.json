@@ -16,7 +16,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "@nuxtjs/auth": "^4.9.1",
     "nuxt": "^2.0.0",
     "vue-pdf": "^4.0.11"
   },
@@ -49,7 +48,6 @@
     "lqip-loader": "^2.2.0",
     "nuxt-compress": "^1.1.0",
     "nuxt-payload-extractor": "^1.0.0",
-    "nuxt-webfontloader": "^1.1.0",
     "prettier": "^2.0.4",
     "responsive-loader": "^1.2.0",
     "stylelint": "^13.3.1",
