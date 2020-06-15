@@ -33,13 +33,13 @@
             <v-spacer />
             <!--<v-btn nuxt text :to="`/research/${item.title}/`">
               <span>Read more</span>
-              <v-icon right color="primary">mdi-page-next</v-icon>
+              <v-icon right color="primary">$mdiPageNext</v-icon>
             </v-btn>-->
             <v-dialog v-model="item.dialog" fullscreen>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn text small v-bind="attrs" v-on="on">
                   <span>Read more</span>
-                  <v-icon right color="primary">mdi-page-next</v-icon>
+                  <v-icon right color="primary">$mdiPageNext</v-icon>
                 </v-btn>
               </template>
               <ResearchCard
@@ -67,14 +67,16 @@
   import StoreImage from '@/components/StoreImage.vue';
   import DynamicText from '@/components/DynamicText.vue';
   import ResearchCard from '@/components/ResearchCard.vue';
+  import headAndTitle from '@/assets/js/headAndTitle';
 
   export default {
     components: { StoreImage, DynamicText, ResearchCard },
-    async asyncData({ $axios /* $payloadURL, route */ }) {
-      // if (process.static && process.client && $payloadURL)
-      //   return await $axios.$get($payloadURL(route));
+    async asyncData({ $axios, $payloadURL, route }) {
+      if (process.static && process.client && $payloadURL)
+        return await $axios.$get($payloadURL(route));
       const items = await $axios.$get('/research/cards/');
       return { items };
     },
+    ...headAndTitle('Research', `QMO Lab @ UCR Research Page.`),
   };
 </script>

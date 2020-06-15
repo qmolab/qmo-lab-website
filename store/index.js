@@ -9,12 +9,12 @@ export const state = () => ({
   },
   navLinks: {
     home: {
-      icon: 'mdi-home',
+      icon: '$mdiHome',
       title: 'Home',
       to: '/',
     },
     members: {
-      icon: 'mdi-account-group',
+      icon: '$mdiAccountGroup',
       title: 'Members',
       to: '/members/',
       sub: {
@@ -25,7 +25,7 @@ export const state = () => ({
       },
     },
     research: {
-      icon: 'mdi-alpha-r-circle',
+      icon: '$mdiAlphaRCircle',
       title: 'Research',
       to: '/research/',
       sub: {
@@ -36,26 +36,30 @@ export const state = () => ({
       },
     },
     publications: {
-      icon: 'mdi-alpha-p-circle',
+      icon: '$mdiAlphaPCircle',
       title: 'Publications',
       to: '/publications/',
     },
     gallery: {
-      icon: 'mdi-camera-iris',
+      icon: '$mdiCameraIris',
       title: 'Gallery',
       to: '/gallery/',
     },
     links: {
-      icon: 'mdi-link',
+      icon: '$mdiLink',
       title: 'Links',
       to: '/links/',
     },
   },
+  currentPageTitle: '',
 });
 
 export const mutations = {
   addToNavLinks(state, { parent, payload }) {
     state.navLinks[parent].sub = payload;
+  },
+  pageTitle(state, payload) {
+    state.currentPageTitle = payload;
   },
   nuxtServerInit({ commit }, { req }) {},
 };

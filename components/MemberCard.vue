@@ -1,89 +1,104 @@
 <template>
-  <v-row dense>
-    <v-col cols="12" md="4" style="max-width: 250px;">
-      <StoreImage sub-category="members" :item-id="name" />
-    </v-col>
-    <v-col>
-      <h2 class="headline">{{ first }} {{ last }}</h2>
-      <div class="font-weight-light subtitle-2">
-        <span v-if="level & 8">Former</span>
-        <span>{{ dept }}</span>
-        <div v-for="(title, i) in titles" :key="title" class="d-inline">
-          <span v-if="level & (1 << i)">
-            {{ title }}
-          </span>
+  <v-fade-transition>
+    <v-progress-circular
+      v-if="loading"
+      color="primary"
+      size="72"
+      class="progressCenterAbs"
+      indeterminate
+    />
+    <v-row v-else dense>
+      <v-col cols="1" style="min-width: 250px;">
+        <StoreImage width="250" sub-category="members" :item-id="name" />
+      </v-col>
+      <v-col>
+        <h2 class="headline">{{ first }} {{ last }}</h2>
+        <div class="font-weight-light subtitle-2">
+          <span v-if="level & 8">Former</span>
+          <span>{{ dept }}</span>
+          <div v-for="(title, i) in titles" :key="title" class="d-inline">
+            <span v-if="level & (1 << i)">
+              {{ title }}
+            </span>
+          </div>
         </div>
-      </div>
-      <div>{{ byline }}</div>
-      <div class="my-12">
-        <h3 class="title font-weight-light">Research Focus:</h3>
-        <div class="font-weight-light">{{ focus }}</div>
-      </div>
-    </v-col>
-    <v-col class="mt-2" cols="12">
-      <div v-if="honors.publications && honors.publications.length !== 0">
-        <h3 class="title font-weight-light">
-          {{ honors.publications.title }}
-        </h3>
-        <v-list style="line-height: 18px;">
-          <v-list-item
-            v-for="item in honors.publications.payload"
-            :key="item.title"
-            :href="item.href"
-            target="_blank"
-            rel="noopener"
-          >
-            <v-row no-gutters>
-              <v-list-item-avatar
-                size="24"
-                color="primary"
-                class="align-self-center"
-                style="max-width: 24px;"
+        <div>{{ byline }}</div>
+        <div class="my-12">
+          <h3 class="title font-weight-light">Research Focus:</h3>
+          <div class="font-weight-light">{{ focus }}</div>
+        </div>
+      </v-col>
+      <v-col class="mt-2" cols="12">
+        <div v-if="honors.publications && honors.publications.length !== 0">
+          <h3 class="title font-weight-light">
+            {{ honors.publications.title }}
+          </h3>
+          <v-list style="line-height: 18px;">
+            <v-list-item
+              v-for="item in honors.publications.payload"
+              :key="item.title"
+              :href="item.href"
+              target="_blank"
+              rel="noopener"
+            >
+              <v-row no-gutters>
+                <v-list-item-avatar
+                  size="24"
+                  color="primary"
+                  class="align-self-center"
+                  style="max-width: 24px;"
+                />
+                <v-col class="ml-2 pt-1">
+                  <span v-if="item.title" class="font-weight-light">
+                    "<DynamicText :html="item.title" />"
+                    {{ item.reference }}
+                  </span>
+                  <v-list-item-icon class="mt-2">
+                    <v-icon color="secondary">$mdiOpenInNew</v-icon>
+                  </v-list-item-icon>
+                </v-col>
+              </v-row>
+            </v-list-item>
+          </v-list>
+        </div>
+        <div v-if="honors.news && honors.news.length !== 0" class="my-8">
+          <h3 class="title font-weight-light">{{ honors.news.title }}</h3>
+          <ul>
+            <li
+              v-for="item in honors.news.payload"
+              :key="item.title"
+              class="fancyListItem"
+            >
+              <PrettyDate :value="item.date" />:
+              <DynamicText
+                v-if="item.title"
+                :html="item.title"
+                class="font-weight-light"
               />
-              <v-col class="ml-2 pt-1">
-                <span v-if="item.title" class="font-weight-light">
-                  "<DynamicText :html="item.title" />"
-                  {{ item.reference }}
-                </span>
-                <v-list-item-icon class="mt-2">
-                  <v-icon color="secondary">mdi-open-in-new</v-icon>
-                </v-list-item-icon>
-              </v-col>
-            </v-row>
-          </v-list-item>
-        </v-list>
-      </div>
-      <div v-if="honors.news && honors.news.length !== 0" class="my-8">
-        <h3 class="title font-weight-light">{{ honors.news.title }}</h3>
-        <ul>
-          <li
-            v-for="item in honors.news.payload"
-            :key="item.title"
-            class="fancyListItem"
-          >
-            <PrettyDate :value="item.date" />:
-            <DynamicText
-              v-if="item.title"
-              :html="item.title"
-              class="font-weight-light"
-            />
-          </li>
-        </ul>
-      </div>
-    </v-col>
-    <v-col>
-      <v-btn v-if="cv" text :href="cv" target="_blank" rel="noopener">
-        <v-icon color="blue-grey">mdi-file-account</v-icon>
-        <span>{{ name }}'s CV</span>
-        <v-icon color="secondary">mdi-open-in-new</v-icon>
-      </v-btn>
-      <v-btn v-if="website" text :href="website" target="_blank" rel="noopener">
-        <v-icon color="primary" right>mdi-web</v-icon>
-        <span>{{ name }}'s Website</span>
-        <v-icon color="secondary" right>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-col>
-  </v-row>
+            </li>
+          </ul>
+        </div>
+      </v-col>
+      <v-col>
+        <v-btn v-if="cv" text :href="cv" target="_blank" rel="noopener">
+          <v-icon color="blue-grey">$mdiFileAccount</v-icon>
+          <span>{{ name }}'s CV</span>
+          <v-icon color="secondary">$mdiOpenInNew</v-icon>
+        </v-btn>
+        <v-btn
+          v-if="website"
+          text
+          :href="website"
+          target="_blank"
+          rel="noopener"
+        >
+          <v-icon color="primary" right>$mdiWeb</v-icon>
+          <span>{{ name }}'s Website</span>
+          <v-icon color="secondary" right>$mdiOpenInNew</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
+  </v-fade-transition>
 </template>
 
 <script>
@@ -112,6 +127,7 @@
         honors: {},
         website: '',
         cv: '',
+        loading: true,
       };
     },
     computed: {
@@ -163,6 +179,7 @@
         this.honors = honors;
         this.website = item.website;
         this.cv = item.cv;
+        this.loading = false;
       },
     },
   };

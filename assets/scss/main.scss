@@ -174,7 +174,17 @@ a {
 
 
 
+.progressCenterAbs {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%,-50%,0);
+}
+
 .v-application {
+  .v-list-item .v-list-item__title {
+    letter-spacing: 1px;
+  }
   .v-dialog {
     box-shadow: none;
   }

@@ -2,7 +2,7 @@
   <v-card class="mx-auto my-4 pa-2 contactCard">
     <v-card-title class="mb-8">
       <span>
-        <v-icon>mdi-email-edit</v-icon>
+        <v-icon>$mdiEmailEdit</v-icon>
         <span class="pl-1">Contact us</span>
       </span>
     </v-card-title>
@@ -11,7 +11,7 @@
         v-model="nameText"
         name="nameText"
         :rules="nameRules"
-        prepend-icon="mdi-form-textbox"
+        prepend-icon="$mdiFormTextbox"
         :counter="nameLength"
         label="Your Name"
         required
@@ -21,7 +21,7 @@
         v-model="emailText"
         name="emailText"
         :rules="emailRules"
-        prepend-icon="mdi-at"
+        prepend-icon="$mdiAt"
         label="Email"
         outlined
         required
@@ -32,7 +32,7 @@
         name="subjectText"
         :items="subjectItems"
         :rules="subjectRules"
-        prepend-icon="mdi-text-subject"
+        prepend-icon="$mdiTextSubject"
         :counter="maxSubjectLength"
         :menu-props="{ auto: true, maxHeight: 1000 }"
         label="Subject"
@@ -44,7 +44,7 @@
         v-if="memberItems"
         v-model="memberTags"
         :items="memberItems"
-        prepend-icon="mdi-tag"
+        prepend-icon="$mdiTag"
         name="memberTags"
         label="Tag a lab member"
         multiple
@@ -52,7 +52,7 @@
       <v-checkbox
         v-if="askForFollowUp"
         v-model="followUpCheckbox"
-        :prepend-icon="followUpCheckbox ? 'mdi-email-check' : 'mdi-email-minus'"
+        :prepend-icon="followUpCheckbox ? '$mdiEmailCheck' : '$mdiEmailMinus'"
         label="Recieve additional information via email"
         :class="{ strike: !followUpCheckbox }"
         style="margin-top: -20px;"
@@ -65,7 +65,7 @@
       />
       <v-textarea
         v-model="messageText"
-        prepend-icon="mdi-message"
+        prepend-icon="$mdiMessage"
         name="messageText"
         :rules="MessageRules"
         :counter="messageLength"
@@ -79,11 +79,11 @@
       <v-spacer />
       <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
         <span>Submit</span>
-        <v-icon right>mdi-email-send</v-icon>
+        <v-icon right>$mdiEmailSend</v-icon>
       </v-btn>
       <v-btn color="error" class="mr-4" @click="reset">
         <span>Reset</span>
-        <v-icon right>mdi-refresh-circle</v-icon>
+        <v-icon right>$mdiRefreshCircle</v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>

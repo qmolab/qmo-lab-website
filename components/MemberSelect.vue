@@ -9,7 +9,7 @@
     :clearable="clearable"
     :multiple="multiple"
     :rules="rules"
-    prepend-icon="mdi-tag"
+    prepend-icon="$mdiTag"
     :menu-props="{ auto: true, maxHeight: 2000 }"
     @input="$emit('update', $event)"
   >

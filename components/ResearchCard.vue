@@ -6,20 +6,29 @@
     style="min-height: 100%;"
     tile
   >
-    <v-container>
-      <h2 class="headline">{{ title }}</h2>
-      <h3 class="font-weight-light">{{ subtitle }}</h3>
-      <DynamicHtml
-        class="mt-8"
-        :page-content="content"
-        image-category="research"
-        figures
+    <v-fade-transition>
+      <v-progress-circular
+        v-if="loading"
+        color="primary"
+        size="72"
+        indeterminate
+        class="progressCenterAbs"
       />
-      <div v-if="youtube" class="videoPlayerContainer mx-auto mt-4">
-        <YoutubeEmbed :video-id="youtube" />
-      </div>
-    </v-container>
-    <span class="fold" />
+      <v-container v-else>
+        <h2 class="headline">{{ title }}</h2>
+        <h3 class="font-weight-light">{{ subtitle }}</h3>
+        <DynamicHtml
+          class="mt-8"
+          :page-content="content"
+          image-category="research"
+          figures
+        />
+        <div v-if="youtube" class="videoPlayerContainer mx-auto mt-4">
+          <YoutubeEmbed :video-id="youtube" />
+        </div>
+      </v-container>
+    </v-fade-transition>
+    <span class="fold" :style="foldStyle" @click="foldClick()" />
     <v-btn
       v-if="close"
       icon
@@ -28,15 +37,8 @@
       class="closeButton"
       @click="close()"
     >
-      <v-icon>mdi-close</v-icon>
+      <v-icon>$mdiClose</v-icon>
     </v-btn>
-    <v-progress-circular
-      v-if="loading"
-      color="primary"
-      size="72"
-      indeterminate
-      class="progress"
-    />
   </v-sheet>
 </template>
 
@@ -55,6 +57,7 @@
       content: '',
       youtube: '',
       loading: true,
+      foldStyle: undefined,
     }),
     mounted() {
       this.update();
@@ -68,7 +71,14 @@
         this.subtitle = item.subtitle;
         this.content = item.content;
         this.youtube = item.youtube;
-        this.loading = false;
+        setTimeout(() => (this.loading = false));
+      },
+      foldClick() {
+        this.foldStyle = 'border-width: 50vw 50vw 0 0;';
+        setTimeout(() => {
+          this.foldStyle = undefined;
+          this.close();
+        }, 200);
       },
     },
   };
@@ -83,18 +93,15 @@
     right: 0;
     border-width: $foldSize $foldSize 0 0;
     border-color: $primary $black $black $black;
+    transition: border-width 0.28s ease;
+    &:hover {
+      border-width: (2 * $foldSize) (2 * $foldSize) 0 0;
+    }
   }
   .closeButton {
     position: absolute;
     top: 0;
     right: 0;
     margin: 8px;
-  }
-  .progress {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-left: -36px;
-    margin-top: -36px;
   }
 </style>

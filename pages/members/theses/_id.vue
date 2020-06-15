@@ -39,22 +39,15 @@
   import PdfViewer from '@/components/PdfViewer.vue';
   export default {
     components: { StoreImage, DynamicText, PdfViewer },
-    async asyncData({ $axios, payload, params /* $payloadURL, route */ }) {
-      const idP = params.id.split('_');
+    async asyncData({ $axios, payload, params, $payloadURL, route }) {
       if (payload)
         return {
           title: payload.title,
-          fullName:
-            idP[0].slice(0, 1).toUpperCase() +
-            idP[0].slice(1) +
-            ' ' +
-            idP[1].slice(0, 1).toUpperCase() +
-            idP[1].slice(1),
           summary: payload.summary,
           name: payload.img,
         };
-      // else if (process.static && process.client && $payloadURL)
-      //   return await $axios.$get($payloadURL(route));
+      else if (process.static && process.client && $payloadURL)
+        return await $axios.$get($payloadURL(route));
       else {
         const item = await $axios.$get('/theses/routes/route/', {
           params: { author: params.id },
@@ -63,12 +56,6 @@
           title: item.title,
           summary: item.summary,
           name: item.img,
-          fullName:
-            idP[0].slice(0, 1).toUpperCase() +
-            idP[0].slice(1) +
-            ' ' +
-            idP[1].slice(0, 1).toUpperCase() +
-            idP[1].slice(1),
         };
       }
     },
@@ -205,12 +192,37 @@
       },
     }),
     computed: {
+      fullName() {
+        const idP = this.$route.params.id.split('_');
+        return (
+          idP[0].slice(0, 1).toUpperCase() +
+          idP[0].slice(1) +
+          ' ' +
+          idP[1].slice(0, 1).toUpperCase() +
+          idP[1].slice(1)
+        );
+      },
       dissertationURL() {
         return `${process.env.ROUTER_BASE}assets/theses/${this.fullName.replace(
           / /g,
           '_'
         )}/Doctoral_Dissertation.pdf`;
       },
+    },
+    mounted() {
+      this.$store.commit('pageTitle', `Dissertations: ${this.fullName}`);
+    },
+    head() {
+      return {
+        title: `Dissertation: ${this.fullName}`,
+        meta: [
+          {
+            hid: 'description',
+            name: 'description',
+            content: `The doctoral dissertation of ${this.fullName}.`,
+          },
+        ],
+      };
     },
   };
 </script>

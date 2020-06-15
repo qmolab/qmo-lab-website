@@ -14,7 +14,7 @@
         :value="dateText"
         :name="name"
         :label="label"
-        prepend-icon="mdi-calendar"
+        prepend-icon="$mdiCalendar"
         readonly
         outlined
         :on="on"
@@ -24,11 +24,11 @@
       <v-spacer />
       <v-btn right color="error" text @click="menu = false">
         <span>Cancel</span>
-        <v-icon right>mdi-cancel</v-icon>
+        <v-icon right>$mdiCancel</v-icon>
       </v-btn>
       <v-btn right color="success" text @click="save">
         <span>OK</span>
-        <v-icon right>mdi-check-outline</v-icon>
+        <v-icon right>$mdiCheckOutline</v-icon>
       </v-btn>
     </v-date-picker>
   </v-menu>

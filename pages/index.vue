@@ -41,35 +41,22 @@
 
 <script>
   import AnnouncementsCard from '@/components/AnnouncementsCard.vue';
-
+  import headAndTitle from '@/assets/js/headAndTitle';
   export default {
     components: {
       AnnouncementsCard,
     },
     async asyncData({ $axios, $payloadURL, route }) {
       // if generated and works as client navigation, fetch previously saved static JSON payload
-      // if (process.static && process.client && $payloadURL)
-      //   return await $axios.$get($payloadURL(route));
-      // const olderAnnouncements = await $axios.$get('/news/offset/');
+      if (process.static && process.client && $payloadURL)
+        return await $axios.$get($payloadURL(route));
       const announcements = await $axios.$get('/news/preview/');
       return { announcements };
     },
-    head() {
-      return {
-        title: 'Home',
-        meta: [
-          {
-            hid: 'description',
-            name: 'description',
-            content: 'QMO Lab @ UCR',
-          },
-          {
-            hid: 'keywords',
-            name: 'keywords',
-            content: 'home QMO',
-          },
-        ],
-      };
-    },
+    ...headAndTitle(
+      '',
+      `QMO Lab @ UCR Home Page. Research Group in Experimental Condensed Matter Research`,
+      'Home'
+    ),
   };
 </script>

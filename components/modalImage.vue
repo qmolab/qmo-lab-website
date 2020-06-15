@@ -1,6 +1,11 @@
 <template>
-  <v-dialog :value="dialog" overlay-opacity="0.9" fullscreen>
-    <div class="overlay">
+  <v-dialog
+    :value="dialog"
+    overlay-opacity="1"
+    overlay-color="primary"
+    fullscreen
+  >
+    <div class="modalContainer">
       <div class="pa-4">
         <v-carousel
           :id="`modal-carousel`"
@@ -13,7 +18,7 @@
           <v-carousel-item
             v-for="(slide, i) in images"
             :id="`modal-carousel-item-${i}`"
-            :key="`modal-carousel-item-${i}`"
+            :key="slide.href"
             :src="slide.href"
             :srcset="slide.webp"
             :lazy-src="slide.thumbnail.src"
@@ -48,7 +53,7 @@
         </v-slide-group>
       </div>
       <v-btn color="red" class="abs closeButton" fab @click="dialog = false">
-        <v-icon x-large>mdi-close</v-icon>
+        <v-icon x-large>$mdiClose</v-icon>
       </v-btn>
     </div>
   </v-dialog>
@@ -88,10 +93,11 @@
 </script>
 
 <style lang="scss">
-  .overlay {
+  .modalContainer {
     height: 100vh;
     width: 100vw;
     overflow: hidden;
+    background-color: rgba($black, 0.9);
     .closeButton {
       top: 16px;
       right: 16px;

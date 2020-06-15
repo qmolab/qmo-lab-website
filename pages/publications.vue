@@ -1,17 +1,39 @@
 <template>
   <div class="publicationsPage">
-    <h2 class="mt-4 headline ml-1">Selected Publications</h2>
+    <h2 class="mt-4 headline ml-1">Featured Publications</h2>
     <v-row>
       <v-col
         v-for="(item, i) in publicationsList"
         :key="i"
         cols="12"
-        sm="6"
-        lg="4"
-        xl="3"
-        class="narrowCard mx-auto"
+        md="6"
+        class="mx-auto"
       >
-        <v-card v-if="item.description" class="stretchCard pb-12">
+        <v-card v-if="item.description" class="stretchCard pb-10">
+          <v-list-item>
+            <v-list-item-content class="align-self-start">
+              <div class="overline mb-2">{{ item.authors }}</div>
+              <v-list-item-title class="mb-1" style="white-space: unset;">
+                <DynamicText :html="item.title" />
+              </v-list-item-title>
+              <v-list-item-subtitle>{{ item.reference }}</v-list-item-subtitle>
+            </v-list-item-content>
+
+            <v-list-item-avatar tile size="120" color="grey">
+              <BaseImage
+                v-if="item.img && images[item.img]"
+                class="mt-2 px-3"
+                :src="images[item.img].img"
+                :webp="images[item.img].webp"
+                :alt="item.alt"
+                :title="item.title"
+                :aspect-ratio="1"
+                width="120"
+                height="120"
+              />
+            </v-list-item-avatar>
+          </v-list-item>
+          <!--
           <v-list-item style="height: 60px; line-height: 1.15rem;">
             <div
               class="primary pubYearCircle mr-2 d-flex"
@@ -42,6 +64,7 @@
               <DynamicText :html="item.title" />
             </span>
           </div>
+          -->
           <v-card-text>
             <DynamicText :html="item.description" />
           </v-card-text>
@@ -49,20 +72,19 @@
             <v-spacer />
             <v-btn text disabled>
               <span>Share</span>
-              <v-icon right color="secondary">mdi-share-variant</v-icon>
+              <v-icon right color="secondary">$mdiShareVariant</v-icon>
             </v-btn>
 
             <v-btn text :href="item.href" target="_blank" rel="noopener">
               <span>Read more</span>
-              <v-icon right color="secondary">mdi-open-in-new</v-icon>
+              <v-icon right color="secondary">$mdiOpenInNew</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
-    <br />
     <h2 class="headline mb-4 l-1">Additional Publications and Patents</h2>
-    <v-sheet>
+    <v-sheet class="mb-8">
       <v-lazy min-height="500">
         <v-row>
           <v-col
@@ -72,6 +94,18 @@
             sm="6"
           >
             <v-card raised class="stretchCard mb-12">
+              <v-list-item>
+                <v-list-item-content>
+                  <div class="overline mb-2">{{ item.authors }}</div>
+                  <v-list-item-title class="mb-1" style="white-space: unset;">
+                    <DynamicText :html="item.title" />
+                  </v-list-item-title>
+                  <v-list-item-subtitle>
+                    <DynamicText :html="item.reference" />
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+              <!--
               <v-card-title>
                 <DynamicText :html="item.title" />
               </v-card-title>
@@ -80,6 +114,7 @@
                 <span> -- </span>
                 <DynamicText :html="item.reference" />
               </v-card-subtitle>
+              -->
               <div v-if="item.href" class="actions">
                 <v-btn
                   text
@@ -89,7 +124,7 @@
                   rel="noopener"
                 >
                   <span>{{ item.href }}</span>
-                  <v-icon right color="secondary">mdi-open-in-new</v-icon>
+                  <v-icon right color="secondary">$mdiOpenInNew</v-icon>
                 </v-btn>
               </div>
             </v-card>
@@ -103,15 +138,15 @@
 <script>
   import BaseImage from '@/components/BaseImage.vue';
   import DynamicText from '@/components/DynamicText.vue';
+  import headAndTitle from '@/assets/js/headAndTitle';
   export default {
     components: {
       BaseImage,
       DynamicText,
     },
     async asyncData({ $axios, $payloadURL, route, store }) {
-      // if generated and works as client navigation, fetch previously saved static JSON payload
-      // if (process.static && process.client && $payloadURL)
-      //   return await $axios.$get($payloadURL(route));
+      if (process.static && process.client && $payloadURL)
+        return await $axios.$get($payloadURL(route));
       const publicationsList = await $axios.$get('/publications/cards/');
       return { publicationsList };
     },
@@ -196,6 +231,7 @@
         },
       };
     },
+    ...headAndTitle('Publications', `QMO Lab @ UCR Publications Page.`),
   };
 </script>
 

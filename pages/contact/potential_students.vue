@@ -13,7 +13,9 @@
 
 <script>
   import ContactCard from '@/components/ContactCard.vue';
+  import headAndTitle from '@/assets/js/headAndTitle';
   export default {
     components: { ContactCard },
+    ...headAndTitle('Potential Students', `Information for potential students`),
   };
 </script>

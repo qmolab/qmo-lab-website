@@ -2,17 +2,99 @@
   <v-app>
     <!-- Begin Navigation Drawer -->
     <v-navigation-drawer v-model="drawer" dark temporary app>
-      <TheNavigationDrawer v-if="drawer" :nav-links="sideNavLinks" />
+      <v-list v-if="drawer" nav dens>
+        <v-list-item><div class="qmoLogo" /></v-list-item>
+        <v-divider />
+        <nuxt-link
+          v-for="(link, i) in navLinks"
+          :key="i"
+          v-slot="{ navigate, isActive, isExactActive }"
+          :to="link.to"
+        >
+          <div>
+            <v-list-item
+              color="primary"
+              :disabled="isExactActive"
+              dens
+              link
+              @click="navigate"
+            >
+              <v-list-item-icon>
+                <v-icon :color="isExactActive ? 'primary' : undefined">
+                  {{ link.icon }}
+                </v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>{{ link.title }}</v-list-item-title>
+            </v-list-item>
+            <div v-if="isActive && link.sub">
+              <v-divider />
+              <nuxt-link
+                v-for="(item, j) in link.sub"
+                :key="j"
+                v-slot="{ navigate: n, isExactActive: a }"
+                :to="item.to"
+                class="mb-0"
+              >
+                <v-list-item color="primary" :disabled="a" dens link @click="n">
+                  <v-list-item-title class="pl-12">{{
+                    item.title
+                  }}</v-list-item-title>
+                </v-list-item>
+              </nuxt-link>
+              <v-divider />
+            </div>
+          </div>
+        </nuxt-link>
+      </v-list>
     </v-navigation-drawer>
     <!-- End Navigation Drawer -->
 
     <!-- Begin Header -->
     <v-app-bar ref="header" dark app :scroll-threshold="32" hide-on-scroll>
-      <TheHeader
-        :title="title"
-        :nav-links="navLinks"
-        @toggle-drawer="drawer = !drawer"
-      />
+      <v-row justify="center" no-gutters class="fill-h">
+        <v-col cols="12" md="0" class="hidden-md-and-up hide-overflow fill-h">
+          <v-app-bar-nav-icon class="float-l" @click.stop="drawer = !drawer" />
+          <h1 class="titleText headline ellipsis_text">
+            QMO Lab
+            {{ title }}
+          </h1>
+        </v-col>
+        <v-col md="3" class="headerCol">
+          <div :key="$route.path" class="hidden-sm-and-down mt-2">
+            <QmoLogo />
+          </div>
+        </v-col>
+        <v-spacer class="hidden-sm-and-down" />
+        <v-col sm="auto" class="hidden-sm-and-down fill-h headerCol">
+          <nav class="nav float-l d-flex align-center">
+            <div
+              v-for="(link, i) in navLinks"
+              :key="i"
+              class="rel fill-h float-l d-flex align-center"
+            >
+              <nuxt-link v-slot="{ navigate, isExactActive }" :to="link.to">
+                <div>
+                  <v-btn
+                    :disabled="isExactActive"
+                    class="mb-1"
+                    exact
+                    text
+                    link
+                    small
+                    @click="navigate"
+                  >
+                    {{ link.title }}
+                  </v-btn>
+                  <div
+                    :class="{ bottomBorder: isExactActive }"
+                    :style="`background-color: ${$vuetify.theme.themes.dark.primary}`"
+                  />
+                </div>
+              </nuxt-link>
+            </div>
+          </nav>
+        </v-col>
+      </v-row>
     </v-app-bar>
     <!-- End Header -->
 
@@ -22,7 +104,7 @@
       <v-expand-transition>
         <div v-if="heroOpen">
           <v-carousel
-            :cycle="cycle"
+            cycle
             show-arrows-on-hover
             progress
             continuous
@@ -30,7 +112,7 @@
             class="progressCarousel"
           >
             <v-carousel-item
-              v-for="(slide, i) in heroSlides"
+              v-for="(slide, i) in $store.state.images.heroSlides"
               :key="i"
               :src="slide.src.src"
               :lazy-src="slide.src.placeholder"
@@ -49,7 +131,7 @@
                 >
                   {{ slide.title }}
                   <v-icon v-if="slide.href" right color="secondary">
-                    mdi-open-in-new
+                    $mdiOpenInNew
                   </v-icon>
                 </v-btn>
               </div>
@@ -86,51 +168,26 @@
 </template>
 
 <script>
-  import TheNavigationDrawer from '@/components/TheNavigationDrawer.vue';
-  import TheHeader from '@/components/TheHeader.vue';
+  import QmoLogo from '@/components/QmoLogo.vue';
   import TheFooter from '@/components/TheFooter.vue';
   export default {
     scrollToTop: true,
-    components: {
-      TheNavigationDrawer,
-      TheHeader,
-      TheFooter,
-    },
+    components: { QmoLogo, TheFooter },
     data() {
-      return { drawer: false, cycle: true };
+      return { drawer: false, spinner: undefined };
     },
     computed: {
-      heroSlides() {
-        return this.$store.state.images.heroSlides;
-      },
-      heroOpen() {
-        return this.$store.state.usesHeroSlider[this.name];
-      },
-      name() {
-        return this.$route.name || '';
-      },
       title() {
-        if (this.name === 'index') return '';
-        const title = this.$route.params.id
-          ? (
-              this.$route.matched[this.$route.matched.length - 2].path
-                .split('/')
-                .slice(-1)[0] +
-              ': ' +
-              this.$route.params.id
-            ).replace(/_/g, ' ')
-          : this.name.replace(/_/g, ' ').replace(/-/g, ': ');
-        return title.charAt(0).toUpperCase() + title.slice(1);
+        return this.$store.state.currentPageTitle;
       },
       navLinks() {
         return this.$store.state.navLinks;
       },
-      sideNavLinks() {
-        return { ...this.navLinks };
+      heroOpen() {
+        return this.$route.name
+          ? this.$store.state.usesHeroSlider[this.$route.name]
+          : false;
       },
-    },
-    head() {
-      return { title: this.title };
     },
   };
 </script>
@@ -147,5 +204,25 @@
   }
   .appContainer {
     min-height: 80vh;
+  }
+  .titleText {
+    margin-top: 6px;
+  }
+  .nav {
+    height: 100%;
+    margin-bottom: -8px;
+  }
+  .v-app-bar--hide-shadow .logoContainer {
+    opacity: 0;
+  }
+  .bottomBorder {
+    position: absolute;
+    bottom: -3px;
+    left: 12px;
+    right: 12px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    height: 5px;
+    background-color: $primary;
   }
 </style>

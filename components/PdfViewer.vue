@@ -13,7 +13,7 @@
             :loading="loading"
             @click="toPage(currentPage - 1)"
           >
-            <v-icon>mdi-chevron-left</v-icon>
+            <v-icon>$mdiChevronLeft</v-icon>
             <span>Prev</span>
           </v-btn>
           <span v-if="bookmarks.startPage" class="align-self-center">
@@ -38,7 +38,7 @@
             @click="toPage(currentPage + 1)"
           >
             <span>Next</span>
-            <v-icon right>mdi-chevron-right</v-icon>
+            <v-icon right>$mdiChevronRight</v-icon>
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
@@ -60,7 +60,7 @@
             >
               <v-list-item-icon v-if="item.icon || Array.isArray(group)">
                 <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
-                <v-icon v-else>mdi-numeric-{{ i + 1 }}-box</v-icon>
+                <v-icon v-else>{{ numericIcons[i] }}</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>{{ item.title || i }}</v-list-item-title>
@@ -85,9 +85,9 @@
       <v-toolbar color="#1f1f1f" flat>
         <v-toolbar-items>
           <v-btn text :href="url">
-            <v-icon color="red">mdi-file-pdf</v-icon>
+            <v-icon color="red">$mdiFilePdf</v-icon>
             Download as PDF
-            <v-icon right>mdi-download</v-icon>
+            <v-icon right>$mdiDownload</v-icon>
           </v-btn>
         </v-toolbar-items>
         <v-spacer />
@@ -102,7 +102,7 @@
               />
             </v-avatar>
             <span class="align-self-center">About {{ author }}</span>
-            <v-icon right color="primary">mdi-page-next</v-icon>
+            <v-icon right color="primary">$mdiPageNext</v-icon>
           </v-btn>
           <v-btn
             nuxt
@@ -111,7 +111,7 @@
             class="ml-2"
           >
             <span>Contact {{ author }}</span>
-            <v-icon right color="primary">mdi-message-arrow-right</v-icon>
+            <v-icon right color="primary">$mdiMessageArrowRight</v-icon>
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
@@ -120,6 +120,17 @@
 </template>
 
 <script>
+  import {
+    mdiNumeric1Box,
+    mdiNumeric2Box,
+    mdiNumeric3Box,
+    mdiNumeric4Box,
+    mdiNumeric5Box,
+    mdiNumeric6Box,
+    mdiNumeric7Box,
+    mdiNumeric8Box,
+    mdiNumeric9Box,
+  } from '@mdi/js';
   import StoreImage from '@/components/StoreImage.vue';
   function convertToRoman(num) {
     const roman = {
@@ -152,13 +163,24 @@
       pageCount: 0,
       loading: false,
       currentBookmark: 0,
+      numericIcons: {
+        mdiNumeric1Box,
+        mdiNumeric2Box,
+        mdiNumeric3Box,
+        mdiNumeric4Box,
+        mdiNumeric5Box,
+        mdiNumeric6Box,
+        mdiNumeric7Box,
+        mdiNumeric8Box,
+        mdiNumeric9Box,
+      },
     }),
     computed: {
       navigation() {
         return [
           {
             'Title Page': {
-              icon: 'mdi-home',
+              icon: '$mdiHome',
               page: 1,
             },
             ...this.bookmarks.frontMatter,

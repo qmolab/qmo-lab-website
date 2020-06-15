@@ -171,7 +171,7 @@
       <p class="mt-4">
         <v-btn nuxt text to="/contact/">
           <span>Contact Us</span>]
-          <v-icon right>mdi-message-arrow-right</v-icon>
+          <v-icon right>$mdiMessageArrowRight</v-icon>
         </v-btn>
       </p>
       <p class="mt-4">Effective as of May 19, 2020</p>
@@ -184,7 +184,14 @@
       rel="noopener"
     >
       <span>UCR Privacy Policy</span>
-      <v-icon right color="secondary">mdi-open-in-new</v-icon>
+      <v-icon right color="secondary">$mdiOpenInNew</v-icon>
     </v-btn>
   </div>
 </template>
+
+<script>
+  import headAndTitle from '@/assets/js/headAndTitle';
+  export default {
+    ...headAndTitle('Privacy Policy', `QMO Lab @ UCR Privacy Policy`),
+  };
+</script>

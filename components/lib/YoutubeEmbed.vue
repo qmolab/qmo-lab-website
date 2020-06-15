@@ -8,7 +8,7 @@
         :aspect-ratio="16 / 9"
       >
         <v-icon class="mdiYoutube" :size="72">
-          mdi-youtube
+          $mdiYoutube
         </v-icon>
       </v-img>
       <iframe
@@ -75,19 +75,6 @@
     .frame {
       top: 0;
       left: 0;
-    }
-    .mdiYoutube {
-      justify-self: center;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-left: -36px;
-      margin-top: -36px;
-      z-index: 1;
-    }
-    &:hover .mdiYoutube {
-      color: $youtube-red;
-      opacity: 1;
     }
   }
 </style>

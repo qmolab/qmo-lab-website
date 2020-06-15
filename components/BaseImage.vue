@@ -1,82 +1,52 @@
 <template>
-  <div :class="{ imageLink: link }" @click="$emit('click', $event)">
+  <div>
+    <v-img
+      ref="image"
+      :src="src.src"
+      :srcset="webp || srcset || src.srcSet"
+      :lazy-src="lazySrc || src.placeholder"
+      v-bind="$attrs"
+      :class="{ imgBorder: border, imageLink: link }"
+      :options="{ threshold: 0.1 }"
+      transition="fade-transition"
+      eager
+      @click="$emit('click', $event)"
+    >
+      <slot />
+      <template v-slot:placeholder>
+        <v-row class="fill-h ma-0 align-center justify-center">
+          <v-progress-circular size="60" indeterminate color="primary" />
+        </v-row>
+      </template>
+    </v-img>
     <v-tooltip
+      v-if="title"
       bottom
       :open-delay="tooltipDelay"
       :close-delay="tooltipDelay / 2"
-      :disabled="noTooltip || !title"
+      :activator="activator"
     >
-      <template v-slot:activator="{ on }">
-        <v-img
-          :src="src.src"
-          :lazy-src="lazySrc"
-          :srcset="webp || srcset || src.srcSet"
-          :alt="alt"
-          :aspect-ratio="aspectRatioChecked"
-          :contain="contain"
-          :height="height"
-          :min-height="minHeight"
-          :max-height="maxHeight"
-          :width="width"
-          :min-width="minWidth"
-          :max-width="maxWidth"
-          :class="{ imgBorder: border }"
-          :options="{ threshold: 0.1 }"
-          transition="fade-transition"
-          v-on="on"
-        >
-          <slot />
-          <template v-slot:placeholder>
-            <v-row class="fill-h ma-0 align-center justify-center">
-              <v-progress-circular indeterminate color="grey lighten-5" />
-            </v-row>
-          </template>
-        </v-img>
-      </template>
-      <span>{{ title }}</span>
+      <span class="cap">{{ title }}</span>
     </v-tooltip>
-    <slot name="caption" />
   </div>
 </template>
 
 <script>
   export default {
     name: 'BaseImage',
+    inheritAttrs: false,
     props: {
       src: { type: [String, Object], required: true },
       webp: { type: [String, Object], default: undefined },
       lazySrc: { type: String, default: undefined },
       srcset: { type: String, default: undefined },
-      alt: { type: String, default: undefined },
-      title: { type: String, default: '' },
-      aspectRatio: { type: [Number, String], default: undefined },
-      contain: { type: Boolean, default: false },
-      height: { type: [Number, String], default: undefined },
-      minHeight: { type: [Number, String], default: undefined },
-      maxHeight: { type: [Number, String], default: undefined },
-      width: { type: [Number, String], default: undefined },
-      minWidth: { type: [Number, String], default: undefined },
-      maxWidth: { type: [Number, String], default: undefined },
-      position: { type: [String, Number], default: 'center, center' },
-      tooltipDelay: { type: [String, Number], default: '500' },
+      title: { type: String, default: undefined },
       link: { type: Boolean, default: false },
-      noTooltip: { type: Boolean, default: false },
-      preload: { type: Boolean, default: false },
       border: { type: Boolean, default: false },
     },
-    data() {
-      return { aspectRatioChecked: undefined };
-    },
+    data: () => ({ tooltipDelay: '500', activator: undefined }),
     mounted() {
-      if (!this.preload || this.aspectRatio || (this.width && this.height))
-        this.aspectRatioChecked = this.aspectRatio;
-      else if (this.lazySrc) {
-        const img = new Image();
-        img.onload = () => {
-          this.aspectRatioChecked = img.naturalWidth / img.naturalHeight;
-        };
-        img.src = this.lazySrc;
-      }
+      this.activator = this.$refs.image;
     },
   };
 </script>

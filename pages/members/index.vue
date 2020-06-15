@@ -74,12 +74,13 @@
         </v-chip-group>
       </v-col>
     </v-row>
-    <div
-      id="memberContainer"
-      ref="memberContainer"
-      :class="{ memberContainer: true, 'memberContainer--fillAll': busy }"
-    >
-      <transition-group name="list" tag="div" class="row">
+    <div class="memberContainer">
+      <transition-group
+        name="cardItem"
+        tag="div"
+        class="row"
+        style="min-height: 225px;"
+      >
         <v-col
           v-for="member in shownMembers"
           :key="member.name"
@@ -148,7 +149,7 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn text small v-bind="attrs" v-on="on">
                     <span>About {{ member.name }}</span>
-                    <v-icon right color="primary">mdi-page-next</v-icon>
+                    <v-icon right color="primary">$mdiPageNext</v-icon>
                   </v-btn>
                 </template>
                 <v-card style="max-width: 1251px;" class="px-4 pt-2">
@@ -163,18 +164,18 @@
                     >
                       <span>{{ member.name }}'s Dissertation</span>
                       <v-icon color="primary" right>
-                        mdi-book-open-variant
+                        $mdiBookOpenVariant
                       </v-icon>
                     </v-btn>
                     <v-btn nuxt text :to="`/contact/#tag=${member.name}`">
                       <span>Contact {{ member.name }}</span>
                       <v-icon color="primary" right>
-                        mdi-message-arrow-right
+                        $mdiMessageArrowRight
                       </v-icon>
                     </v-btn>
                     <v-btn text @click="member.dialog = false">
                       <span>Close Window</span>
-                      <v-icon color="error" right>mdi-close</v-icon>
+                      <v-icon color="error" right>$mdiClose</v-icon>
                     </v-btn>
                   </v-card-actions>
                 </v-card>
@@ -192,10 +193,19 @@
       />
     </div>
     <v-row>
+      <h2 class="headline mt-8 mb-4">
+        For more on QMO Lab Members and Their Research:
+      </h2>
       <v-col cols="12">
         <v-btn text nuxt to="/members/theses/">
           <span>Student Dissertations</span>
-          <v-icon color="primary" right>mdi-book-open-variant</v-icon>
+          <v-icon color="primary" right>$mdiBookOpenVariant</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col cols="12">
+        <v-btn text nuxt to="/members/theses/">
+          <span>Research</span>
+          <v-icon color="primary" right>$mdiAlphaRCircle</v-icon>
         </v-btn>
       </v-col>
     </v-row>
@@ -256,10 +266,8 @@
   export default {
     components: { StoreImage, DynamicText, MemberCard },
     async asyncData({ $axios, $payloadURL, route, store }) {
-      // if generated and works as client navigation, fetch previously saved static JSON payload
-      // if (process.static && process.client && $payloadURL)
-      //   return await $axios.$get($payloadURL(route));
-      // const olderAnnouncements = await $axios.$get('/news/offset/');
+      if (process.static && process.client && $payloadURL)
+        return await $axios.$get($payloadURL(route));
       let memberList;
       if (store.state.members.firstLoad) {
         memberList = await $axios.$get('/members/cards/current/');
@@ -290,11 +298,15 @@
       ];
       return {
         chips,
-        professors: store.state.members.professors,
-        shownMembers: [],
         hiddenMembers: memberList.map((e) => ({ ...e, dialog: false })),
+      };
+    },
+    data() {
+      return {
         downloadedFormer: false,
         busy: false,
+        professors: this.$store.state.members.professors,
+        shownMembers: [],
       };
     },
     computed: {
@@ -327,12 +339,13 @@
     created() {
       this.filterList();
     },
+    mounted() {
+      this.$store.commit('pageTitle', `Members`);
+    },
     methods: {
       async getFormerMembers() {
         this.downloadedFormer = true;
-        this.hiddenMembers = [];
-        const l = await this.$axios.$get('/members/cards/former/');
-        l.forEach((e) => this.hiddenMembers.push(e));
+        this.hiddenMembers = await this.$axios.$get('/members/cards/former/');
         this.$store.commit(
           'members/saveMemberList',
           this.shownMembers.concat(this.hiddenMembers)
@@ -357,6 +370,18 @@
         );
       },
     },
+    head() {
+      return {
+        title: 'Members',
+        meta: [
+          {
+            hid: 'description',
+            name: 'description',
+            content: `QMO Lab Members. QMO Lab @ UCR`,
+          },
+        ],
+      };
+    },
   };
 </script>
 
@@ -365,7 +390,6 @@
     overflow: hidden;
   }
   .memberContainer {
-    transition: min-height 0.28s linear;
     height: auto;
     min-height: 0;
     position: relative;
@@ -377,9 +401,5 @@
       width: 80px;
       margin-left: -40px;
     }
-  }
-  .memberContainer--fillAll {
-    min-height: 100vh;
-    transition: min-height 0.14s linear;
   }
 </style>

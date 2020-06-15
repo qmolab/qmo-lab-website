@@ -15,14 +15,11 @@
         :resizable="true"
         :items="gallery.images"
       >
-        <BaseImage
+        <GalleryImage
           :src="item.thumbnail"
-          :lazy-src="item.thumbnail.placeholder"
           :webp="item.webp"
           :alt="item.title"
           :title="item.title"
-          link
-          preload
           @click="click(index, gallery.images)"
         />
       </waterfall>
@@ -32,14 +29,14 @@
 
 <script>
   import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
-  import BaseImage from '@/components/BaseImage.vue';
+  import GalleryImage from '@/components/GalleryImage.vue';
   import ModalImage from '@/components/ModalImage.vue';
 
   export default {
     name: 'ImageGallery',
     components: {
       Waterfall,
-      BaseImage,
+      GalleryImage,
       ModalImage,
     },
     props: { galleryImages: { type: Array, required: true } },

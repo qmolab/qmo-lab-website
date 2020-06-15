@@ -1,11 +1,20 @@
 <template>
   <div class="linksPage mb-8">
-    <v-list-item
-      href="https://small.ucr.edu/"
-      target="_blank"
-      rel="noopener"
-      class="my-8"
-    >
+    <h2 class="headline mt-8">Helpful Links</h2>
+    <v-list-item to="/members/theses/">
+      <v-list-item-icon class="mx-2">
+        <v-icon color="primary">$mdiBookOpen</v-icon>
+      </v-list-item-icon>
+      <v-list-item-title>Student Dissertations and Theses</v-list-item-title>
+    </v-list-item>
+    <v-list-item to="/research/posters/">
+      <v-list-item-icon class="mx-2">
+        <v-icon color="primary">$mdiBillboard</v-icon>
+      </v-list-item-icon>
+      <v-list-item-title>Research Presentation Posters</v-list-item-title>
+    </v-list-item>
+    <h2 class="headline mt-8 mb-4">External Resources</h2>
+    <v-list-item href="https://small.ucr.edu/" target="_blank" rel="noopener">
       <v-img
         src="https://small.ucr.edu/assets/images/SMALL_logo_small_v2.svg"
         alt="UCR Small Lab"
@@ -16,28 +25,10 @@
         >UCR Shared Micro-Assembly and Lithography Laboratory</v-list-item-title
       >
       <v-list-item-icon>
-        <v-icon color="secondary">mdi-open-in-new</v-icon>
+        <v-icon color="secondary">$mdiOpenInNew</v-icon>
       </v-list-item-icon>
     </v-list-item>
-    <v-list-item to="/members/theses/">
-      <v-list-item-icon class="mx-2">
-        <v-icon color="primary">mdi-book-open</v-icon>
-      </v-list-item-icon>
-      <v-list-item-title>Dissertations</v-list-item-title>
-    </v-list-item>
-    <v-list-item to="/research/posters/">
-      <v-list-item-icon class="mx-2">
-        <v-icon color="primary">mdi-billboard</v-icon>
-      </v-list-item-icon>
-      <v-list-item-title>Research Posters</v-list-item-title>
-    </v-list-item>
-    <v-list-item to="/contact/">
-      <v-list-item-icon class="mx-2">
-        <v-icon color="primary">mdi-message-arrow-right</v-icon>
-      </v-list-item-icon>
-      <v-list-item-title>Contact Us</v-list-item-title>
-    </v-list-item>
-    <v-expansion-panels multiple class="py-8">
+    <v-expansion-panels multiple>
       <v-expansion-panel v-for="(panel, i) in panels" :key="i">
         <v-expansion-panel-header>
           <span>
@@ -56,7 +47,7 @@
             >
               <v-list-item-title>{{ item.linkText }}</v-list-item-title>
               <v-list-item-icon>
-                <v-icon color="secondary">mdi-open-in-new</v-icon>
+                <v-icon color="secondary">$mdiOpenInNew</v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list>
@@ -67,21 +58,29 @@
 </template>
 
 <script>
+  import headAndTitle from '@/assets/js/headAndTitle';
   export default {
     name: 'LinksView',
-    async asyncData({ $axios /* $payloadURL, route */ }) {
+    async asyncData({ $axios, $payloadURL, route }) {
+      if (process.static && process.client && $payloadURL)
+        return await $axios.$get($payloadURL(route));
       const panels = await $axios.$get('/links/cards/');
       return { panels };
     },
     data() {
       return {
         icons: {
-          'Lab Funding': 'mdi-currency-usd',
-          'UCR Links': 'mdi-link-variant',
-          'Science Journals': 'mdi-notebook-outline',
-          'Other Groups': 'mdi-vector-link',
+          'Lab Funding': '$mdiCurrencyUsd',
+          'UCR Links': '$mdiLinkVariant',
+          'Science Journals': '$mdiNotebookOutline',
+          'Other Groups': '$mdiVectorLink',
+          'Lab Safety': '$mdiSafetyGoggles',
         },
       };
     },
+    ...headAndTitle(
+      'Links and Resources',
+      `QMO Lab @ UCR Links and Resources Page.`
+    ),
   };
 </script>

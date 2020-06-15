@@ -19,7 +19,13 @@
       </v-row>
       <v-row class="ta-center">
         <v-col v-for="(item, i) in floatingLinks" :key="i" cols="12" md="4">
-          <v-btn text nuxt small :to="item.to" active-class="v-btn--disabled">
+          <v-btn
+            text
+            nuxt
+            small
+            :to="item.to"
+            exact-active-class="v-btn--disabled"
+          >
             <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
             <span>{{ item.text }}</span>
           </v-btn>
@@ -62,7 +68,7 @@
               </v-btn>
             </template>
             <span>{{ item.title }}</span>
-            <v-icon v-if="item.href">mdi-open-in-new</v-icon>
+            <v-icon v-if="item.href" v-text="'$mdiOpenInNew'" />
           </v-tooltip>
         </v-col>
         <v-col
@@ -78,38 +84,6 @@
             University of California, Riverside
           </p>
         </v-col>
-        <!--
-        <v-col md="5" class="hidden-sm-and-down">
-          <v-hover v-slot:default="{ hover }">
-            <v-card
-              :elevation="hover ? 12 : 2"
-              :color="color(hover)"
-              nuxt
-              to="/links/"
-              height="initial"
-              class="transition_defualt"
-            >
-              <v-card-title>Lab Funding:</v-card-title>
-              <v-row>
-                <v-col
-                  v-for="(fundingSource, n) in fundingImages"
-                  :key="n"
-                  :cols="6"
-                >
-                  <BaseImage
-                    :src="fundingSource.src"
-                    :webp="fundingSource.webp"
-                    :alt="fundingSource.alt"
-                    :title="fundingSource.title"
-                    :max-height="80"
-                    contain
-                  />
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-hover>
-        </v-col>
-        -->
       </v-row>
     </v-container>
     <div class="copyrightNotice fill-w abs pa-2 overline ta-center">
@@ -126,7 +100,7 @@
     >
       <span>
         <span>Visit the Official UCR Website</span>
-        <v-icon>mdi-open-in-new</v-icon>
+        <v-icon v-text="'$mdiOpenInNew'" />
       </span>
     </v-tooltip>
   </v-footer>
@@ -134,12 +108,10 @@
 
 <script>
   import NuxtLink from '@/components/NuxtLink.vue';
-  // import BaseImage from '@/components/BaseImage.vue';
   export default {
     name: 'TheFooter',
     components: {
       NuxtLink,
-      /* BaseImage, */
     },
     data() {
       return {
@@ -148,31 +120,31 @@
         ucrLogoWebp: require('~/assets/images/ucr_logo_blGd.png?webp'),
         icons: [
           {
-            icon: 'mdi-twitter',
+            icon: '$mdiTwitter',
             title: 'Follow us on Twitter',
             href: 'https://twitter.com/qmo_lab',
             color: '#08a0e9',
           },
           {
-            icon: 'mdi-youtube',
+            icon: '$mdiYoutube',
             title: 'Check out our Youtube Channel',
             href: 'https://www.youtube.com/channel/UCJdmhoGpcmAFzVx9PolvBOA',
             color: '#c4302b',
           },
           {
-            icon: 'mdi-github',
+            icon: '$mdiGithub',
             title: 'Lab Software Repository',
             href: 'https://github.com/qmolabucr',
             color: '#211F1F',
           },
           {
-            icon: 'mdi-atom',
+            icon: '$mdiAtom',
             title: 'UCR Physics',
             href: 'https://physics.ucr.edu/',
             color: '#2d6cc0',
           },
           {
-            icon: 'mdi-alpha-s',
+            icon: '$mdiAlphaS',
             title: 'UCR SMALL Lab',
             href: 'https://small.ucr.edu/',
             color: 'green darken-2',
@@ -183,17 +155,17 @@
           {
             to: '/contact/tour/',
             text: 'Schedule a tour',
-            icon: 'mdi-bus-marker',
+            icon: '$mdiBusMarker',
           },
           {
             to: '/contact/potential_students/',
             text: 'Information for potential students',
-            icon: 'mdi-information-variant',
+            icon: '$mdiInformationVariant',
           },
           {
             to: '/contact/',
             text: 'Contact Us',
-            icon: 'mdi-message',
+            // icon: '$mdiMessage',
           },
         ],
         fundingImages: [

@@ -10,21 +10,24 @@
 
 <script>
   import ContactCard from '@/components/ContactCard.vue';
+  import headAndTitle from '@/assets/js/headAndTitle';
   export default {
     components: { ContactCard },
-    async asyncData({ store }) {
-      return await new Promise((resolve) => {
-        resolve({
-          memberItems: ['Nathan', ...Object.keys(store.state.images.members)],
-          subjectItems: [
-            'Lab Tour',
-            'Information for potential students',
-            'Question about research',
-            'Question about a publication',
-            'Lab funding',
-          ],
-        });
-      });
+    data() {
+      return {
+        memberItems: [
+          'Nathan',
+          ...Object.keys(this.$store.state.images.members),
+        ],
+        subjectItems: [
+          'Lab Tour',
+          'Information for potential students',
+          'Question about research',
+          'Question about a publication',
+          'Lab funding',
+        ],
+      };
     },
+    ...headAndTitle('Contact', `Contact the QMO Lab @ UCR`),
   };
 </script>

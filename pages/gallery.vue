@@ -7,7 +7,7 @@
       href="https://www.youtube.com/channel/UCJdmhoGpcmAFzVx9PolvBOA"
     >
       <span>QMO YouTube Channel</span>
-      <v-icon right color="secondary">mdi-youtube-subscription</v-icon>
+      <v-icon right color="secondary">{{ mdiYoutubeSubscription }}</v-icon>
     </v-btn>
     <VideoGallery :videos="videos" />
     <ImageGallery :gallery-images="galleryImages" />
@@ -15,8 +15,10 @@
 </template>
 
 <script>
+  import { mdiYoutubeSubscription } from '@mdi/js';
   import ImageGallery from '@/components/ImageGallery';
   import VideoGallery from '@/components/VideoGallery';
+  import headAndTitle from '@/assets/js/headAndTitle';
 
   export default {
     name: 'GalleryView',
@@ -179,7 +181,12 @@
             title: `Carrier multiplication in 2D materials`,
           },
         ],
+        mdiYoutubeSubscription,
       };
     },
+    ...headAndTitle(
+      'Gallery',
+      `QMO Lab Gallery: Quantum Materials Optoelectronics @ UCR`
+    ),
   };
 </script>

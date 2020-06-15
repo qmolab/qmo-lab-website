@@ -37,7 +37,7 @@
               .toLowerCase()}/`"
           >
             <span>Read more</span>
-            <v-icon right color="secondary">mdi-page-next</v-icon>
+            <v-icon right color="secondary">$mdiPageNext</v-icon>
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -48,13 +48,18 @@
 <script>
   import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
   import StoreImage from '@/components/StoreImage.vue';
+  import headAndTitle from '@/assets/js/headAndTitle';
   export default {
     components: { Waterfall, StoreImage },
-    async asyncData({ $axios /* $payloadURL, route */ }) {
-      // if (process.static && process.client && $payloadURL)
-      //   return await $axios.$get($payloadURL(route));
+    async asyncData({ $axios, $payloadURL, route }) {
+      if (process.static && process.client && $payloadURL)
+        return await $axios.$get($payloadURL(route));
       const memberTheses = await $axios.$get('/theses/cards/');
       return { memberTheses };
     },
+    ...headAndTitle(
+      'Theses',
+      `QMO Lab @ UCR Theses Page. Student Theses and Dissertations from former student members.`
+    ),
   };
 </script>

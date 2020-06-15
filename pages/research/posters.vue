@@ -22,14 +22,14 @@
                   :href="posterFolder + item.ppt"
                   class="hide-sm-and-down"
                 >
-                  <v-icon class="pb-1">mdi-file-powerpoint</v-icon>
+                  <v-icon class="pb-1">$mdiFilePowerpoint</v-icon>
                   Download PPT
-                  <v-icon right class="pb-1">mdi-download</v-icon>
+                  <v-icon right class="pb-1">$mdiDownload</v-icon>
                 </v-btn>
                 <v-btn text :href="posterFolder + item.pdf">
-                  <v-icon class="pb-1">mdi-file-pdf</v-icon>
+                  <v-icon class="pb-1">$mdiFilePdf</v-icon>
                   Download PDF
-                  <v-icon right class="pb-1">mdi-download</v-icon>
+                  <v-icon right class="pb-1">$mdiDownload</v-icon>
                 </v-btn>
               </div>
             </div>
@@ -42,9 +42,12 @@
 
 <script>
   import DynamicText from '@/components/DynamicText.vue';
+  import headAndTitle from '@/assets/js/headAndTitle';
   export default {
     components: { DynamicText },
-    async asyncData({ $axios /* $payloadURL, route */ }) {
+    async asyncData({ $axios, $payloadURL, route }) {
+      if (process.static && process.client && $payloadURL)
+        return await $axios.$get($payloadURL(route));
       const posters = await $axios.$get('/posters/');
       return { posters };
     },
@@ -54,5 +57,9 @@
         img: require('~/assets/images/posters/SHINES.png?resize'),
       };
     },
+    ...headAndTitle(
+      'Research Posters',
+      `QMO Lab @ UCR Research Posters Page. View or Download research presentation posters made by former student members.`
+    ),
   };
 </script>
