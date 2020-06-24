@@ -1,5 +1,4 @@
 // import colors from 'vuetify/es5/util/colors';
-import axios from 'axios';
 import minifyTheme from 'minify-css-string';
 import {
   primary,
@@ -52,22 +51,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const imageQuality = 0.7;
-
-async function getRoute(table, routeBase, idColumn) {
-  const res = await axios.get(process.env.API_BASE + table);
-  return res.data.map((item) => {
-    return {
-      route: routeBase + item[idColumn].replace(/ /g, '_').toLowerCase(),
-      payload: Object.keys(item).length === 1 ? undefined : item,
-    };
-  });
-}
-
-async function routes() {
-  const theses = await getRoute('/theses/routes/', '/theses/', 'author');
-  const research = await getRoute('/research/routes/', '/research/', 'title');
-  return [...theses, ...research];
-}
 
 export default {
   vue: {
