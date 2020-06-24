@@ -1,19 +1,15 @@
 <template>
   <div>
     <BaseImage
-      v-if="asset"
-      :src="asset.img"
-      :webp="asset.webp"
-      :title="figure ? undefined : title"
-      :alt="asset.alt"
+      v-if="payload"
+      :src="payload.img"
+      :title="noTitle ? undefined : payload.title || itemId"
+      :alt="payload.alt || itemId"
       v-bind="$attrs"
-      border
     >
       <slot />
     </BaseImage>
-    <div v-if="figure" class="caption mb-2">
-      Figure {{ figure }}: {{ asset.title }}
-    </div>
+    <slot name="append" :payload="payload" />
   </div>
 </template>
 
@@ -26,15 +22,11 @@
     props: {
       subCategory: { type: String, required: true },
       itemId: { type: String, required: true },
-      figure: { type: Number, default: undefined },
-      border: { type: Boolean, default: false },
+      noTitle: { type: Boolean, default: false },
     },
     computed: {
-      asset() {
+      payload() {
         return this.$store.state.images[this.subCategory][this.itemId];
-      },
-      title() {
-        return this.figure ? undefined : this.asset.title || this.itemId;
       },
     },
   };

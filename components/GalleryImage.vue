@@ -1,5 +1,5 @@
 <template>
-  <div class="imageLink">
+  <div class="no-overflow link rounded">
     <v-img
       ref="galleryImage"
       :src="src"
@@ -10,7 +10,13 @@
       :options="{ threshold: 0.1 }"
       transition="fade-transition"
       @click="$emit('click', $event)"
-    />
+    >
+      <template v-slot:placeholder>
+        <v-row class="fill-h ma-0 align-center justify-center">
+          <v-progress-circular size="60" indeterminate color="primary" />
+        </v-row>
+      </template>
+    </v-img>
     <v-tooltip
       v-if="title"
       bottom
@@ -33,7 +39,7 @@
         return this.$attrs.src.src;
       },
       srcset() {
-        return this.$attrs.webp || this.$attrs.srcset || this.$attrs.src.srcSet;
+        return this.$attrs.srcset || this.$attrs.src.srcSet;
       },
       lazySource() {
         return this.$attrs.src.placeholder;
@@ -42,7 +48,7 @@
         return this.$attrs.title;
       },
       attrs() {
-        const { src, webp, title, ...attrs } = this.$attrs;
+        const { src, title, ...attrs } = this.$attrs;
         return attrs;
       },
     },
@@ -57,11 +63,3 @@
     },
   };
 </script>
-
-<style lang="scss" scoped>
-  .imageLink {
-    cursor: pointer;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-</style>

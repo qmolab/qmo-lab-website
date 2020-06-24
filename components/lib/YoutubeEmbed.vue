@@ -1,14 +1,12 @@
 <template>
-  <div class="youtube fill-w fill-h rel hide-overflow" @click="isLoaded = true">
+  <div
+    class="link rounded fill-w fill-h rel no-overflow"
+    @click="isLoaded = true"
+  >
     <v-fade-transition>
-      <v-img
-        v-if="!isLoaded"
-        :src="thumbSource"
-        :srcset="sourceSet"
-        :aspect-ratio="16 / 9"
-      >
+      <v-img v-if="!isLoaded" :src="thumbSource" :aspect-ratio="16 / 9">
         <v-icon class="mdiYoutube" :size="72">
-          $mdiYoutube
+          $youtube
         </v-icon>
       </v-img>
       <iframe
@@ -17,7 +15,7 @@
         allow="encrypted-media"
         allowfullscreen=""
         :src="videoSource"
-        class="frame abs fill-w fill-h"
+        class="abs t0 l0 fill-w fill-h"
       />
     </v-fade-transition>
   </div>
@@ -52,11 +50,7 @@
         return new Promise((resolve) => {
           if (this.videoId.length !== 0) {
             const y = 'https://img.youtube.com/vi';
-            const yw = y + '_webp/';
             this.thumbSource = y + '/' + this.videoId + '/default.jpg';
-            this.sourceSet = `${yw + this.videoId}/mqdefault.webp 320w, ${
-              yw + this.videoId
-            }/hqdefault.webp 480w`;
             this.videoSource = `https://www.youtube-nocookie.com/embed/${this.videoId}?rel=0&showinfo=0`;
             resolve(true);
           }
@@ -66,15 +60,3 @@
     },
   };
 </script>
-
-<style scoped lang="scss">
-  .youtube {
-    border-radius: 4px;
-    cursor: pointer;
-
-    .frame {
-      top: 0;
-      left: 0;
-    }
-  }
-</style>

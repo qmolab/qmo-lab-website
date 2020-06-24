@@ -24,7 +24,9 @@
             :item-id="item.toLowerCase()"
           />
         </v-avatar>
-        <v-list-item-title class="cap">{{ item }}</v-list-item-title>
+        <v-list-item-title class="text-capitalize">{{
+          item
+        }}</v-list-item-title>
       </v-list-item>
     </template>
     <template v-slot:selection="{ item }">
@@ -37,7 +39,7 @@
             :item-id="item.toLowerCase()"
           />
         </v-avatar>
-        <span class="cap">{{ item }}</span>
+        <span class="text-capitalize">{{ item }}</span>
       </v-chip>
     </template>
   </v-select>

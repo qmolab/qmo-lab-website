@@ -14,39 +14,39 @@ export const state = () => ({
       to: '/',
     },
     members: {
-      icon: '$mdiAccountGroup',
+      icon: '$membersPage',
       title: 'Members',
       to: '/members/',
-      sub: {
-        theses: {
-          title: 'Theses',
-          to: '/members/theses/',
-        },
-      },
     },
     research: {
-      icon: '$mdiAlphaRCircle',
+      icon: '$researchPage',
       title: 'Research',
       to: '/research/',
       sub: {
         posters: {
+          icon: '$postersPage',
           title: 'Posters',
-          to: '/research/posters/',
+          to: '/posters/',
         },
       },
     },
     publications: {
-      icon: '$mdiAlphaPCircle',
+      icon: '$publicationsPage',
       title: 'Publications',
       to: '/publications/',
     },
     gallery: {
-      icon: '$mdiCameraIris',
+      icon: '$galleryPage',
       title: 'Gallery',
       to: '/gallery/',
     },
+    /* theses: {
+      icon: '$thesesPage',
+      title: 'Student Theses',
+      to: '/theses/',
+    }, */
     links: {
-      icon: '$mdiLink',
+      icon: '$linksPage',
       title: 'Links',
       to: '/links/',
     },

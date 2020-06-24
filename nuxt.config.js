@@ -1,76 +1,6 @@
 // import colors from 'vuetify/es5/util/colors';
 import axios from 'axios';
-import {
-  mdiCancel,
-  mdiClose,
-  mdiDelete,
-  mdiInformation,
-  mdiChevronLeft,
-  mdiChevronRight,
-  mdiCircleSlice8,
-  mdiSort,
-  mdiMenu,
-  mdiAlert,
-  mdiAlertCircle,
-  mdiRadioboxMarked,
-  mdiRadioboxBlank,
-  mdiFileDocument,
-  mdiUnfoldLessHorizontal,
-  mdiUnfoldMoreHorizontal,
-  mdiPencil,
-  mdiLoading,
-  mdiChevronDown,
-  mdiCheckboxBlankOutline,
-  mdiCheckboxIntermediate,
-  mdiCheckboxMarked,
-  mdiCheckBold,
-  mdiOpenInNew,
-  mdiBookOpen,
-  mdiBookOpenVariant,
-  mdiPageNext,
-  mdiAlphaPCircle,
-  mdiAlphaRCircle,
-  mdiAt,
-  mdiFormTextarea,
-  mdiFormTextbox,
-  mdiTextSubject,
-  mdiTag,
-  mdiEmailCheck,
-  mdiEmailMinus,
-  mdiMessage,
-  mdiEmailSend,
-  mdiRefreshCircle,
-  mdiFileAccount,
-  mdiWeb,
-  mdiFilePdf,
-  mdiFilePowerpoint,
-  mdiFile,
-  mdiDownload,
-  mdiHome,
-  mdiMessageArrowRight,
-  mdiTwitter,
-  mdiYoutube,
-  mdiGithub,
-  mdiAtom,
-  mdiAlphaS,
-  mdiBusMarker,
-  mdiInformationVariant,
-  mdiCalendar,
-  mdiCheckOutline,
-  mdiBillboard,
-  mdiCurrencyUsd,
-  mdiLinkVariant,
-  mdiVectorLink,
-  mdiNotebookOutline,
-  mdiShareVariant,
-  mdiAccountGroup,
-  mdiLink,
-  mdiCameraIris,
-  mdiSafetyGoggles,
-  // mdiStar,
-  // mdiStarOutline,
-  // mdiStarHalf,
-} from '@mdi/js';
+import minifyTheme from 'minify-css-string';
 import {
   primary,
   accent,
@@ -81,102 +11,47 @@ import {
   success,
   backgroundColor,
 } from './assets/scss/colors';
+import { MY_ICONS } from './assets/js/icons';
 
 require('dotenv').config();
-const MY_ICONS = {
-  complete: mdiCheckBold,
-  cancel: mdiCancel,
-  close: mdiClose,
-  delete: mdiDelete, // delete (e.g. v-chip close)
-  clear: mdiClose,
-  success: mdiCheckBold,
-  info: mdiInformation,
-  warning: mdiAlert,
-  error: mdiAlertCircle,
-  prev: mdiChevronLeft,
-  next: mdiChevronRight,
-  checkboxOn: mdiCheckboxMarked,
-  checkboxOff: mdiCheckboxBlankOutline,
-  checkboxIndeterminate: mdiCheckboxIntermediate,
-  delimiter: mdiCircleSlice8, // for carousel
-  sort: mdiSort,
-  expand: mdiChevronDown,
-  menu: mdiMenu,
-  // subgroup: '...',
-  dropdown: mdiChevronDown,
-  radioOn: mdiRadioboxMarked,
-  radioOff: mdiRadioboxBlank,
-  edit: mdiPencil,
-  // ratingEmpty: mdiStarOutline,
-  // ratingFull: mdiStar,
-  // ratingHalf: mdiStarHalf,
-  loading: mdiLoading,
-  // first: '...',
-  // last: '...',
-  fold: mdiUnfoldLessHorizontal,
-  unfold: mdiUnfoldMoreHorizontal,
-  file: mdiFileDocument,
-  mdiOpenInNew,
-  mdiBookOpen,
-  mdiBookOpenVariant,
-  mdiPageNext,
-  mdiAlphaPCircle,
-  mdiAlphaRCircle,
-  mdiAt,
-  mdiFormTextarea,
-  mdiFormTextbox,
-  mdiTextSubject,
-  mdiTag,
-  mdiEmailCheck,
-  mdiEmailMinus,
-  mdiMessage,
-  mdiEmailSend,
-  mdiRefreshCircle,
-  mdiFileAccount,
-  mdiWeb,
-  mdiClose,
-  mdiChevronLeft,
-  mdiChevronRight,
-  mdiFilePdf,
-  mdiFilePowerpoint,
-  mdiFile,
-  mdiDownload,
-  mdiHome,
-  mdiMessageArrowRight,
-  mdiTwitter,
-  mdiYoutube,
-  mdiGithub,
-  mdiAtom,
-  mdiAlphaS,
-  mdiBusMarker,
-  mdiInformationVariant,
-  mdiCalendar,
-  mdiCancel,
-  mdiCheckOutline,
-  mdiMenu,
-  mdiBillboard,
-  mdiCurrencyUsd,
-  mdiLinkVariant,
-  mdiVectorLink,
-  mdiNotebookOutline,
-  mdiShareVariant,
-  mdiAccountGroup,
-  mdiCameraIris,
-  mdiLink,
-  mdiSafetyGoggles,
-};
 // Doc: https://axios.nuxtjs.org/usage.html
-const modules = ['@nuxtjs/axios'];
+const modules = ['@nuxtjs/axios', 'nuxt-webfontloader'];
+const buildModules = [
+  'nuxt-polyfill',
+  'nuxt-vuex-localstorage',
+  // Doc: https://github.com/nuxt-community/dotenv-module
+  '@nuxtjs/dotenv',
+  // Doc: https://github.com/nuxt-community/eslint-module
+  '@nuxtjs/eslint-module',
+  // Doc: https://github.com/nuxt-community/stylelint-module
+  '@nuxtjs/stylelint-module',
+  // Doc: https://www.bazzite.com/docs/nuxt-optimized-images
+  '@bazzite/nuxt-optimized-images',
+  // Doc: https://github.com/nuxt-community/vuetify-module
+  '@nuxtjs/vuetify',
+  // Doc: https://www.npmjs.com/package/vue-social-sharing
+  'vue-social-sharing/nuxt',
+  // Doc https://github.com/nuxt-community/analytics-module#readme
+  '@nuxtjs/google-analytics',
+  // Doc: https://pwa.nuxtjs.org/setup.html
+  '@nuxtjs/pwa',
+  // Doc: https://github.com/nuxt-community/sitemap-module
+  '@nuxtjs/sitemap',
+  // Doc: https://github.com/robcresswell/nuxt-compress
+  'nuxt-compress',
+];
 let modern = false;
 let base = '/';
 let baseUrl = 'http://localhost:3000';
 if (process.env.NODE_ENV === 'production') {
+  // Doc: https://github.com/DreaMinder/nuxt-payload-extractor
+  // buildModules.push(['nuxt-payload-extractor', {}]);
   modern = 'client';
   base = process.env.ROUTER_BASE;
   baseUrl = process.env.SITE_BASE + process.env.ROUTER_BASE;
 }
 
-const imageQuality = 0.85;
+const imageQuality = 0.7;
 
 async function getRoute(table, routeBase, idColumn) {
   const res = await axios.get(process.env.API_BASE + table);
@@ -188,11 +63,15 @@ async function getRoute(table, routeBase, idColumn) {
   });
 }
 
+async function routes() {
+  const theses = await getRoute('/theses/routes/', '/theses/', 'author');
+  const research = await getRoute('/research/routes/', '/research/', 'title');
+  return [...theses, ...research];
+}
+
 export default {
   vue: {
-    config: {
-      performance: process.env.NODE_ENV !== 'production', // you probably should detect dev mode here
-    },
+    config: { performance: process.env.NODE_ENV !== 'production' },
   },
   /*
    ** Nuxt mode property (one of spa or universal)
@@ -205,44 +84,18 @@ export default {
    ** https://nuxtjs.org/api/configuration-modern/
    */
   modern,
-
+  target: 'static',
   modules, // Nuxt.js modules (defined at top level)
 
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: [
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
-    // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
-    // Doc: https://github.com/nuxt-community/stylelint-module
-    '@nuxtjs/stylelint-module',
-    // Doc: https://www.bazzite.com/docs/nuxt-optimized-images
-    '@bazzite/nuxt-optimized-images',
-    // Doc: https://github.com/nuxt-community/vuetify-module
-    '@nuxtjs/vuetify',
-    // Doc: https://github.com/DreaMinder/nuxt-payload-extractor
-    'nuxt-payload-extractor',
-    // Doc: https://pwa.nuxtjs.org/setup.html
-    '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/sitemap-module
-    '@nuxtjs/sitemap',
-    // Doc: https://github.com/nuxt-community/webpackmonitor-module
-    // '@nuxtjs/webpackmonitor',
-    // Doc: https://github.com/robcresswell/nuxt-compress
-    'nuxt-compress',
-  ],
+  buildModules,
 
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [
-    {
-      src: '~/plugins/vue-pdf',
-      ssr: false,
-    },
-  ],
+  plugins: [{ src: '~/plugins/dynamicText' }],
 
   /*
    ** Router.base is required if app is running in subfolder
@@ -274,6 +127,19 @@ export default {
    */
   pageTransition: 'fade',
   layoutTransition: 'fade',
+
+  webfontloader: {
+    // add Google Fonts as "custom" | workaround required
+    custom: {
+      families: ['Roboto:n4,n5,n7,n9', 'Roboto Condensed:n1,n3,n4,n5'],
+      urls: [
+        // for each Google Fonts add url + options you want
+        // here add font-display option
+        'https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap',
+        'https://fonts.googleapis.com/css?family=Roboto+Condensed:100,300,400,500&display=swap',
+      ],
+    },
+  },
 
   /*
    ** Default Head Meta Items
@@ -326,16 +192,20 @@ export default {
    */
   vuetify: {
     customVariables: ['~/assets/scss/variables.scss'],
-    defaultAssets: {
-      font: false,
-      icons: false,
-    },
-    icons: {
-      values: MY_ICONS,
-    },
+    defaultAssets: { font: false, icons: false },
+    icons: { values: MY_ICONS },
     treeShake: true,
     theme: {
       dark: true,
+      options: {
+        // variations: false,
+        minifyTheme,
+        themeCache: {
+          get: (key) => process.client && localStorage.getItem(key),
+          set: (key, value) =>
+            process.client && localStorage.setItem(key, value),
+        },
+      },
       themes: {
         dark: {
           primary,
@@ -350,6 +220,24 @@ export default {
     },
   },
 
+  // Configure polyfills:
+  polyfill: {
+    features: [
+      {
+        require: 'intersection-observer',
+        detect: () => 'IntersectionObserver' in window,
+      },
+      {
+        require: 'intl',
+        detect: () => 'Intl' in global,
+      },
+      {
+        require: 'localstorage-polyfill',
+        detect: () => typeof localStorage !== 'undefined',
+      },
+    ],
+  },
+
   optimizeCSS: {
     assetNameRegExp: /\.optimize\.css$/g,
     cssProcessor: require('cssnano'),
@@ -358,6 +246,11 @@ export default {
     },
     canPrint: true,
   },
+
+  /*
+   ** Plugins to load before mounting the App
+   */
+  googleAnalytics: { id: 'UA-153705105-2' },
 
   /*
    ** @bazzite/nuxt-optimized-images module configuration
@@ -373,10 +266,7 @@ export default {
       placeholder: true,
       placeholderSize: 6,
     },
-    webp: {
-      preset: 'default',
-      quality: imageQuality,
-    },
+    webp: { preset: 'default', quality: imageQuality },
     pngquant: [0.3, 0.5],
   },
 
@@ -389,18 +279,12 @@ export default {
      ** compression-webpack-plugin module configuration
      ** https://github.com/webpack-contrib/compression-webpack-plugin
      */
-    gzip: {
-      cache: true,
-      test: /\.(js|css|svg)$/,
-    },
+    gzip: { cache: true, test: /\.(js|css|svg)$/ },
     /*
      ** brotli plugin for webpack module configuration
      ** https://github.com/mynameiswhm/brotli-webpack-plugin
      */
-    brotli: {
-      threshold: 0,
-      test: /\.(js|css|svg)$/,
-    },
+    brotli: { threshold: 0, test: /\.(js|css|svg)$/ },
   },
 
   /*
@@ -445,14 +329,10 @@ export default {
    ** https://nuxtjs.org/api/configuration-build
    */
   build: {
-    build: {
-      analyze: {
-        analyzerMode: 'static',
-      },
-    },
+    transpile: ['vuetify', 'nuxt-vuex-localstorage'],
+    // analyze: { analyzerMode: 'static' },
     terser: { extractComments: 'NODE_LICENSES' /* default was LICENSES */ },
-    /// extractCSS: true,
-    /*
+    /* extractCSS: true,
     optimization: {
       splitChunks: {
         cacheGroups: {
@@ -471,10 +351,10 @@ export default {
      */
     extend(config, ctx) {
       // config.output.globalObject = 'this';
-      config.module.rules.push({
+      /* config.module.rules.push({
         test: /\.pdf$/,
         loader: 'url-loader',
-      });
+      }); */
     },
   },
 
@@ -484,18 +364,9 @@ export default {
    ** Guide: https://nuxtjs.org/guide/routing/
    */
   generate: {
-    async routes() {
-      const theses = await getRoute(
-        '/theses/routes/',
-        '/members/theses/',
-        'author'
-      );
-      const research = await getRoute(
-        '/research/routes/',
-        '/research/',
-        'title'
-      );
-      return [...theses, ...research];
-    },
+    // routes,
+    exclude: [
+      /#/, // path containing hashes
+    ],
   },
 };

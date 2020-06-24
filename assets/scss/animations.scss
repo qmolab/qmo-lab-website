@@ -1,0 +1,35 @@
+.fade-enter-active, .fade-leave-active  {
+  transition: $transition_duration $transition_func_main;
+}
+.fade-enter-to, .fade-leave {
+  opacity: 1;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+.cardItem-enter-active, .cardItem-leave-active  {
+  transition: $transition_duration $transition_func_main;
+  transform-origin: right center;
+}
+.cardItem-enter-to, .list-leave {
+  opacity: 1;
+  transform: translateX(0);
+}
+.cardItem-enter, .cardItem-leave-to {
+  opacity: 0;
+  transform: translateX($transition_distance);
+}
+.list-enter-active {
+  transition: $transition_duration $transition_func_main;
+}
+.list-leave-active {
+  transition: $transition_duration $transition_func_main;
+}
+.list-enter-to, .list-leave {
+  opacity: 1;
+  transform: translateY(0);
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY($transition_distance);
+}

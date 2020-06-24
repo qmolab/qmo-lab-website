@@ -7,29 +7,29 @@
             <div class="title">{{ item.title }}</div>
             <div class="subtitle-2">{{ item.authors }}</div>
           </v-col>
-          <v-col cols="12" sm="6" md="3" lg="3" xl="2">
+          <v-col cols="12" sm="4" md="3" lg="3" xl="2">
             <v-img :src="img" :aspect-ratio="0.8" width="100%" />
           </v-col>
           <v-col>
-            <div class="stretchCard pb-12">
+            <div class="stretchCard pb-10">
               <div class="body-1 font-weight-light">
-                <DynamicText :html="item.discussion" />
+                <dynamic-text :html="item.discussion" />
               </div>
               <div class="pr-8 actions">
                 <v-spacer />
                 <v-btn
                   text
                   :href="posterFolder + item.ppt"
-                  class="hide-sm-and-down"
+                  class="hidden-xs-only"
                 >
-                  <v-icon class="pb-1">$mdiFilePowerpoint</v-icon>
-                  Download PPT
-                  <v-icon right class="pb-1">$mdiDownload</v-icon>
+                  <v-icon>$ppt</v-icon>
+                  <span>Download PPT</span>
+                  <v-icon right>$mdiDownload</v-icon>
                 </v-btn>
                 <v-btn text :href="posterFolder + item.pdf">
-                  <v-icon class="pb-1">$mdiFilePdf</v-icon>
-                  Download PDF
-                  <v-icon right class="pb-1">$mdiDownload</v-icon>
+                  <v-icon>$pdf</v-icon>
+                  <span>Download PDF</span>
+                  <v-icon right>$mdiDownload</v-icon>
                 </v-btn>
               </div>
             </div>
@@ -41,24 +41,21 @@
 </template>
 
 <script>
-  import DynamicText from '@/components/DynamicText.vue';
   import headAndTitle from '@/assets/js/headAndTitle';
   export default {
-    components: { DynamicText },
-    async asyncData({ $axios, $payloadURL, route }) {
-      if (process.static && process.client && $payloadURL)
-        return await $axios.$get($payloadURL(route));
+    async asyncData({ $axios }) {
       const posters = await $axios.$get('/posters/');
       return { posters };
     },
     data() {
       return {
-        posterFolder: process.env.ROUTER_BASE + 'assets/posters/',
+        posterFolder: process.env.baseUrl + '/assets/posters/',
         img: require('~/assets/images/posters/SHINES.png?resize'),
       };
     },
     ...headAndTitle(
       'Research Posters',
+      'posters/',
       `QMO Lab @ UCR Research Posters Page. View or Download research presentation posters made by former student members.`
     ),
   };

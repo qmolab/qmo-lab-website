@@ -1,7 +1,11 @@
 <template>
   <div>
-    <div class="px-8 py-5"><NuxtLink text to="/">Home</NuxtLink></div>
-    <h2>Error</h2>
+    <div class="px-8 py-5">
+      <v-btn to="/" text>
+        Home
+      </v-btn>
+    </div>
+    <h2 class="text-h1 ma-4">Error</h2>
     <span v-if="error.statusCode === 404">
       {{ pageNotFound }}
     </span>
@@ -10,7 +14,7 @@
     </span>
     <div
       role="img"
-      class="emoji--disappointed"
+      class="emoji--disappointed text-center"
       aria-label="Disappointed Emoji"
     />
   </div>
@@ -40,7 +44,6 @@
 
 <style lang="scss" scoped>
   .emoji--disappointed {
-    text-align: center;
     &::before {
       content: '\1F61E';
       font-size: 25em;

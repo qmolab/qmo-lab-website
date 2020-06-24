@@ -2,7 +2,7 @@
   <v-card class="mx-auto my-4 pa-2 contactCard">
     <v-card-title class="mb-8">
       <span>
-        <v-icon>$mdiEmailEdit</v-icon>
+        <v-icon>{{ mdiEmailEdit }}</v-icon>
         <span class="pl-1">Contact us</span>
       </span>
     </v-card-title>
@@ -11,7 +11,7 @@
         v-model="nameText"
         name="nameText"
         :rules="nameRules"
-        prepend-icon="$mdiFormTextbox"
+        :prepend-icon="mdiFormTextbox"
         :counter="nameLength"
         label="Your Name"
         required
@@ -21,7 +21,7 @@
         v-model="emailText"
         name="emailText"
         :rules="emailRules"
-        prepend-icon="$mdiAt"
+        :prepend-icon="mdiAt"
         label="Email"
         outlined
         required
@@ -32,7 +32,7 @@
         name="subjectText"
         :items="subjectItems"
         :rules="subjectRules"
-        prepend-icon="$mdiTextSubject"
+        :prepend-icon="mdiTextSubject"
         :counter="maxSubjectLength"
         :menu-props="{ auto: true, maxHeight: 1000 }"
         label="Subject"
@@ -52,10 +52,9 @@
       <v-checkbox
         v-if="askForFollowUp"
         v-model="followUpCheckbox"
-        :prepend-icon="followUpCheckbox ? '$mdiEmailCheck' : '$mdiEmailMinus'"
+        :prepend-icon="followUpCheckbox ? mdiEmailCheck : mdiEmailMinus"
         label="Recieve additional information via email"
-        :class="{ strike: !followUpCheckbox }"
-        style="margin-top: -20px;"
+        :class="{ 'mt-n5': true, strike: !followUpCheckbox }"
       />
       <DatePicker
         v-if="date"
@@ -83,13 +82,22 @@
       </v-btn>
       <v-btn color="error" class="mr-4" @click="reset">
         <span>Reset</span>
-        <v-icon right>$mdiRefreshCircle</v-icon>
+        <v-icon right>{{ mdiRefreshCircle }}</v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+  import {
+    mdiFormTextbox,
+    mdiTextSubject,
+    mdiEmailCheck,
+    mdiEmailEdit,
+    mdiRefreshCircle,
+    mdiEmailMinus,
+    mdiAt,
+  } from '@mdi/js';
   import {
     emailRule,
     lengthRule,
@@ -109,6 +117,7 @@
       maxSubjectLength: { type: Number, default: 140 },
       maxEmailLength: { type: Number, default: 100 },
       date: { type: Boolean, default: false },
+      messageSubject: { type: String, default: 'New' },
     },
     data() {
       const hash = this.$route.hash.slice(1).split('&');
@@ -118,10 +127,17 @@
         assignments[part[0]] = part[1];
       }
       return {
+        mdiFormTextbox,
+        mdiTextSubject,
+        mdiEmailCheck,
+        mdiEmailMinus,
+        mdiRefreshCircle,
+        mdiEmailEdit,
+        mdiAt,
         valid: false,
         nameText: '',
         emailText: '',
-        subjectText: assignments.subject || '',
+        subjectText: assignments.subject || this.messageSubject,
         messageText: '',
         memberTags: assignments.tag ? [assignments.tag] : [],
         followUpCheckbox: true,
@@ -160,21 +176,29 @@
       },
       submit() {
         this.cancelToken = this.$axios.CancelToken.source();
-        this.request = this.$axios.$post(
-          '/post/contact/',
-          {
-            name: this.nameText,
-            email: this.emailText,
-            subject: this.subjectText,
-            message: this.messageText,
-            tags: this.memberTags,
-            date: this.datePicker,
-            followUp: this.followUpCheckbox,
-          },
-          {
-            cancelToken: this.cancelToken.token,
-          }
-        );
+        this.request = this.$axios
+          .$post(
+            '/post/contact/',
+            {
+              name: this.nameText,
+              email: this.emailText,
+              subject: this.subjectText,
+              message: this.messageText,
+              tags: this.memberTags,
+              date: this.datePicker,
+              followUp: this.followUpCheckbox,
+            },
+            {
+              cancelToken: this.cancelToken.token,
+            }
+          )
+          .then((r) => {
+            // eslint-disable-next-line no-console
+            console.log(r[0]);
+            // eslint-disable-next-line no-console
+            console.log(r[0] === 'sent');
+            if (r[0] === 'sent') this.reset();
+          });
       },
     },
   };

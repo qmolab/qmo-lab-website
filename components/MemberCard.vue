@@ -4,15 +4,15 @@
       v-if="loading"
       color="primary"
       size="72"
-      class="progressCenterAbs"
+      class="centerItem abs"
       indeterminate
     />
     <v-row v-else dense>
-      <v-col cols="1" style="min-width: 250px;">
+      <v-col cols="1" class="minW-256">
         <StoreImage width="250" sub-category="members" :item-id="name" />
       </v-col>
       <v-col>
-        <h2 class="headline">{{ first }} {{ last }}</h2>
+        <h2 class="text-h5">{{ first }} {{ last }}</h2>
         <div class="font-weight-light subtitle-2">
           <span v-if="level & 8">Former</span>
           <span>{{ dept }}</span>
@@ -24,16 +24,16 @@
         </div>
         <div>{{ byline }}</div>
         <div class="my-12">
-          <h3 class="title font-weight-light">Research Focus:</h3>
+          <h3 class="font-weight-light">Research Focus:</h3>
           <div class="font-weight-light">{{ focus }}</div>
         </div>
       </v-col>
       <v-col class="mt-2" cols="12">
         <div v-if="honors.publications && honors.publications.length !== 0">
-          <h3 class="title font-weight-light">
+          <h3 class="font-weight-light text-capitalize">
             {{ honors.publications.title }}
           </h3>
-          <v-list style="line-height: 18px;">
+          <v-list dense>
             <v-list-item
               v-for="item in honors.publications.payload"
               :key="item.title"
@@ -41,49 +41,59 @@
               target="_blank"
               rel="noopener"
             >
-              <v-row no-gutters>
-                <v-list-item-avatar
-                  size="24"
-                  color="primary"
-                  class="align-self-center"
-                  style="max-width: 24px;"
-                />
-                <v-col class="ml-2 pt-1">
+              <v-list-item-avatar
+                size="12"
+                color="primary"
+                class="align-self-center"
+              />
+              <v-list-item-content>
+                <v-list-item-title class="body-1">
                   <span v-if="item.title" class="font-weight-light">
-                    "<DynamicText :html="item.title" />"
-                    {{ item.reference }}
+                    "<dynamic-text :html="item.title" />",
+                    <dynamic-text :html="item.reference" />
                   </span>
-                  <v-list-item-icon class="mt-2">
-                    <v-icon color="secondary">$mdiOpenInNew</v-icon>
-                  </v-list-item-icon>
-                </v-col>
-              </v-row>
+                </v-list-item-title>
+              </v-list-item-content>
+              <v-list-item-icon class="mt-2">
+                <v-icon color="secondary">$mdiOpenInNew</v-icon>
+              </v-list-item-icon>
             </v-list-item>
           </v-list>
         </div>
         <div v-if="honors.news && honors.news.length !== 0" class="my-8">
-          <h3 class="title font-weight-light">{{ honors.news.title }}</h3>
-          <ul>
-            <li
-              v-for="item in honors.news.payload"
-              :key="item.title"
-              class="fancyListItem"
-            >
-              <PrettyDate :value="item.date" />:
-              <DynamicText
-                v-if="item.title"
-                :html="item.title"
-                class="font-weight-light"
+          <h3 class="font-weight-light text-capitalize">
+            {{ honors.news.title }}
+          </h3>
+          <v-list dense>
+            <v-list-item v-for="item in honors.news.payload" :key="item.title">
+              <v-list-item-avatar
+                size="12"
+                color="primary"
+                class="align-self-center"
               />
-            </li>
-          </ul>
+              <v-list-item-content>
+                <v-list-item-title class="body-1">
+                  <PrettyDate :value="item.date" />:
+                  <dynamic-text
+                    v-if="item.tag_line || item.title"
+                    :html="item.tag_line || item.title"
+                    class="font-weight-light"
+                  />
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
         </div>
       </v-col>
       <v-col>
+        <v-btn v-if="(level & 10) === 10" nuxt text :to="dissertationRoute">
+          <span>{{ name }}'s Dissertation</span>
+          <v-icon color="primary" right>$thesisPage</v-icon>
+        </v-btn>
         <v-btn v-if="cv" text :href="cv" target="_blank" rel="noopener">
-          <v-icon color="blue-grey">$mdiFileAccount</v-icon>
+          <v-icon color="blue-grey" left>$pdf</v-icon>
           <span>{{ name }}'s CV</span>
-          <v-icon color="secondary">$mdiOpenInNew</v-icon>
+          <v-icon color="secondary" right>$mdiOpenInNew</v-icon>
         </v-btn>
         <v-btn
           v-if="website"
@@ -92,7 +102,7 @@
           target="_blank"
           rel="noopener"
         >
-          <v-icon color="primary" right>$mdiWeb</v-icon>
+          <v-icon color="primary" left>$mdiWeb</v-icon>
           <span>{{ name }}'s Website</span>
           <v-icon color="secondary" right>$mdiOpenInNew</v-icon>
         </v-btn>
@@ -103,11 +113,10 @@
 
 <script>
   import StoreImage from '@/components/StoreImage.vue';
-  import DynamicText from '@/components/DynamicText.vue';
   import PrettyDate from '@/components/lib/PrettyDate.vue';
 
   export default {
-    components: { StoreImage, DynamicText, PrettyDate },
+    components: { StoreImage, PrettyDate },
     props: { id: { type: String, required: true } },
     data() {
       return {
@@ -131,6 +140,9 @@
       };
     },
     computed: {
+      dissertationRoute() {
+        return '/theses/' + (this.first + '_' + this.last + '/').toLowerCase();
+      },
       byline() {
         let s = '';
         if ((this.level & 9) === 9) {

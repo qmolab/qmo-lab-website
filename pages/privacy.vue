@@ -1,7 +1,7 @@
 <template>
   <div class="privacyPolicyPage">
     <v-sheet class="mt-8 pa-4">
-      <h2 class="ta-center mb-8 headline">Privacy Policy</h2>
+      <h2 class="text-center mb-8 text-h5">Privacy Policy</h2>
       <p class="mt-4">
         Protecting your private information is our priority. This Statement of
         Privacy applies to qmolab.ucr.edu and The Quantum Materials
@@ -176,7 +176,7 @@
       </p>
       <p class="mt-4">Effective as of May 19, 2020</p>
     </v-sheet>
-    <h2 class="mt-8 headline">Relevant Links:</h2>
+    <h2 class="mt-8 text-h5">Relevant Links:</h2>
     <v-btn
       text
       href="https://www.ucr.edu/privacy.html"
@@ -192,6 +192,10 @@
 <script>
   import headAndTitle from '@/assets/js/headAndTitle';
   export default {
-    ...headAndTitle('Privacy Policy', `QMO Lab @ UCR Privacy Policy`),
+    ...headAndTitle(
+      'Privacy Policy',
+      'privacy/',
+      `QMO Lab @ UCR Privacy Policy`
+    ),
   };
 </script>

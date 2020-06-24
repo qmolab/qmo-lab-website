@@ -6,7 +6,7 @@
       :images="currentImages"
     />
     <div v-for="(gallery, k) in galleryImages" :key="k" class="mt-4">
-      <h2 class="px-6 headline">{{ gallery.title }}</h2>
+      <h2 class="px-6 text-h5">{{ gallery.title }}</h2>
       <waterfall
         :id="`waterfall-${k}`"
         :key="`waterfall-${k}`"
@@ -17,7 +17,6 @@
       >
         <GalleryImage
           :src="item.thumbnail"
-          :webp="item.webp"
           :alt="item.title"
           :title="item.title"
           @click="click(index, gallery.images)"

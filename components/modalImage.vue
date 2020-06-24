@@ -1,59 +1,49 @@
 <template>
-  <v-dialog
-    :value="dialog"
-    overlay-opacity="1"
-    overlay-color="primary"
-    fullscreen
-  >
-    <div class="modalContainer">
-      <div class="pa-4">
-        <v-carousel
-          :id="`modal-carousel`"
-          v-model="modelValue"
-          hide-delimiters
-          show-arrows
-          continuous
-          height="80vh"
-        >
-          <v-carousel-item
-            v-for="(slide, i) in images"
-            :id="`modal-carousel-item-${i}`"
-            :key="slide.href"
-            :src="slide.href"
-            :srcset="slide.webp"
-            :lazy-src="slide.thumbnail.src"
+  <v-dialog v-model="dialog" fullscreen>
+    <div class="modalContainer fill-vw fill-vh black--80 no-overflow">
+      <v-row class="pa-4" no-gutters>
+        <v-col class="d-flex align-center justify-center modalImage">
+          <v-img
+            v-if="images[modelValue]"
+            :src="images[modelValue].href"
+            :lazy-src="images[modelValue].thumbnail.src"
             contain
+            max-width="75vw"
+            max-height="75vh"
+            class="flex-grow-0"
           />
-        </v-carousel>
-        <v-slide-group
-          v-if="images.length > 0"
-          :key="images[0].thumbnail.src"
-          v-model="modelValue"
-          class="hidden-md-and-down pt-4 vh15"
-          show-arrows
-          center-active
-          mandatory
-        >
-          <v-slide-item
-            v-for="(slide, i) in images"
-            :id="`modal-carousel-bsi-${i}`"
-            :key="`modal-carousel-bsi-${i}`"
-            v-slot:default="{ active, toggle }"
-            class="mx-2"
+        </v-col>
+        <v-col cols="12">
+          <v-slide-group
+            v-if="images.length > 0"
+            :key="images[0].thumbnail.src"
+            v-model="modelValue"
+            class="hidden-md-and-down pt-4 vh15"
+            show-arrows
+            center-active
+            mandatory
           >
-            <v-img
-              max-height="13.5vh"
-              max-width="24vh"
-              :class="{ dimDown: active, pointer: !active }"
-              :src="slide.thumbnail.src"
-              :srcset="slide.webp"
-              @click="toggle"
-            />
-          </v-slide-item>
-        </v-slide-group>
-      </div>
-      <v-btn color="red" class="abs closeButton" fab @click="dialog = false">
-        <v-icon x-large>$mdiClose</v-icon>
+            <v-slide-item
+              v-for="(slide, i) in images"
+              :id="`modal-carousel-bsi-${i}`"
+              :key="`modal-carousel-bsi-${i}`"
+              v-slot:default="{ active, toggle }"
+              class="mx-2 justify-self-center"
+            >
+              <v-img
+                max-height="13.5vh"
+                max-width="24vh"
+                :class="{ dimmer: active, link: !active }"
+                :src="slide.thumbnail.src"
+                :srcset="slide.thumbnail.srcSet"
+                @click="toggle"
+              />
+            </v-slide-item>
+          </v-slide-group>
+        </v-col>
+      </v-row>
+      <v-btn color="red" class="abs t0 r0 ma-4" fab @click="dialog = false">
+        <v-icon x-large>$close</v-icon>
       </v-btn>
     </div>
   </v-dialog>
@@ -61,7 +51,6 @@
 
 <script>
   export default {
-    name: 'ModalImage',
     components: {},
     model: {
       prop: 'value',
@@ -92,27 +81,11 @@
   };
 </script>
 
-<style lang="scss">
-  .modalContainer {
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    background-color: rgba($black, 0.9);
-    .closeButton {
-      top: 16px;
-      right: 16px;
-    }
-    .v-slide-group__content {
-      justify-content: center;
-    }
+<style lang="scss" scoped>
+  .modalImage {
+    height: 78vh;
   }
   .vh15 {
     height: 15vh !important;
-  }
-  .pointer {
-    cursor: pointer !important;
-  }
-  .dimDown {
-    opacity: 0.3 !important;
   }
 </style>

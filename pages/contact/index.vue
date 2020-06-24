@@ -28,6 +28,6 @@
         ],
       };
     },
-    ...headAndTitle('Contact', `Contact the QMO Lab @ UCR`),
+    ...headAndTitle('Contact', 'contact/', `Contact the QMO Lab @ UCR`),
   };
 </script>

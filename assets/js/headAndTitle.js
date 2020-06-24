@@ -1,5 +1,6 @@
 export default function setHeadAndTitle(
   title,
+  path = '',
   description,
   metaTitle = undefined,
   tags = ''
@@ -17,10 +18,11 @@ export default function setHeadAndTitle(
             name: 'description',
             content: description,
           },
+        ],
+        link: [
           {
-            hid: 'keywords',
-            name: 'keywords',
-            content: `${title}, QMO Lab UCR ${tags}`,
+            rel: 'canonical',
+            href: process.env.baseUrl + path,
           },
         ],
       };

@@ -2,65 +2,110 @@
   <div class="thesisPage">
     <v-row class="mt-8" dense>
       <v-col cols="12">
-        <h2 class="headline">{{ title }}</h2>
+        <h2 class="text-h5"><dynamic-text :html="payload.title" /></h2>
       </v-col>
       <v-col cols="12">
         <v-avatar size="75">
           <StoreImage
-            width="75"
-            height="75"
+            width="82"
+            height="82"
             sub-category="members"
-            :item-id="name"
+            :item-id="payload.img"
           />
         </v-avatar>
-        <span class="title font-weight-light pl-2">
-          <v-btn large nuxt text :to="`/members/${name}/`">
+        <span class="font-weight-light pl-2">
+          <v-btn large nuxt text :to="`/members/#${payload.img}`">
             <span>By {{ fullName }}</span>
           </v-btn>
         </span>
       </v-col>
       <v-col cols="12" class="my-8">
-        <h3 class="ta-center title">Abstract</h3>
-        <DynamicText class="font-weight-light" :html="summary" />
+        <h3 class="text-center text-h5">Abstract</h3>
+        <dynamic-text
+          class="body-1 font-weight-light"
+          :html="payload.summary"
+        />
+      </v-col>
+      <v-col cols="12">
+        <v-btn text :href="dissertationURL">
+          <v-icon color="red">$pdf</v-icon>
+          Download as PDF
+          <v-icon right>$mdiDownload</v-icon>
+        </v-btn>
       </v-col>
     </v-row>
-    <PdfViewer
-      :url="dissertationURL"
-      :title="`Doctoral Dissertation of ${fullName}`"
-      :author="name"
-      :bookmarks="bookmarks[name]"
-    />
+    <!--<client-only placeholder="Loading PDF...">
+      <PdfViewer
+        v-if="prevPage"
+        :url="dissertationURL"
+        :title="`Doctoral Dissertation of ${fullName}`"
+        :author="payload.img"
+        :bookmarks="bookmarks[payload.img]"
+      />
+    </client-only>-->
   </div>
 </template>
 
 <script>
   import StoreImage from '@/components/StoreImage.vue';
-  import DynamicText from '@/components/DynamicText.vue';
-  import PdfViewer from '@/components/PdfViewer.vue';
+  // import PdfViewer from '@/components/PdfViewer.vue';
   export default {
-    components: { StoreImage, DynamicText, PdfViewer },
-    async asyncData({ $axios, payload, params, $payloadURL, route }) {
-      if (payload)
-        return {
-          title: payload.title,
-          summary: payload.summary,
-          name: payload.img,
-        };
-      else if (process.static && process.client && $payloadURL)
-        return await $axios.$get($payloadURL(route));
-      else {
-        const item = await $axios.$get('/theses/routes/route/', {
-          params: { author: params.id },
-        });
-        return {
-          title: item.title,
-          summary: item.summary,
-          name: item.img,
-        };
-      }
+    components: { StoreImage },
+    async asyncData({ $axios, payload, params }) {
+      if (payload) return { payload };
+      const item = await $axios.$get('/theses/routes/route/', {
+        params: { author: params.id },
+      });
+      return { payload: item };
     },
     data: () => ({
+      prevPage: undefined,
       bookmarks: {
+        trevor: {
+          startPage: 16,
+          frontMatter: {
+            Acknowledgement: 4,
+            Dedication: 7,
+            Abstract: 8,
+            'Table of Contents': 10,
+            'List of Figures': 13,
+          },
+          chapters: [
+            {
+              title: 'Motivation and Background ',
+              page: 16,
+            },
+            {
+              title: `Methodology and Metrology`,
+              page: 30,
+            },
+            {
+              title: 'Data Handling, Analysis, and Visualization',
+              page: 58,
+            },
+            {
+              title: `The Microscopic Scale`,
+              page: 87,
+            },
+            {
+              title: 'The Mesoscopic Scale',
+              page: 122,
+            },
+            {
+              title: 'The Statistical Scale',
+              page: 152,
+            },
+            {
+              title: 'Conclusion',
+              page: 175,
+            },
+          ],
+          endMatter: {
+            References: 181,
+            'Appendix 1: Sample Information': 191,
+            'Appendix 2: Calculations': 198,
+          },
+        },
         max: {
           startPage: 13,
           frontMatter: {
@@ -203,7 +248,7 @@
         );
       },
       dissertationURL() {
-        return `${process.env.ROUTER_BASE}assets/theses/${this.fullName.replace(
+        return `${process.env.baseUrl}/assets/theses/${this.fullName.replace(
           / /g,
           '_'
         )}/Doctoral_Dissertation.pdf`;
@@ -215,11 +260,18 @@
     head() {
       return {
         title: `Dissertation: ${this.fullName}`,
+        base: { href: '/' },
         meta: [
           {
             hid: 'description',
             name: 'description',
             content: `The doctoral dissertation of ${this.fullName}.`,
+          },
+        ],
+        link: [
+          {
+            rel: 'canonical',
+            href: process.env.baseUrl + this.$route.path,
           },
         ],
       };

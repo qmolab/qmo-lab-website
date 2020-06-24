@@ -1,82 +1,84 @@
 <template>
-  <div class="researchPage d-flex justify-center">
-    <v-row style="max-width: 1650px;">
-      <v-col
-        v-for="(item, i) in items"
-        :key="i"
-        cols="12"
-        md="6"
-        lg="4"
-        xl="3"
-        class="narrowCard mx-auto"
-      >
-        <v-card
-          :class="{
-            'pt-3 stretchCard': true,
-            'pb-12': item.subtitle,
-            'pb-3': !item.subtitle,
-          }"
-        >
-          <StoreImage
-            class="aspect-667 px-3"
-            sub-category="research"
-            :item-id="item.img"
-            :aspect-ratio="3 / 2"
-          />
-          <v-card-title class="pt-1">
-            <DynamicText :html="item.title.replace(/_/g, ' ')" />
-          </v-card-title>
-          <v-card-text>
-            <DynamicText :html="item.description" />
-          </v-card-text>
-          <v-card-actions v-if="item.subtitle" class="actions">
-            <v-spacer />
-            <!--<v-btn nuxt text :to="`/research/${item.title}/`">
-              <span>Read more</span>
-              <v-icon right color="primary">$mdiPageNext</v-icon>
-            </v-btn>-->
-            <v-dialog v-model="item.dialog" fullscreen>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn text small v-bind="attrs" v-on="on">
-                  <span>Read more</span>
-                  <v-icon right color="primary">$mdiPageNext</v-icon>
-                </v-btn>
-              </template>
-              <ResearchCard
-                :id="item.title"
-                :close="() => (item.dialog = false)"
+  <div class="researchPage">
+    <h2 class="text-h5 ml-1 mt-8">Featured Research Topics</h2>
+    <div class="d-flex justify-center">
+      <v-row class="researchContainer">
+        <v-col v-for="(item, i) in researchLisMain" :key="i" cols="12" lg="6">
+          <v-sheet rounded="lg" class="no-overflow">
+            <v-list-item class="px-2" nuxt :to="`/research/${item.title}/`">
+              <v-list-item-content class="pl-2 align-self-start">
+                <h3
+                  class="v-list-item__title text-h6 font-weight-thin mb-1 unsetWhiteSpace text-capitalize"
+                >
+                  <dynamic-text :html="item.title.replace(/_/g, ' ')" />
+                </h3>
+                <v-list-item-subtitle class="subtitle-1 unsetWhiteSpace">
+                  <dynamic-text :html="item.description" />
+                </v-list-item-subtitle>
+              </v-list-item-content>
+              <v-list-item-avatar tile size="120">
+                <StoreImage
+                  sub-category="research"
+                  :item-id="item.img"
+                  width="125"
+                  height="125"
+                />
+              </v-list-item-avatar>
+            </v-list-item>
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </div>
+    <h2 class="text-h5 mb-4 ml-1 mt-8">Additional Research Topics</h2>
+    <v-row>
+      <v-col v-for="(item, i) in researchListAux" :key="i" cols="12" lg="6">
+        <v-sheet rounded="lg" class="no-overflow">
+          <v-list-item class="px-2" nuxt :to="`/research/${item.title}/`">
+            <v-list-item-content class="pl-2 align-self-start">
+              <h3
+                class="v-list-item__title text-capitalize font-weight-thin text-h6 unsetWhiteSpace"
+              >
+                <dynamic-text :html="item.title.replace(/_/g, ' ')" />
+              </h3>
+              <v-list-item-subtitle class="subtitle-1 unsetWhiteSpace">
+                <dynamic-text :html="item.description" />
+              </v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-avatar tile size="120">
+              <StoreImage
+                sub-category="research"
+                :item-id="item.img"
+                width="125"
+                height="125"
+                style="height: inherit;"
               />
-            </v-dialog>
-          </v-card-actions>
-        </v-card>
+            </v-list-item-avatar>
+          </v-list-item>
+        </v-sheet>
       </v-col>
-      <v-col
-        v-for="i in [10000, 10001, 10002]"
-        :key="i"
-        cols="12"
-        sm="6"
-        lg="4"
-        xl="3"
-        class="narrowCard mx-auto"
-      />
     </v-row>
   </div>
 </template>
 
 <script>
   import StoreImage from '@/components/StoreImage.vue';
-  import DynamicText from '@/components/DynamicText.vue';
-  import ResearchCard from '@/components/ResearchCard.vue';
   import headAndTitle from '@/assets/js/headAndTitle';
 
   export default {
-    components: { StoreImage, DynamicText, ResearchCard },
-    async asyncData({ $axios, $payloadURL, route }) {
-      if (process.static && process.client && $payloadURL)
-        return await $axios.$get($payloadURL(route));
-      const items = await $axios.$get('/research/cards/');
-      return { items };
+    components: { StoreImage },
+    async asyncData({ $axios }) {
+      const researchList = await $axios.$get('/research/cards/');
+      return {
+        researchLisMain: researchList.main,
+        researchListAux: researchList.aux,
+      };
     },
-    ...headAndTitle('Research', `QMO Lab @ UCR Research Page.`),
+    ...headAndTitle('Research', 'research/', `QMO Lab @ UCR Research Page.`),
   };
 </script>
+
+<style lang="scss" scoped>
+  .researchContainer {
+    max-width: 1650px;
+  }
+</style>

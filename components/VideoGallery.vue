@@ -2,7 +2,10 @@
   <div class="px-3 pb-6 hidden-xs-only">
     <div>
       <v-expand-transition>
-        <div v-if="currentVideoID !== ''" class="videoPlayerContainer">
+        <div
+          v-if="currentVideoID !== ''"
+          class="videoPlayerContainer mx-auto no-overflow rounded"
+        >
           <YoutubeEmbed :video-id="currentVideoID" />
         </div>
       </v-expand-transition>
@@ -25,14 +28,16 @@
       >
         <BaseImage
           :src="{ src: `https://img.youtube.com/vi/${video.src}/default.jpg` }"
-          :srcset="`https://img.youtube.com/vi_webp/${video.src}/default.webp`"
           :alt="video.title"
           :title="video.title"
-          class="videoGalleryVideoCard hide-overflow"
+          class="videoGalleryVideoCard no-overflow"
           :aspect-ratio="16 / 9"
-          :disabled="video.src === currentVideoID"
           :link="video.src !== currentVideoID"
           :no-tooltip="video.title === ''"
+          :img-class="{
+            'no-overflow rounded': video.src === currentVideoID,
+            link: video.src !== currentVideoID,
+          }"
           @click="currentVideoID = video.src"
         >
           <span class="v-icon notranslate mdiYoutube v-icon--svg theme--dark">

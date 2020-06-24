@@ -9,32 +9,34 @@
     max-width="290px"
     min-width="290px"
   >
-    <template v-slot:activator="{ on }">
+    <template v-slot:activator="{ on, attrs }">
       <v-text-field
         :value="dateText"
         :name="name"
         :label="label"
-        prepend-icon="$mdiCalendar"
+        :prepend-icon="mdiCalendar"
         readonly
         outlined
-        :on="on"
+        v-bind="attrs"
+        v-on="on"
       />
     </template>
     <v-date-picker v-model="date" :range="range" reactive no-title scrollable>
       <v-spacer />
       <v-btn right color="error" text @click="menu = false">
         <span>Cancel</span>
-        <v-icon right>$mdiCancel</v-icon>
+        <v-icon right>$cancel</v-icon>
       </v-btn>
       <v-btn right color="success" text @click="save">
         <span>OK</span>
-        <v-icon right>$mdiCheckOutline</v-icon>
+        <v-icon right>$success</v-icon>
       </v-btn>
     </v-date-picker>
   </v-menu>
 </template>
 
 <script>
+  import { mdiCalendar } from '@mdi/js';
   export default {
     model: {
       prop: 'value',
@@ -50,6 +52,7 @@
       return {
         menu: false,
         date: this.getDate(),
+        mdiCalendar,
       };
     },
     computed: {

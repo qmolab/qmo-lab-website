@@ -13,7 +13,7 @@
             :loading="loading"
             @click="toPage(currentPage - 1)"
           >
-            <v-icon>$mdiChevronLeft</v-icon>
+            <v-icon>$prev</v-icon>
             <span>Prev</span>
           </v-btn>
           <span v-if="bookmarks.startPage" class="align-self-center">
@@ -38,7 +38,7 @@
             @click="toPage(currentPage + 1)"
           >
             <span>Next</span>
-            <v-icon right>$mdiChevronRight</v-icon>
+            <v-icon right>$next</v-icon>
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
@@ -48,7 +48,7 @@
         v-if="navigation"
         permanent
         width="auto"
-        style="overflow-y: auto;"
+        class="pdfNav"
       >
         <v-list-item-group v-model="currentBookmark" mandatory>
           <div v-for="(group, j) in navigation" :key="j">
@@ -70,33 +70,40 @@
         </v-list-item-group>
       </v-navigation-drawer>
     </v-col>
-    <v-col cols="12" md="9" lg="8">
-      <client-only>
+    <v-col cols="12" md="9" lg="8" class="rel">
+      <!--<div v-if="mounted">
         <pdf
-          style="opacity: 0.6;"
+          class="dim"
           :src="url"
           :page="currentPage"
           @num-pages="pageCount = $event"
           @page-loaded="load"
         />
-      </client-only>
+      </div>-->
+      <v-progress-circular
+        v-if="loading"
+        size="80"
+        color="primary"
+        indeterminate
+        class="centerItem abs"
+      />
     </v-col>
     <v-col cols="12">
       <v-toolbar color="#1f1f1f" flat>
         <v-toolbar-items>
           <v-btn text :href="url">
-            <v-icon color="red">$mdiFilePdf</v-icon>
+            <v-icon color="red">$pdf</v-icon>
             Download as PDF
             <v-icon right>$mdiDownload</v-icon>
           </v-btn>
         </v-toolbar-items>
         <v-spacer />
         <v-toolbar-items v-if="author">
-          <v-btn nuxt text :to="`/members/${author.toLowerCase()}/`">
+          <v-btn nuxt text :to="`/members/#${author.toLowerCase()}`">
             <v-avatar size="50" class="align-self-center mr-1">
               <StoreImage
-                width="50"
-                height="50"
+                width="57"
+                height="57"
                 sub-category="members"
                 :item-id="author"
               />
@@ -131,6 +138,7 @@
     mdiNumeric8Box,
     mdiNumeric9Box,
   } from '@mdi/js';
+  // import pdf from 'vue-pdf';
   import StoreImage from '@/components/StoreImage.vue';
   function convertToRoman(num) {
     const roman = {
@@ -161,9 +169,10 @@
     data: () => ({
       currentPage: 1,
       pageCount: 0,
-      loading: false,
+      loading: true,
+      mounted: false,
       currentBookmark: 0,
-      numericIcons: {
+      numericIcons: [
         mdiNumeric1Box,
         mdiNumeric2Box,
         mdiNumeric3Box,
@@ -173,7 +182,7 @@
         mdiNumeric7Box,
         mdiNumeric8Box,
         mdiNumeric9Box,
-      },
+      ],
     }),
     computed: {
       navigation() {
@@ -189,6 +198,15 @@
           this.bookmarks.endMatter,
         ];
       },
+    },
+    created() {
+      this.$router.onError(() => {
+        // eslint-disable-next-line no-console
+        console.log('asdf');
+      });
+    },
+    mounted() {
+      setTimeout(() => (this.mounted = true), 1000);
     },
     methods: {
       toPage(page) {
@@ -219,3 +237,9 @@
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  .pdfNav {
+    overflow-y: auto;
+  }
+</style>
