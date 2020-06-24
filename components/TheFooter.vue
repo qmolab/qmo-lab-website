@@ -9,7 +9,6 @@
               :src="ucrLogo.src"
               :lazy-src="ucrLogo.placeholder"
               alt="University of California, Riverside"
-              :aspect-ratio="204 / 43.49"
               max-width="432"
             />
           </a>
