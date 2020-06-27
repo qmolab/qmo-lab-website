@@ -78,6 +78,9 @@
         },
       },
     },
+    mounted() {
+      this.$forceUpdate();
+    },
   };
 </script>
 

@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "..\\qmolabAdmin"
+		},
+		{
+			"path": "..\\qmolabAPI"
 		}
 	],
 	"settings": {}

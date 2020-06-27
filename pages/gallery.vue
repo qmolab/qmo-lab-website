@@ -140,6 +140,10 @@
           },
         ],
         videos: [
+          {
+            src: 'sOrFEvEbZMQ',
+            title: `Optimally spaced pairs of off-center absorption peaks can maximize photosynthetic output in the face of external noise.`,
+          },
           { src: 'iOqmUeZVA0Q', title: 'The electron-hole liquid in MoTe2' },
           {
             src: 'aVY4od4mfnA',

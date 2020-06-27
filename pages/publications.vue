@@ -192,6 +192,11 @@
             img: require('~/assets/images/publications/intervalley_exciton.png?resize'),
             alt: 'Optical Recombination of Intervalley Excitons',
           },
+          bio_design: {
+            img: require('~/assets/images/research/writeups/bio_design.png?resize'),
+            alt:
+              'The LH2 light harvesting complex of a terrestrial green plant.',
+          },
         },
       };
     },
