@@ -33,7 +33,7 @@
         <v-icon color="secondary">$mdiOpenInNew</v-icon>
       </v-list-item-icon>
     </v-list-item>
-    <v-expansion-panels multiple>
+    <v-expansion-panels v-model="panelValue" multiple>
       <v-expansion-panel v-for="(panel, i) in panels" :key="i">
         <v-expansion-panel-header>
           <span>
@@ -72,12 +72,13 @@
     mdiVectorLink,
     mdiNotebookOutline,
   } from '@mdi/js';
-  import headAndTitle from '@/assets/js/headAndTitle';
   export default {
     name: 'LinksView',
     async asyncData({ $axios }) {
       const panels = await $axios.$get('/links/cards/');
-      return { panels };
+      const values = [];
+      for (let i = 0; i < Object.keys(panels).length; ++i) values.push(i);
+      return { panels, panelValue: values };
     },
     data() {
       return {
@@ -90,10 +91,27 @@
         },
       };
     },
-    ...headAndTitle(
-      'Links and Resources',
-      'links/',
-      `QMO Lab @ UCR Links and Resources Page.`
-    ),
+    mounted() {
+      this.$store.commit('pageTitle', 'Links and Resources');
+      this.panelValue = [];
+    },
+    head() {
+      return {
+        title: 'Links and Resources',
+        meta: [
+          {
+            hid: 'description',
+            name: 'description',
+            content: `QMO Lab @ UCR Links and Resources Page.`,
+          },
+        ],
+        link: [
+          {
+            rel: 'canonical',
+            href: process.env.baseUrl + 'links/',
+          },
+        ],
+      };
+    },
   };
 </script>
