@@ -1,8 +1,9 @@
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <div class="thesisPage">
     <v-row class="mt-8" dense>
       <v-col cols="12">
-        <h2 class="text-h5"><dynamic-text :html="payload.title" /></h2>
+        <h2 class="text-h5" v-html="payload.title"></h2>
       </v-col>
       <v-col cols="12">
         <v-avatar size="75">
@@ -14,17 +15,20 @@
           />
         </v-avatar>
         <span class="font-weight-light pl-2">
-          <v-btn large nuxt text :to="`/members/#${payload.img}`">
-            <span>By {{ fullName }}</span>
-          </v-btn>
+          <nuxt-link
+            v-slot="{ navigate }"
+            :to="`/members/#${payload.img}`"
+            no-prefetch
+          >
+            <v-btn large nuxt text @click="navigate">
+              <span>By {{ fullName }}</span>
+            </v-btn>
+          </nuxt-link>
         </span>
       </v-col>
       <v-col cols="12" class="my-8">
         <h3 class="text-center text-h5">Abstract</h3>
-        <dynamic-text
-          class="body-1 font-weight-light"
-          :html="payload.summary"
-        />
+        <div class="body-1 font-weight-light" v-html="payload.summary" />
       </v-col>
       <v-col cols="12">
         <v-btn text :href="dissertationURL">
@@ -51,12 +55,11 @@
   // import PdfViewer from '@/components/PdfViewer.vue';
   export default {
     components: { StoreImage },
-    async asyncData({ $axios, payload, params }) {
-      if (payload) return { payload };
-      const item = await $axios.$get('/theses/routes/route/', {
+    async asyncData({ $axios, params }) {
+      const payload = await $axios.$get('/theses/routes/route/', {
         params: { author: params.id },
       });
-      return { payload: item };
+      return { payload };
     },
     data: () => ({
       prevPage: undefined,

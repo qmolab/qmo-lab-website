@@ -11,13 +11,13 @@
       </v-expand-transition>
     </div>
     <v-row>
-      <svg
+      <!--<svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         class="d-none"
       >
         <path id="ytIconPath" :d="mdiYoutube" />
-      </svg>
+      </svg>-->
       <v-col>
         <v-slide-group show-arrows center-active>
           <v-slide-item v-for="(video, i) in videos" :key="i">
@@ -39,7 +39,7 @@
               style="width: 200px;"
               @click="currentVideoID = video.src"
             >
-              <span
+              <!--<span
                 class="v-icon notranslate mdiYoutube v-icon--svg theme--dark"
               >
                 <svg
@@ -52,7 +52,7 @@
                 >
                   <use href="#ytIconPath" />
                 </svg>
-              </span>
+              </span>-->
             </BaseImage>
           </v-slide-item>
         </v-slide-group>

@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable vue/no-v-html -->
-  <div class="d-inline" v-html="checked" />
+  <div v-if="html" class="d-inline" v-html="checked" />
 </template>
 
 <script>

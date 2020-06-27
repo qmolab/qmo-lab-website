@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <div class="thesesPage">
     <v-row>
       <v-col v-for="(item, i) in memberTheses" :key="i" cols="12" md="6">
@@ -21,9 +22,7 @@
               >
             </v-list-item-content>
           </v-list-item>
-          <v-card-text class="pt-2 body-1">
-            <dynamic-text :html="item.title" />
-          </v-card-text>
+          <v-card-text class="pt-2 body-1" v-html="item.title" />
           <v-card-actions class="actions">
             <v-spacer />
             <v-btn

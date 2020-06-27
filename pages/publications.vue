@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <div class="publicationsPage">
     <h2 class="mt-4 text-h5 ml-1">Featured Publications</h2>
     <v-row>
@@ -19,12 +20,12 @@
                   </div>
                   <h3
                     class="v-list-item__title text-h6 font-weight-thin mb-1 unsetWhiteSpace"
-                  >
-                    <dynamic-text :html="item.title" />
-                  </h3>
-                  <v-list-item-subtitle class="subtitle-1 unsetWhiteSpace">
-                    <dynamic-text :html="item.reference" />
-                  </v-list-item-subtitle>
+                    v-html="item.title"
+                  />
+                  <v-list-item-subtitle
+                    class="subtitle-1 unsetWhiteSpace"
+                    v-html="item.reference"
+                  />
                 </v-list-item-content>
 
                 <v-list-item-avatar
@@ -88,12 +89,9 @@
                 </div>
                 <h3
                   class="v-list-item__title font-weight-regular mb-1 text--primary unsetWhiteSpace"
-                >
-                  <dynamic-text :html="item.title" />
-                </h3>
-                <v-list-item-subtitle>
-                  <dynamic-text :html="item.reference" />
-                </v-list-item-subtitle>
+                  v-html="item.title"
+                />
+                <v-list-item-subtitle v-html="item.reference" />
               </v-list-item-content>
             </v-list-item>
             <div v-if="item.href" class="actions">

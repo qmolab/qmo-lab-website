@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <v-card class="mx-auto mb-5 pa-2 announcementCard" shaped>
     <div>
       <div class="float-right">
@@ -40,7 +41,7 @@
                 <PrettyDate :value="item.date" />
                 <span>
                   <span>: </span>
-                  <dynamic-text :html="item.title" />
+                  <span v-html="item.title" />
                 </span>
               </span>
             </v-list-item-title>

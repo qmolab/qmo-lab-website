@@ -47,15 +47,11 @@
     },
     methods: {
       setup() {
-        return new Promise((resolve) => {
-          if (this.videoId.length !== 0) {
-            const y = 'https://img.youtube.com/vi';
-            this.thumbSource = y + '/' + this.videoId + '/default.jpg';
-            this.videoSource = `https://www.youtube-nocookie.com/embed/${this.videoId}?rel=0&showinfo=0`;
-            resolve(true);
-          }
-          resolve(false);
-        });
+        if (this.videoId.length !== 0) {
+          const y = 'https://img.youtube.com/vi';
+          this.thumbSource = y + '/' + this.videoId + '/default.jpg';
+          this.videoSource = `https://www.youtube-nocookie.com/embed/${this.videoId}?rel=0&showinfo=0`;
+        }
       },
     },
   };

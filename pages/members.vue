@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <div class="membersPage mt-8">
     <v-card
       class="mx-auto stretchCard"
@@ -52,12 +53,14 @@
       </v-row>
       <v-card-actions>
         <v-spacer />
-        <v-btn nuxt text to="/contact/#tag=Nathan">
-          <span>Contact Nathan</span>
-          <v-icon color="primary" right>
-            $mdiMessageArrowRight
-          </v-icon>
-        </v-btn>
+        <nuxt-link v-slot="{ navigate }" to="/contact/#tag=Nathan" no-prefetch>
+          <v-btn nuxt text @click="navigate">
+            <span>Contact Nathan</span>
+            <v-icon color="primary" right>
+              $mdiMessageArrowRight
+            </v-icon>
+          </v-btn>
+        </nuxt-link>
         <v-btn
           text
           to="/assets/curriculum_vitae/nathan_2020_short.pdf"
@@ -157,7 +160,7 @@
             <v-card-text class="pa-0 px-4 mt-4 body-1">
               <div class="white--text">Research:</div>
               <span class="font-weight-light">
-                <dynamic-text :html="member.focus" />
+                <span v-html="member.focus" />
               </span>
             </v-card-text>
             <div class="actions d-flex align-end pr-2">
@@ -184,12 +187,18 @@
                   <MemberCard :id="member.name" />
                   <v-card-actions>
                     <v-spacer />
-                    <v-btn nuxt text :to="`/contact/#tag=${member.name}`">
-                      <span>Contact {{ member.name }}</span>
-                      <v-icon color="primary" right>
-                        $mdiMessageArrowRight
-                      </v-icon>
-                    </v-btn>
+                    <nuxt-link
+                      v-slot="{ navigate }"
+                      :to="`/contact/#tag=${member.name}`"
+                      no-prefetch
+                    >
+                      <v-btn nuxt text @click="navigate">
+                        <span>Contact {{ member.name }}</span>
+                        <v-icon color="primary" right>
+                          $mdiMessageArrowRight
+                        </v-icon>
+                      </v-btn>
+                    </nuxt-link>
                     <v-btn text @click="member.dialog = false">
                       <span>Close Window</span>
                       <v-icon color="error" right>$close</v-icon>
@@ -267,9 +276,19 @@
       const { memberList, memberFilters } = await $axios.$get(
         '/members/cards/'
       );
+      const memberChips = store.state.localStorage.members.memberChips;
+      const memberFlags =
+        2 ** (memberChips - 1) +
+        8 * store.state.localStorage.members.currentFormerSwitch;
       return {
         chips: memberFilters,
-        memberList,
+        memberList: memberList.map((e) => ({
+          ...e,
+          hidden: !(
+            8 & (e.level ^ memberFlags) &&
+            (!memberChips || e.level & memberFlags)
+          ),
+        })),
       };
     },
     data() {
@@ -305,23 +324,19 @@
     },
     mounted() {
       this.$store.commit('pageTitle', `Members`);
-      this.memberList.forEach((e) => {
-        if (
-          8 & (e.level ^ this.memberFlags) &&
-          (!this.memberChips || e.level & this.memberFlags)
-        )
-          e.hidden = false;
-      });
-      this.busy = false;
     },
     methods: {
+      filterTest(e) {
+        return (
+          8 & (e.level ^ this.memberFlags) &&
+          (!this.memberChips || e.level & this.memberFlags)
+        );
+      },
       filterList() {
         this.busy = true;
         recursiveFilter(
           this.memberList,
-          (e) =>
-            8 & (e.level ^ this.memberFlags) &&
-            (!this.memberChips || e.level & this.memberFlags),
+          this.filterTest,
           () => (this.busy = false)
         );
       },

@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <v-fade-transition>
     <v-progress-circular
       v-if="loading"
@@ -49,8 +50,8 @@
               <v-list-item-content>
                 <v-list-item-title class="body-1">
                   <span v-if="item.title" class="font-weight-light">
-                    "<dynamic-text :html="item.title" />",
-                    <dynamic-text :html="item.reference" />
+                    "<span v-html="item.title" />",
+                    <span v-html="item.reference" />
                   </span>
                 </v-list-item-title>
               </v-list-item-content>

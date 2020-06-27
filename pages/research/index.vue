@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <div class="researchPage">
     <h2 class="text-h5 ml-1 mt-8">Featured Research Topics</h2>
     <div class="d-flex justify-center">
@@ -9,12 +10,12 @@
               <v-list-item-content class="pl-2 align-self-start">
                 <h3
                   class="v-list-item__title text-h6 font-weight-thin mb-1 unsetWhiteSpace text-capitalize"
-                >
-                  <dynamic-text :html="item.title.replace(/_/g, ' ')" />
-                </h3>
-                <v-list-item-subtitle class="subtitle-1 unsetWhiteSpace">
-                  <dynamic-text :html="item.description" />
-                </v-list-item-subtitle>
+                  v-html="item.title.replace(/_/g, ' ')"
+                />
+                <v-list-item-subtitle
+                  class="subtitle-1 unsetWhiteSpace"
+                  v-html="item.description"
+                />
               </v-list-item-content>
               <v-list-item-avatar tile size="120">
                 <StoreImage
@@ -37,12 +38,12 @@
             <v-list-item-content class="pl-2 align-self-start">
               <h3
                 class="v-list-item__title text-capitalize font-weight-thin text-h6 unsetWhiteSpace"
-              >
-                <dynamic-text :html="item.title.replace(/_/g, ' ')" />
-              </h3>
-              <v-list-item-subtitle class="subtitle-1 unsetWhiteSpace">
-                <dynamic-text :html="item.description" />
-              </v-list-item-subtitle>
+                v-html="item.title.replace(/_/g, ' ')"
+              />
+              <v-list-item-subtitle
+                class="subtitle-1 unsetWhiteSpace"
+                v-html="item.description"
+              />
             </v-list-item-content>
             <v-list-item-avatar tile size="120">
               <StoreImage
