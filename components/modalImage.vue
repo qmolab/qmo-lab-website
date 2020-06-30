@@ -3,10 +3,11 @@
     <div class="modalContainer fill-vw fill-vh black--80 no-overflow">
       <v-row class="pa-4" no-gutters>
         <v-col class="d-flex align-center justify-center modalImage">
-          <v-img
+          <QImg
             v-if="images[modelValue]"
-            :src="images[modelValue].href"
-            :lazy-src="images[modelValue].thumbnail.src"
+            cat="gallery"
+            :name="images[modelValue].name"
+            large
             contain
             max-width="75vw"
             max-height="75vh"
@@ -16,7 +17,6 @@
         <v-col cols="12">
           <v-slide-group
             v-if="images.length > 0"
-            :key="images[0].thumbnail.src"
             v-model="modelValue"
             class="hidden-md-and-down pt-4 vh15"
             show-arrows
@@ -30,12 +30,15 @@
               v-slot:default="{ active, toggle }"
               class="mx-2 justify-self-center"
             >
-              <v-img
+              <QImg
                 max-height="13.5vh"
                 max-width="24vh"
                 :class="{ dimmer: active, link: !active }"
-                :src="slide.thumbnail.src"
-                :srcset="slide.thumbnail.srcSet"
+                :name="slide.name"
+                :placeholder="slide.placeholder"
+                :alt="slide.alt"
+                :title="slide.title"
+                cat="gallery"
                 @click="toggle"
               />
             </v-slide-item>
@@ -50,8 +53,9 @@
 </template>
 
 <script>
+  import QImg from '@/components/lib/QImg.vue';
   export default {
-    components: {},
+    components: { QImg },
     model: {
       prop: 'value',
       event: 'changed',

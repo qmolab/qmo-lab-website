@@ -101,12 +101,7 @@
         <v-toolbar-items v-if="author">
           <v-btn nuxt text :to="`/members/#${author.toLowerCase()}`">
             <v-avatar size="50" class="align-self-center mr-1">
-              <StoreImage
-                width="57"
-                height="57"
-                sub-category="members"
-                :item-id="author"
-              />
+              <QImg width="57" height="57" cat="members" :name="author" />
             </v-avatar>
             <span class="align-self-center">About {{ author }}</span>
             <v-icon right color="primary">$mdiPageNext</v-icon>
@@ -139,7 +134,7 @@
     mdiNumeric9Box,
   } from '@mdi/js';
   // import pdf from 'vue-pdf';
-  import StoreImage from '@/components/StoreImage.vue';
+  import QImg from '@/components/lib/QImg.vue';
   function convertToRoman(num) {
     const roman = {
       x: 10,
@@ -159,7 +154,7 @@
     return s;
   }
   export default {
-    components: { StoreImage },
+    components: { QImg },
     props: {
       url: { type: [String, Object], default: '' },
       title: { type: String, default: '' },

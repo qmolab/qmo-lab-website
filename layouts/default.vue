@@ -119,10 +119,11 @@
             <v-carousel-item
               v-for="(slide, i) in heroSlides"
               :key="i"
-              :src="slide.src.src"
-              :lazy-src="slide.src.placeholder"
+              :src="imgPath + slide.name + ext"
+              :lazy-src="slide.placeholder"
               :alt="slide.alt"
               cover
+              @error="ext = '.jpg'"
             >
               <div class="d-flex align-end fill-h pa-4 justify-end">
                 <v-btn
@@ -197,11 +198,17 @@
     scrollToTop: true,
     components: { TheFooter },
     data() {
-      return { drawer: false, spinner: undefined, carouselModel: 0 };
+      return {
+        drawer: false,
+        spinner: undefined,
+        carouselModel: 0,
+        ext: '.webp',
+        imgPath: 'https://qmolab.ucr.edu/node/images/hero_carousel/',
+      };
     },
     computed: {
       heroSlides() {
-        return this.$store.state.images.heroSlides;
+        return this.$store.state.hero_images;
       },
       currentSlide() {
         return this.heroSlides[

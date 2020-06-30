@@ -2,7 +2,7 @@
   <!-- eslint-disable vue/no-v-html -->
   <div v-if="pageContent">
     <div v-for="(item, i) in paragraphs" :key="i">
-      <StoreImage
+      <QImg
         v-if="imageCategory && item.img"
         :class="{
           'my-1 text-center': true,
@@ -10,22 +10,24 @@
           'float-right ml-4': item.float === 'right',
           'mx-auto': !item.float,
         }"
-        :sub-category="imageCategory"
-        :item-id="item.img"
+        :cat="imageCategory"
+        :name="item.img"
+        :alt="item.alt"
         :width="item.width"
         :height="item.height"
+        :placeholder="item.placeholder"
         :max-width="item.maxWidth || '400px'"
         :style="`max-width: ${item.maxWidth || '400px'}`"
         :max-height="item.maxHeight"
         img-class="imgBorder"
         no-title
       >
-        <template v-slot:append="{ payload }">
+        <template v-slot:append>
           <div v-if="figures" class="caption mb-2">
-            Figure {{ figureNum(i) }}: {{ payload.title }}
+            Figure {{ figureNum(i) }}: {{ item.imgTitle }}
           </div>
         </template>
-      </StoreImage>
+      </QImg>
       <div
         v-if="item.content"
         class="body-1 text--secondary mb-2"
@@ -36,7 +38,7 @@
 </template>
 
 <script>
-  import StoreImage from '@/components/StoreImage.vue';
+  import QImg from '@/components/lib/QImg.vue';
   function convertText(text) {
     return text
       .replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />')
@@ -53,7 +55,7 @@
       .replace(/\n/g, '<br />');
   }
   export default {
-    components: { StoreImage },
+    components: { QImg },
     props: {
       pageContent: {
         type: String,

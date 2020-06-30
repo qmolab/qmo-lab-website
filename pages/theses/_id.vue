@@ -7,11 +7,12 @@
       </v-col>
       <v-col cols="12">
         <v-avatar size="75">
-          <StoreImage
+          <QImg
             width="82"
             height="82"
-            sub-category="members"
-            :item-id="payload.img"
+            cat="members"
+            :name="payload.img"
+            :placeholder="payload.placeholder"
           />
         </v-avatar>
         <span class="font-weight-light pl-2">
@@ -51,10 +52,10 @@
 </template>
 
 <script>
-  import StoreImage from '@/components/StoreImage.vue';
+  import QImg from '@/components/lib/QImg.vue';
   // import PdfViewer from '@/components/PdfViewer.vue';
   export default {
-    components: { StoreImage },
+    components: { QImg },
     async asyncData({ $axios, params }) {
       const payload = await $axios.$get('/theses/routes/route/', {
         params: { author: params.id },

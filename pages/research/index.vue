@@ -18,9 +18,12 @@
                 />
               </v-list-item-content>
               <v-list-item-avatar tile size="120">
-                <StoreImage
-                  sub-category="research"
-                  :item-id="item.img"
+                <QImg
+                  cat="research"
+                  :name="item.img"
+                  :placeholder="item.placeholder"
+                  :title="item.imgTitle"
+                  :alt="item.alt"
                   width="125"
                   height="125"
                 />
@@ -46,9 +49,12 @@
               />
             </v-list-item-content>
             <v-list-item-avatar tile size="120">
-              <StoreImage
-                sub-category="research"
-                :item-id="item.img"
+              <QImg
+                cat="research"
+                :name="item.img"
+                :placeholder="item.placeholder"
+                :title="item.imgTitle"
+                :alt="item.alt"
                 width="125"
                 height="125"
                 style="height: inherit;"
@@ -62,11 +68,11 @@
 </template>
 
 <script>
-  import StoreImage from '@/components/StoreImage.vue';
+  import QImg from '@/components/lib/QImg.vue';
   import headAndTitle from '@/assets/js/headAndTitle';
 
   export default {
-    components: { StoreImage },
+    components: { QImg },
     async asyncData({ $axios }) {
       const researchList = await $axios.$get('/research/cards/');
       return {

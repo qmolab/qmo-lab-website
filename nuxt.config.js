@@ -13,38 +13,10 @@ import {
 import { MY_ICONS } from './assets/js/icons';
 
 require('dotenv').config();
-// Doc: https://axios.nuxtjs.org/usage.html
-const modules = ['@nuxtjs/axios', 'nuxt-webfontloader'];
-const buildModules = [
-  'nuxt-polyfill',
-  'nuxt-vuex-localstorage',
-  // Doc: https://github.com/nuxt-community/dotenv-module
-  '@nuxtjs/dotenv',
-  // Doc: https://github.com/nuxt-community/eslint-module
-  '@nuxtjs/eslint-module',
-  // Doc: https://github.com/nuxt-community/stylelint-module
-  '@nuxtjs/stylelint-module',
-  // Doc: https://www.bazzite.com/docs/nuxt-optimized-images
-  '@bazzite/nuxt-optimized-images',
-  // Doc: https://github.com/nuxt-community/vuetify-module
-  '@nuxtjs/vuetify',
-  // Doc: https://www.npmjs.com/package/vue-social-sharing
-  'vue-social-sharing/nuxt',
-  // Doc https://github.com/nuxt-community/analytics-module#readme
-  '@nuxtjs/google-analytics',
-  // Doc: https://pwa.nuxtjs.org/setup.html
-  '@nuxtjs/pwa',
-  // Doc: https://github.com/nuxt-community/sitemap-module
-  '@nuxtjs/sitemap',
-  // Doc: https://github.com/robcresswell/nuxt-compress
-  'nuxt-compress',
-];
 let modern = false;
 let base = '/';
 let baseUrl = 'http://localhost:3000';
 if (process.env.NODE_ENV === 'production') {
-  // Doc: https://github.com/DreaMinder/nuxt-payload-extractor
-  // buildModules.push(['nuxt-payload-extractor', {}]);
   modern = 'client';
   base = process.env.ROUTER_BASE;
   baseUrl = process.env.SITE_BASE + process.env.ROUTER_BASE;
@@ -53,32 +25,42 @@ if (process.env.NODE_ENV === 'production') {
 const imageQuality = 0.7;
 
 export default {
-  vue: {
-    config: { performance: process.env.NODE_ENV !== 'production' },
-  },
-  /*
-   ** Nuxt mode property (one of spa or universal)
-   ** https://nuxtjs.org/api/configuration-mode/
-   */
   mode: 'universal',
-
-  /*
-   ** Nuxt modern property
-   ** https://nuxtjs.org/api/configuration-modern/
-   */
-  modern,
   target: 'static',
-  modules, // Nuxt.js modules (defined at top level)
+  modern,
 
-  /*
-   ** Nuxt.js dev-modules
-   */
-  buildModules,
-
-  /*
-   ** Plugins to load before mounting the App
-   */
+  modules: ['@nuxtjs/axios', 'nuxt-webfontloader'],
+  buildModules: [
+    'nuxt-polyfill',
+    'nuxt-vuex-localstorage',
+    // Doc: https://github.com/nuxt-community/dotenv-module
+    '@nuxtjs/dotenv',
+    // Doc: https://github.com/nuxt-community/eslint-module
+    '@nuxtjs/eslint-module',
+    // Doc: https://github.com/nuxt-community/stylelint-module
+    '@nuxtjs/stylelint-module',
+    // Doc: https://www.bazzite.com/docs/nuxt-optimized-images
+    '@bazzite/nuxt-optimized-images',
+    // Doc: https://github.com/nuxt-community/vuetify-module
+    '@nuxtjs/vuetify',
+    // Doc: https://www.npmjs.com/package/vue-social-sharing
+    'vue-social-sharing/nuxt',
+    // Doc https://github.com/nuxt-community/analytics-module#readme
+    '@nuxtjs/google-analytics',
+    // Doc: https://pwa.nuxtjs.org/setup.html
+    '@nuxtjs/pwa',
+    // Doc: https://github.com/nuxt-community/sitemap-module
+    '@nuxtjs/sitemap',
+    // Doc: https://github.com/robcresswell/nuxt-compress
+    'nuxt-compress',
+  ],
   plugins: [{ src: '~/plugins/dynamicText' }],
+
+  /*
+   ** Injects contents into process.env for client-side
+   ** https://nuxtjs.org/api/configuration-env
+   */
+  env: { baseUrl },
 
   /*
    ** Router.base is required if app is running in subfolder
@@ -88,10 +70,15 @@ export default {
   router: { base },
 
   /*
-   ** Injects contents into process.env for client-side
-   ** https://nuxtjs.org/api/configuration-env
+   ** @nuxtjs/axios module configuration
+   ** https://axios.nuxtjs.org/options.html
    */
-  env: { baseUrl },
+  axios: { baseURL: process.env.API_BASE },
+
+  /*
+   ** Nuxt - Google Analytics module
+   */
+  googleAnalytics: { id: process.env.GA_ID },
 
   /*
    ** Customize the progress-bar color
@@ -132,16 +119,10 @@ export default {
     titleTemplate: 'QMO Lab %s',
     title: '',
     meta: [
-      { name: 'HandheldFriendly', content: 'true' },
       {
         hid: 'description',
         name: 'description',
         content: `QMO Lab is a leader in optoelectronic investigations of novel quantum materials.`,
-      },
-      {
-        hid: 'keywords',
-        name: 'keywords',
-        content: `qmo lab, physics, quantum materials, condensed matter physics, nathan gabor, nathaniel gabor, gabor Lab, ucr physics, optoelectronics, ucr lab, graphene, nanotubes, physics`,
       },
     ],
     link: [
@@ -162,12 +143,6 @@ export default {
       },
     ],
   },
-
-  /*
-   ** @nuxtjs/axios module configuration
-   ** https://axios.nuxtjs.org/options.html
-   */
-  axios: { baseURL: process.env.API_BASE },
 
   /*
    ** vuetify module configuration
@@ -203,24 +178,6 @@ export default {
     },
   },
 
-  // Configure polyfills:
-  polyfill: {
-    features: [
-      {
-        require: 'intersection-observer',
-        detect: () => 'IntersectionObserver' in window,
-      },
-      {
-        require: 'intl',
-        detect: () => 'Intl' in global,
-      },
-      {
-        require: 'localstorage-polyfill',
-        detect: () => typeof localStorage !== 'undefined',
-      },
-    ],
-  },
-
   optimizeCSS: {
     assetNameRegExp: /\.optimize\.css$/g,
     cssProcessor: require('cssnano'),
@@ -229,11 +186,6 @@ export default {
     },
     canPrint: true,
   },
-
-  /*
-   ** Plugins to load before mounting the App
-   */
-  googleAnalytics: { id: 'UA-153705105-2' },
 
   /*
    ** @bazzite/nuxt-optimized-images module configuration
@@ -307,49 +259,29 @@ export default {
    */
   sitemap: { hostname: baseUrl },
 
+  // Configure polyfills:
+  polyfill: {
+    features: [
+      {
+        require: 'intersection-observer',
+        detect: () => 'IntersectionObserver' in window,
+      },
+      {
+        require: 'localstorage-polyfill',
+        detect: () => typeof localStorage !== 'undefined',
+      },
+    ],
+  },
+
   /*
    ** Build configuration
    ** https://nuxtjs.org/api/configuration-build
    */
   build: {
     transpile: ['vuetify', 'nuxt-vuex-localstorage'],
-    // analyze: { analyzerMode: 'static' },
-    terser: { extractComments: 'NODE_LICENSES' /* default was LICENSES */ },
-    /* extractCSS: true,
-    optimization: {
-      splitChunks: {
-        cacheGroups: {
-          styles: {
-            name: 'styles',
-            test: /\.(s?css|sass|vue)$/,
-            chunks: 'all',
-            enforce: true,
-          },
-        },
-      },
-    }, */
-
-    /*
-     ** You can extend webpack config here
-     */
-    extend(config, ctx) {
-      // config.output.globalObject = 'this';
-      /* config.module.rules.push({
-        test: /\.pdf$/,
-        loader: 'url-loader',
-      }); */
-    },
+    // analyze: true,
   },
-
-  /*
-   ** Generate configuration
-   ** https://nuxtjs.org/api/configuration-generate/
-   ** Guide: https://nuxtjs.org/guide/routing/
-   */
-  generate: {
-    // routes,
-    exclude: [
-      /#/, // path containing hashes
-    ],
-  },
+  /* vue: {
+    config: { performance: process.env.NODE_ENV !== 'production' },
+  }, */
 };

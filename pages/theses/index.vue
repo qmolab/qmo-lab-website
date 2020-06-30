@@ -6,9 +6,10 @@
         <v-card class="itemCard stretchCard pb-8">
           <v-list-item>
             <v-list-item-avatar size="75">
-              <StoreImage
-                sub-category="members"
-                :item-id="item.img"
+              <QImg
+                cat="members"
+                :name="item.img"
+                :placeholder="item.placeholder"
                 width="82"
                 height="82"
               />
@@ -41,10 +42,10 @@
 </template>
 
 <script>
-  import StoreImage from '@/components/StoreImage.vue';
+  import QImg from '@/components/lib/QImg.vue';
   import headAndTitle from '@/assets/js/headAndTitle';
   export default {
-    components: { StoreImage },
+    components: { QImg },
     async asyncData({ $axios }) {
       const memberTheses = await $axios.$get('/theses/cards/');
       return { memberTheses };

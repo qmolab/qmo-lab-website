@@ -50,7 +50,7 @@
     data() {
       return {
         posterFolder: process.env.baseUrl + '/assets/posters/',
-        img: require('~/assets/images/posters/SHINES.png?resize'),
+        img: require('~/assets/images/posters/SHINES.jpg?resize'),
       };
     },
     ...headAndTitle(

@@ -27,10 +27,13 @@
           class="mb-2"
         >
           <v-list-item-avatar size="75" color="grey">
-            <StoreImage
+            <QImg
               v-if="item.imageSubCategory && item.imageRef"
-              :sub-category="item.imageSubCategory"
-              :item-id="item.imageRef"
+              :cat="item.imageSubCategory"
+              :name="item.imageRef"
+              :placeholder="item.placeholder"
+              :title="item.imgTitle"
+              :alt="item.alt"
               width="80"
               height="80"
             />
@@ -38,7 +41,7 @@
           <v-list-item-content class="align-self-start">
             <v-list-item-title class="mb-1 text-h6 unsetWhiteSpace">
               <span>
-                <PrettyDate :value="item.date" />
+                <span v-text="item.date" />
                 <span>
                   <span>: </span>
                   <span v-html="item.title" />
@@ -71,12 +74,11 @@
 </template>
 
 <script>
-  import StoreImage from '@/components/StoreImage.vue';
-  import PrettyDate from '@/components/lib/PrettyDate.vue';
+  import QImg from '@/components/lib/QImg.vue';
 
   export default {
     name: 'Home',
-    components: { StoreImage, PrettyDate },
+    components: { QImg },
     props: {
       announcements: { type: Array, required: true },
       secondaryAnnouncements: { type: Array, default: undefined },

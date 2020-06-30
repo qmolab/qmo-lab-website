@@ -9,10 +9,9 @@
     >
       <v-row no-gutters class="px-4">
         <v-col cols="12" sm="4" class="mt-2">
-          <StoreImage
-            sub-category="professors"
-            item-id="nathan"
-            alt="Nathan"
+          <QImg
+            cat="members"
+            name="nathan"
             :aspect-ratio="5 / 4"
             max-width="300"
             img-class="mx-auto"
@@ -124,10 +123,10 @@
           <v-card class="mx-auto stretchCard pb-10" :min-height="200" outlined>
             <v-list-item>
               <v-list-item-avatar size="80">
-                <StoreImage
-                  sub-category="members"
-                  :item-id="member.name"
-                  :alt="member.name"
+                <QImg
+                  cat="members"
+                  :name="member.name"
+                  :placeholder="member.placeholder"
                   width="85"
                   height="85"
                 />
@@ -236,7 +235,7 @@
 </template>
 
 <script>
-  import StoreImage from '@/components/StoreImage.vue';
+  import QImg from '@/components/lib/QImg.vue';
   import MemberCard from '@/components/MemberCard.vue';
 
   function recursiveFilter(memberList, filterFunc, callback, delayEach = 150) {
@@ -271,7 +270,7 @@
   }
 
   export default {
-    components: { StoreImage, MemberCard },
+    components: { QImg, MemberCard },
     async asyncData({ $axios, store }) {
       const { memberList, memberFilters } = await $axios.$get(
         '/members/cards/'

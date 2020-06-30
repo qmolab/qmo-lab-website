@@ -10,7 +10,12 @@
     />
     <v-row v-else dense>
       <v-col cols="1" class="minW-256">
-        <StoreImage width="250" sub-category="members" :item-id="name" />
+        <QImg
+          width="250"
+          cat="members"
+          :name="name"
+          :placeholder="placeholder"
+        />
       </v-col>
       <v-col>
         <h2 class="text-h5">{{ first }} {{ last }}</h2>
@@ -74,7 +79,7 @@
               />
               <v-list-item-content>
                 <v-list-item-title class="body-1">
-                  <PrettyDate :value="item.date" />:
+                  <span v-text="item.date" />:
                   <dynamic-text
                     v-if="item.tag_line || item.title"
                     :html="item.tag_line || item.title"
@@ -113,11 +118,10 @@
 </template>
 
 <script>
-  import StoreImage from '@/components/StoreImage.vue';
-  import PrettyDate from '@/components/lib/PrettyDate.vue';
+  import QImg from '@/components/lib/QImg.vue';
 
   export default {
-    components: { StoreImage, PrettyDate },
+    components: { QImg },
     props: { id: { type: String, required: true } },
     data() {
       return {
@@ -127,6 +131,7 @@
           'Undergraduate Student',
         ],
         name: '',
+        placeholder: undefined,
         first: '',
         last: '',
         focus: '',
@@ -182,6 +187,7 @@
           ? JSON.parse(item.post_doc_dates)
           : undefined;
         this.name = item.name;
+        this.placeholder = item.placeholder;
         this.first = item.first;
         this.last = item.last;
         this.focus = item.focus;
@@ -197,13 +203,3 @@
     },
   };
 </script>
-
-<style lang="scss" scoped>
-  fancyListItem::before {
-    content: '\2022';
-    font-weight: bold;
-    display: inline-block;
-    width: 1em;
-    margin-left: -1em;
-  }
-</style>

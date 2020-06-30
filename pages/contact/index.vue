@@ -13,12 +13,12 @@
   import headAndTitle from '@/assets/js/headAndTitle';
   export default {
     components: { ContactCard },
+    async asyncData({ $axios }) {
+      const memberItems = await $axios.$get('/members/list/master/');
+      return { memberItems: memberItems.map((e) => e.text) };
+    },
     data() {
       return {
-        memberItems: [
-          'Nathan',
-          ...Object.keys(this.$store.state.images.members),
-        ],
         subjectItems: [
           'Lab Tour',
           'Information for potential students',

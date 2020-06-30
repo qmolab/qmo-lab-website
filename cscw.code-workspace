@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "..\\qmolabAPI"
+		},
+		{
+			"path": "..\\qmolabImages"
 		}
 	],
 	"settings": {}

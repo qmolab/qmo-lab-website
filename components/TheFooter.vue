@@ -176,7 +176,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background-image: url('~assets/images/gallery/blue.png?webp');
+      background-image: url('~assets/images/blue.jpg?webp');
       background-size: cover;
       opacity: 0.25;
     }

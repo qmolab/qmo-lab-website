@@ -52,6 +52,7 @@ export const state = () => ({
     },
   },
   currentPageTitle: '',
+  hero_images: [],
 });
 
 export const mutations = {
@@ -61,5 +62,17 @@ export const mutations = {
   pageTitle(state, payload) {
     state.currentPageTitle = payload;
   },
-  nuxtServerInit({ commit }, { req }) {},
+  heroImages(state, payload) {
+    state.hero_images = payload;
+  },
+};
+
+export const actions = {
+  async nuxtServerInit({ dispatch }) {
+    await dispatch('storeDispatchFunc');
+  },
+  async storeDispatchFunc({ commit }) {
+    const { data } = await this.$axios.get('/hero/');
+    commit('heroImages', data);
+  },
 };

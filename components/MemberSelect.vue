@@ -17,11 +17,11 @@
       <v-list-item v-on="on">
         <v-checkbox :input-value="attrs.inputValue" />
         <v-avatar size="45" class="align-self-center mr-1">
-          <StoreImage
+          <QImg
             width="45"
             height="45"
-            :sub-category="item === 'Nathan' ? 'professors' : 'members'"
-            :item-id="item.toLowerCase()"
+            cat="members"
+            :name="item.toLowerCase()"
           />
         </v-avatar>
         <v-list-item-title class="text-capitalize">{{
@@ -32,11 +32,11 @@
     <template v-slot:selection="{ item }">
       <v-chip>
         <v-avatar size="25" class="align-self-center mr-1">
-          <StoreImage
+          <QImg
             width="25"
             height="25"
-            :sub-category="item === 'Nathan' ? 'professors' : 'members'"
-            :item-id="item.toLowerCase()"
+            cat="members"
+            :name="item.toLowerCase()"
           />
         </v-avatar>
         <span class="text-capitalize">{{ item }}</span>
@@ -45,9 +45,9 @@
   </v-select>
 </template>
 <script>
-  import StoreImage from '@/components/StoreImage.vue';
+  import QImg from '@/components/lib/QImg.vue';
   export default {
-    components: { StoreImage },
+    components: { QImg },
     model: {
       prop: 'value',
       event: 'update',
