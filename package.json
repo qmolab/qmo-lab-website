@@ -1,6 +1,6 @@
 {
   "name": "qmo-lab-website",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Upgraded QMO Lab Website",
   "author": "David Mayes",
   "license": "MIT",
@@ -10,9 +10,11 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "generate": "nuxt build && nuxt export",
-    "deploy": "npm run build && npm run deployNoBuild",
-    "deployNoBuild": "nuxt export && gzip dist/**/*.html --extension=gz --extension=br && deploy.bat",
-    "serve": "serve dist",
+    "export": "nuxt export",
+    "serve": "nuxt serve",
+    "deploy": "nuxt build && nuxt export && npm run deployNoExport",
+    "deployNoBuild": "nuxt export && npm run deployNoExport",
+    "deployNoExport": "gzip dist/**/*.html --extension=gz --extension=br && deploy.bat",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {

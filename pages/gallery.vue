@@ -1,5 +1,62 @@
 <template>
   <div class="galleryPage">
+    <div v-if="currentImages.length > 0">
+      <v-dialog v-model="dialog" fullscreen>
+        <div class="modalContainer fill-h black--80 no-overflow">
+          <div class="d-flex align-center justify-center vh77">
+            <QImg
+              v-if="currentImages[currentImage]"
+              cat="gallery"
+              :name="currentImages[currentImage].name"
+              large
+              contain
+              max-width="75vw"
+              max-height="75vh"
+              class="flex-grow-0"
+            />
+          </div>
+          <div
+            v-if="currentImages[currentImage]"
+            class="vh6 d-flex justify-center subtitle-1"
+          >
+            {{ currentImages[currentImage].title }}
+          </div>
+          <div class="d-flex align-center justify-center vh17">
+            <v-slide-group
+              v-if="currentImages.length > 0"
+              v-model="currentImage"
+              class="hidden-sm-and-down vh15"
+              show-arrows
+              center-active
+              mandatory
+            >
+              <v-slide-item
+                v-for="(slide, i) in currentImages"
+                :id="`modal-carousel-bsi-${i}`"
+                :key="`modal-carousel-bsi-${i}`"
+                v-slot:default="{ active, toggle }"
+                class="mx-2 justify-self-center"
+              >
+                <QImg
+                  max-height="15vh"
+                  width="24vh"
+                  :class="{ dimmer: active, link: !active }"
+                  :name="slide.name"
+                  :placeholder="slide.placeholder"
+                  :alt="slide.alt"
+                  :title="slide.title"
+                  cat="gallery"
+                  @click="toggle"
+                />
+              </v-slide-item>
+            </v-slide-group>
+          </div>
+          <v-btn color="red" class="abs t0 r0 ma-4" fab @click="dialog = false">
+            <v-icon x-large>$close</v-icon>
+          </v-btn>
+        </div>
+      </v-dialog>
+    </div>
     <v-btn
       x-large
       text
@@ -16,7 +73,28 @@
             v-if="currentVideoID !== ''"
             class="videoPlayerContainer mx-auto no-overflow rounded"
           >
-            <YoutubeEmbed :video-id="currentVideoID" />
+            <div class="link rounded fill-w fill-h rel no-overflow">
+              <v-fade-transition>
+                <v-img
+                  v-if="!videoLoaded"
+                  :src="videoThumb"
+                  :aspect-ratio="16 / 9"
+                  @click="videoLoaded = true"
+                >
+                  <v-icon class="mdiYoutube" :size="72">
+                    $youtube
+                  </v-icon>
+                </v-img>
+                <iframe
+                  v-else
+                  frameborder="0"
+                  allow="encrypted-media"
+                  allowfullscreen=""
+                  :src="videoSource"
+                  class="abs t0 l0 fill-w fill-h"
+                />
+              </v-fade-transition>
+            </div>
           </div>
         </v-expand-transition>
       </div>
@@ -69,52 +147,41 @@
         </v-col>
       </v-row>
     </div>
-    <div>
-      <ModalImage
-        :id="`modal-gallery`"
-        v-model="currentImage"
-        :images="currentImages"
-      />
-      <div v-for="(gallery, k) in galleryImages" :key="k" class="mt-4">
-        <h2 class="px-6 text-h5">{{ gallery.title }}</h2>
-        <waterfall
-          :id="`waterfall-${k}`"
-          :key="`waterfall-${k}`"
-          v-slot="{ item, index }"
-          :container-id="`waterfall-${k}`"
-          :resizable="true"
-          :items="gallery.images"
-        >
-          <GalleryImage
-            :name="item.name"
-            :placeholder="item.placeholder"
-            :alt="item.title"
-            :title="item.title"
-            @click="click(index, gallery.images)"
-          />
-        </waterfall>
-      </div>
+    <div
+      v-for="(gallery, k) in galleryImages"
+      id="galleryImageContainer"
+      :key="k"
+      class="mt-4"
+    >
+      <h2 class="px-6 text-h5">{{ gallery.title }}</h2>
+      <waterfall v-slot="{ item, index }" :items="gallery.images">
+        <GalleryImage
+          v-if="item.name"
+          :name="item.name"
+          :placeholder="item.placeholder"
+          :alt="item.title"
+          :title="item.title"
+          @click="click(index, gallery.images)"
+        />
+      </waterfall>
     </div>
   </div>
 </template>
 
 <script>
   import { mdiYoutubeSubscription, mdiYoutube } from '@mdi/js';
+  import QImg from '@/components/lib/QImg.vue';
   import BaseImage from '@/components/BaseImage.vue';
-  import YoutubeEmbed from '@/components/lib/YoutubeEmbed.vue';
-  import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
   import GalleryImage from '@/components/GalleryImage.vue';
-  import ModalImage from '@/components/ModalImage.vue';
-  import headAndTitle from '@/assets/js/headAndTitle';
+  import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
 
   export default {
     name: 'GalleryView',
     components: {
+      QImg,
       BaseImage,
-      YoutubeEmbed,
-      Waterfall,
       GalleryImage,
-      ModalImage,
+      Waterfall,
     },
     async asyncData({ $axios }) {
       const payload = await $axios.$get('/gallery/');
@@ -123,30 +190,59 @@
       for (const title in payload) {
         galleryImages.push({
           title,
-          index: null,
           images: payload[title],
         });
       }
       return { galleryImages, videos };
     },
     data: () => ({
-      mdiYoutubeSubscription,
-      mdiYoutube,
       currentVideoID: '',
       currentImage: -1,
+      dialog: false,
       currentImages: [],
+      videoLoaded: false,
+      videoSource: undefined,
+      videoThumb: '',
+      mdiYoutubeSubscription,
+      mdiYoutube,
     }),
+    watch: {
+      currentVideoID() {
+        if (this.currentVideoID.length !== 0) {
+          const y = 'https://img.youtube.com/vi';
+          this.videoThumb = y + '/' + this.currentVideoID + '/default.jpg';
+          this.videoSource = `https://www.youtube-nocookie.com/embed/${this.currentVideoID}?rel=0&showinfo=0`;
+        }
+      },
+    },
+    mounted() {
+      this.$store.commit('pageTitle', 'Gallery');
+    },
     methods: {
       click(index, images) {
         this.currentImages = images;
         this.currentImage = index;
+        this.dialog = true;
       },
     },
-    ...headAndTitle(
-      'Gallery',
-      'gallery/',
-      'QMO Lab Gallery: Quantum Materials Optoelectronics @ UCR'
-    ),
+    head() {
+      return {
+        title: 'Gallery',
+        meta: [
+          {
+            hid: 'description',
+            name: 'description',
+            content: 'QMO Lab Gallery: Quantum Materials Optoelectronics @ UCR',
+          },
+        ],
+        link: [
+          {
+            rel: 'canonical',
+            href: process.env.baseUrl + 'gallery/',
+          },
+        ],
+      };
+    },
   };
 </script>
 
@@ -159,5 +255,17 @@
       color: $youtube-red;
       opacity: 1;
     }
+  }
+  .vh77 {
+    height: 78vh;
+  }
+  .vh20 {
+    height: 20vh;
+  }
+  .vh6 {
+    height: 4vh;
+  }
+  .vh17 {
+    height: 18vh !important;
   }
 </style>
