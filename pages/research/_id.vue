@@ -54,7 +54,7 @@
         link: [
           {
             rel: 'canonical',
-            href: process.env.baseUrl + this.$route.path,
+            href: process.env.baseUrl + this.$route.path + '/',
           },
         ],
       };
