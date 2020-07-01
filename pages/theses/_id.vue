@@ -39,21 +39,25 @@
         </v-btn>
       </v-col>
     </v-row>
-    <!--<client-only placeholder="Loading PDF...">
-      <PdfViewer
-        v-if="prevPage"
-        :url="dissertationURL"
-        :title="`Doctoral Dissertation of ${fullName}`"
-        :author="payload.img"
-        :bookmarks="bookmarks[payload.img]"
-      />
-    </client-only>-->
+    <div class="d-flex justify-center align-center mb-8">
+      <div style="height: 90vh; width: 100%;">
+        <object
+          :data="dissertationURL"
+          type="application/pdf"
+          width="100%"
+          height="100%"
+        >
+          <iframe
+            :src="`https://docs.google.com/viewer?url=${dissertationURL}&embedded=true`"
+          />
+        </object>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import QImg from '@/components/lib/QImg.vue';
-  // import PdfViewer from '@/components/PdfViewer.vue';
   export default {
     components: { QImg },
     async asyncData({ $axios, params }) {
@@ -62,184 +66,6 @@
       });
       return { payload };
     },
-    data: () => ({
-      prevPage: undefined,
-      bookmarks: {
-        trevor: {
-          startPage: 16,
-          frontMatter: {
-            Acknowledgement: 4,
-            Dedication: 7,
-            Abstract: 8,
-            'Table of Contents': 10,
-            'List of Figures': 13,
-          },
-          chapters: [
-            {
-              title: 'Motivation and Background ',
-              page: 16,
-            },
-            {
-              title: `Methodology and Metrology`,
-              page: 30,
-            },
-            {
-              title: 'Data Handling, Analysis, and Visualization',
-              page: 58,
-            },
-            {
-              title: `The Microscopic Scale`,
-              page: 87,
-            },
-            {
-              title: 'The Mesoscopic Scale',
-              page: 122,
-            },
-            {
-              title: 'The Statistical Scale',
-              page: 152,
-            },
-            {
-              title: 'Conclusion',
-              page: 175,
-            },
-          ],
-          endMatter: {
-            References: 181,
-            'Appendix 1: Sample Information': 191,
-            'Appendix 2: Calculations': 198,
-          },
-        },
-        max: {
-          startPage: 13,
-          frontMatter: {
-            Acknowledgement: 4,
-            Dedication: 7,
-            Abstract: 8,
-            'Table of Contents': 9,
-            'List of Figures': 11,
-          },
-          chapters: [
-            {
-              title: 'Introduction ',
-              page: 13,
-            },
-            {
-              title: `Instrumentation: Modular Muti-Dimensional Scanning Microscope`,
-              page: 22,
-            },
-            {
-              title: 'Photoluminescence in a Neodymium-Doped Ceramic',
-              page: 41,
-            },
-            {
-              title: `Photocurrent and Carrier Multiplication in TMD Heterostructures`,
-              page: 58,
-            },
-            {
-              title: 'Thermospintronic Imaging of Electrostatic Flux',
-              page: 95,
-            },
-            {
-              title: 'Conclusion',
-              page: 114,
-            },
-          ],
-          endMatter: {
-            'Appendix A: Visualizing Nanoscience': 115,
-          },
-        },
-        fatemeh: {
-          startPage: 15,
-          frontMatter: {
-            Acknowledgement: 4,
-            Dedication: 5,
-            Abstract: 6,
-            'Table of Contents': 8,
-            'List of Figures': 11,
-          },
-          chapters: [
-            {
-              title: 'Introduction and Background',
-              page: 15,
-            },
-            {
-              title: `Theory of 2DEG and 2D-Transition Metal Dichalcogenides Band Structure`,
-              page: 23,
-            },
-            {
-              title: 'Device Fabrication',
-              page: 44,
-            },
-            {
-              title: `Instrumentation: Low Temperature Broadband Photocurrent Scanning Microscope`,
-              page: 55,
-            },
-            {
-              title: 'Basic Optical Characterization of TMDs Heterostructures',
-              page: 89,
-            },
-            {
-              title: `Hot Carrier-Enhanced Interlayer Electron-Hole Pair Multiplication in 2D Semiconductor Heterostructure Photocells`,
-              page: 99,
-            },
-            {
-              title: `Phonon-Assisted Antistokes Upconversion in a 2D-TMD Heterostructure`,
-              page: 129,
-            },
-            {
-              title: 'Conclusions',
-              page: 143,
-            },
-          ],
-        },
-        dennis: {
-          startPage: 17,
-          frontMatter: {
-            Acknowledgement: 4,
-            Dedication: 8,
-            Abstract: 9,
-            'Table of Contents': 11,
-            'List of Figures': 13,
-            'Forward: About the fullName': 15,
-            "Quantum Confinement: There's not so much room at the bottom": 17,
-          },
-          chapters: [
-            {
-              title: 'Excitons in the 2-Dimensional Limit',
-              page: 20,
-            },
-            {
-              title: 'Properties of Ultrathin MoTe_2 Heterostructures',
-              page: 39,
-            },
-            {
-              title: 'Device Fabrication and Measurement',
-              page: 53,
-            },
-            {
-              title: 'Basic Characterization of MoTe_2 Photocells',
-              page: 91,
-            },
-            {
-              title: `Auger Recombination in the Extreme Electron-Hole Density Limit of a MoTe_2 Photocell`,
-              page: 101,
-            },
-            {
-              title: `Electron-Hole Liquid in a Van Der Waals Heterostructure Photocell at Room Temperature`,
-              page: 115,
-            },
-            {
-              title: 'Conclusion',
-              page: 130,
-            },
-          ],
-          endMatter: {
-            References: 131,
-          },
-        },
-      },
-    }),
     computed: {
       fullName() {
         const idP = this.$route.params.id.split('_');
