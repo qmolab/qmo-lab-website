@@ -5,7 +5,6 @@
       <QImg
         v-if="imageCategory && item.img"
         :class="{
-          'my-1 text-center': true,
           'float-left mr-4': item.float === 'left',
           'float-right ml-4': item.float === 'right',
           'mx-auto': !item.float,
@@ -19,11 +18,11 @@
         :max-width="item.maxWidth || '400px'"
         :style="`max-width: ${item.maxWidth || '400px'}`"
         :max-height="item.maxHeight"
-        img-class="imgBorder"
+        img-class="figureImage"
         no-title
       >
         <template v-slot:append>
-          <div v-if="figures" class="caption mb-2">
+          <div v-if="figures" class="caption mb-2 mt-1 text-justify">
             Figure {{ figureNum(i) }}: {{ item.imgTitle }}
           </div>
         </template>
