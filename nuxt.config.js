@@ -152,7 +152,9 @@ export default {
     customVariables: ['~/assets/scss/variables.scss'],
     defaultAssets: { font: false, icons: false },
     icons: { values: MY_ICONS },
-    treeShake: true,
+    treeShake: {
+      directives: ['Touch', 'Ripple'],
+    },
     theme: {
       dark: true,
       options: {

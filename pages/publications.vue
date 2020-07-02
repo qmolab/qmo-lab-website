@@ -12,7 +12,7 @@
       >
         <v-card v-if="item.description" class="stretchCard">
           <a :href="item.href" target="_blank" rel="noopener">
-            <div class="mb-10">
+            <div v-ripple class="mb-10">
               <v-list-item>
                 <v-list-item-content class="align-self-start">
                   <div class="overline text--secondary">

@@ -19,6 +19,7 @@
     <v-tooltip
       v-if="!noTitle"
       bottom
+      :eager="eager"
       :open-delay="500"
       :close-delay="250"
       :activator="activator"
@@ -43,6 +44,7 @@
       imgClass: { type: [String, Object], default: '' },
       large: { type: Boolean, default: false },
       noTitle: { type: Boolean, default: false },
+      eager: { type: Boolean, default: false },
     },
     data: () => ({ ext: '.webp', activator: undefined }),
     computed: {

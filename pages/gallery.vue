@@ -109,39 +109,49 @@
         <v-col>
           <v-slide-group show-arrows center-active>
             <v-slide-item v-for="(video, i) in videos" :key="i">
-              <BaseImage
-                :src="{
-                  src: `https://img.youtube.com/vi/${video.src}/default.jpg`,
-                }"
-                :alt="video.title"
-                :title="video.title"
-                :aspect-ratio="16 / 9"
-                width="200"
-                :link="video.src !== currentVideoID"
-                :no-tooltip="video.title === ''"
-                :img-class="{
-                  'no-overflow rounded': video.src === currentVideoID,
-                  link: video.src !== currentVideoID,
-                }"
-                class="mx-2"
-                style="width: 200px;"
-                @click="currentVideoID = video.src"
-              >
-                <span
-                  class="v-icon notranslate mdiYoutube v-icon--svg theme--dark"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    height="24"
-                    width="24"
-                    role="img"
-                    aria-hidden="true"
-                  >
-                    <use href="#ytIconPath" />
-                  </svg>
-                </span>
-              </BaseImage>
+              <div class="mx-2" style="width: 200px;">
+                <v-tooltip bottom :open-delay="500" :close-delay="250">
+                  <template v-slot:activator="{ on }">
+                    <v-img
+                      :src="`https://img.youtube.com/vi/${video.src}/default.jpg`"
+                      :class="{
+                        'no-overflow rounded': video.src === currentVideoID,
+                        link: video.src !== currentVideoID,
+                      }"
+                      :alt="video.title"
+                      :aspect-ratio="16 / 9"
+                      width="200"
+                      @click="currentVideoID = video.src"
+                      v-on="on"
+                    >
+                      <span
+                        class="v-icon notranslate mdiYoutube v-icon--svg theme--dark"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          height="24"
+                          width="24"
+                          role="img"
+                          aria-hidden="true"
+                        >
+                          <use href="#ytIconPath" />
+                        </svg>
+                      </span>
+                      <template v-slot:placeholder>
+                        <v-row class="fill-h ma-0 align-center justify-center">
+                          <v-progress-circular
+                            size="60"
+                            indeterminate
+                            color="primary"
+                          />
+                        </v-row>
+                      </template>
+                    </v-img>
+                  </template>
+                  <span class="text-capitalize">{{ video.title }}</span>
+                </v-tooltip>
+              </div>
             </v-slide-item>
           </v-slide-group>
         </v-col>
@@ -171,7 +181,6 @@
 <script>
   import { mdiYoutubeSubscription, mdiYoutube } from '@mdi/js';
   import QImg from '@/components/lib/QImg.vue';
-  import BaseImage from '@/components/BaseImage.vue';
   import GalleryImage from '@/components/GalleryImage.vue';
   import Waterfall from '@/components/lib/VuetifyWaterfall.vue';
 
@@ -179,7 +188,6 @@
     name: 'GalleryView',
     components: {
       QImg,
-      BaseImage,
       GalleryImage,
       Waterfall,
     },

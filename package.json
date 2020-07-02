@@ -1,7 +1,7 @@
 {
   "name": "qmo-lab-website",
-  "version": "1.0.6",
-  "description": "Upgraded QMO Lab Website",
+  "version": "1.0.7",
+  "description": "A Website for the QMO Lab Research Group",
   "author": "David Mayes",
   "license": "MIT",
   "repository": "github:qmolab/qmo-lab-website",

@@ -7,6 +7,7 @@
       :title="title"
       :alt="alt"
       :aspect-ratio="aspectRatio"
+      eager
       v-bind="$attrs"
       @click="$emit('click', $event)"
     />
