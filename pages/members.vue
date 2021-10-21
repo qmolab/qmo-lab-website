@@ -11,11 +11,11 @@
         <v-col cols="12" sm="4" class="mt-2">
           <QImg
             cat="members"
-            name="nathan"
-            :aspect-ratio="5 / 4"
-            max-width="300"
+            name="nathanLong"
+            :aspect-ratio="0.84"
+            max-width="336"
             img-class="mx-auto"
-          />
+          /><!--Could be 1.19 -->
         </v-col>
         <v-col>
           <v-list-item>
@@ -62,7 +62,7 @@
         </nuxt-link>
         <v-btn
           text
-          to="/assets/curriculum_vitae/nathan_2020_short.pdf"
+          to="/assets/curriculum_vitae/nathan_web_CV_2021.pdf"
           target="_blank"
           rel="nofollow"
         >
