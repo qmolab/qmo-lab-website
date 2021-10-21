@@ -86,7 +86,7 @@
     data() {
       return {
         loading: false,
-        newsSwitch: this.announcements.length === 3,
+        newsSwitch: this.announcements.length === 5,
         oldAnnouncements: this.secondaryAnnouncements,
         announcementsChecked: this.announcements,
       };
@@ -104,7 +104,7 @@
     },
     methods: {
       recursivePop() {
-        if (this.announcementsChecked.length > 3) {
+        if (this.announcementsChecked.length > 5) {
           this.announcementsChecked.pop();
           setTimeout(() => this.recursivePop(), 75);
         } else this.loading = false;
