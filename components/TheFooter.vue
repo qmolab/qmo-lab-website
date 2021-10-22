@@ -74,7 +74,18 @@
       </v-row>
     </v-container>
     <div
-      class="copyrightNotice caption text--secondary d-flex justify-center fill-w abs b0 pa-2 text-center"
+      class="
+        copyrightNotice
+        caption
+        text--secondary
+        d-flex
+        justify-center
+        fill-w
+        abs
+        b0
+        pa-2
+        text-center
+      "
     >
       <v-btn
         x-small

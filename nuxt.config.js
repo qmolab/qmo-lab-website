@@ -25,7 +25,6 @@ if (process.env.NODE_ENV === 'production') {
 const imageQuality = 0.7;
 
 export default {
-  mode: 'universal',
   target: 'static',
   modern,
 
@@ -39,8 +38,6 @@ export default {
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
-    // Doc: https://www.bazzite.com/docs/nuxt-optimized-images
-    '@bazzite/nuxt-optimized-images',
     // Doc: https://github.com/nuxt-community/vuetify-module
     '@nuxtjs/vuetify',
     // Doc: https://www.npmjs.com/package/vue-social-sharing
@@ -187,24 +184,6 @@ export default {
       preset: ['default', { discardComments: { removeAll: true } }],
     },
     canPrint: true,
-  },
-
-  /*
-   ** @bazzite/nuxt-optimized-images module configuration
-   ** https://www.bazzite.com/docs/nuxt-optimized-images/configuration/
-   ** https://www.bazzite.com/docs/nuxt-optimized-images/example/
-   */
-  optimizedImages: {
-    inlineImageLimit: 500,
-    responsive: {
-      size: 450,
-      format: 'jpg',
-      quality: imageQuality,
-      placeholder: true,
-      placeholderSize: 6,
-    },
-    webp: { preset: 'default', quality: imageQuality },
-    pngquant: [0.3, 0.5],
   },
 
   /*
